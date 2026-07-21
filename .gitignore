@@ -1,0 +1,10 @@
+# Large backup files (GitHub limit is 100MB per file)
+BackUP.zip
+*.zip
+*.tar.gz
+*.rar
+
+# Session and Cache files
+session/*
+cache/*
+error_log/*

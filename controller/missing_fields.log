@@ -1,0 +1,22 @@
+Array
+(
+    [0] => fuName
+    [1] => paddress
+    [2] => street
+    [3] => postalcode
+    [4] => state
+    [5] => country
+    [6] => mobile
+    [7] => email
+)
+Array
+(
+    [0] => fuName
+    [1] => paddress
+    [2] => street
+    [3] => postalcode
+    [4] => state
+    [5] => country
+    [6] => mobile
+    [7] => email
+)

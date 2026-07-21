@@ -1,0 +1,100 @@
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                     FROM product_details pd
+                     LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                     WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                     FROM product_details pd
+                     LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                     WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                     FROM product_details pd
+                     LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                     WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                     FROM product_details pd
+                     LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                     WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
+Query: SELECT pd.*, pi.product_image 
+                   FROM product_details pd
+                   LEFT JOIN product_image pi ON pd.ids = pi.product_id
+                   WHERE pd.ids = '17'
