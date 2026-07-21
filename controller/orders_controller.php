@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Bahrain');
 require('../model/common/common_functions.php');
+require_once(__DIR__ . '/afs_payment.php');
 
 class orders_controller
 {
@@ -61,7 +62,7 @@ class orders_controller
     {
         $this->varModelObj = new CommonModel();
         $this->varDBConnection = $this->varModelObj->varDBConnection;
-        $this->actionevents = $_POST['action'] ?? null;
+        $this->actionevents = $_POST['action'] ?? $_GET['action'] ?? null;
         $this->ids = $_POST['ids'] ?? null;
         $this->customer_name = $_POST['customer_name'] ?? null;
         $this->permanent_address = $_POST['permanent_address'] ?? null;
@@ -656,10 +657,61 @@ class orders_controller
                         // SEND EMAILS TO CUSTOMER & VENDOR
                         $this->sendOrderConfirmationEmails($order_id, $this->v_email);
                         
+                        // Calculate total order amount for AFS invoice
+                        $tot_sql = "SELECT SUM(selling_price * quantity) AS total_amount FROM order_details WHERE order_id = '" . $this->varDBConnection->real_escape_string($order_id) . "'";
+                        $tot_res = $this->varDBConnection->query($tot_sql);
+                        $tot_row = $tot_res ? $tot_res->fetch_assoc() : null;
+                        $orderTotal = floatval($tot_row['total_amount'] ?? 0);
+
+                        $payment_url = null;
+                        try {
+                            $afs  = new AFSPaymentGateway();
+                            $auth = $afs->getAuthToken();
+
+                            if (isset($auth['token'])) {
+                                $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+                                $baseUrl  = $protocol . "://" . $_SERVER['HTTP_HOST'];
+
+                                $invoicePayload = [
+                                    'customer' => [
+                                        [
+                                            'name' => $this->v_fuName ?: ($this->customer_name ?: 'Valued Customer'),
+                                            'send_by' => 'email',
+                                            'email' => $this->v_email ?: 'info@darjanafashion.com',
+                                            'mobile' => $this->v_mobile ?: '+97300000000',
+                                            'reference_number' => $order_id
+                                        ]
+                                    ],
+                                    'sub_total' => $orderTotal,
+                                    'discount'  => floatval($this->promo_discount ?? 0),
+                                    'total'     => max($orderTotal - floatval($this->promo_discount ?? 0), 0.01),
+                                    'items'     => [
+                                        [
+                                            'description' => "Order #$order_id",
+                                            'quantity'    => 1,
+                                            'unit_price'  => $orderTotal,
+                                            'amount'      => $orderTotal
+                                        ]
+                                    ],
+                                    'success_redirect_url'         => "$baseUrl/controller/orders_controller.php?action=afs_callback&order_id=$order_id",
+                                    'failed_redirect_url'          => "$baseUrl/controller/orders_controller.php?action=afs_callback&order_id=$order_id",
+                                    'payment_confirmation_webhook' => "$baseUrl/controller/orders_controller.php?action=afs_webhook"
+                                ];
+
+                                $invoiceResult = $afs->createInvoice($auth['token'], $invoicePayload);
+                                if (isset($invoiceResult['data'][0]['payment_url'])) {
+                                    $payment_url = $invoiceResult['data'][0]['payment_url'];
+                                }
+                            }
+                        } catch (Exception $e) {
+                            error_log("AFS Gateway Invoice Error: " . $e->getMessage());
+                        }
+
                         $response = [
-                            'status' => 'success',
-                            'order_id' => $order_id,
-                            'vendor_whatsapp' => $vendor_whatsapp
+                            'status'          => 'success',
+                            'order_id'        => $order_id,
+                            'vendor_whatsapp' => $vendor_whatsapp,
+                            'payment_url'     => $payment_url
                         ];
                     } else {
                         throw new Exception('Error placing order – some items failed to save');
@@ -673,6 +725,12 @@ class orders_controller
                 ob_clean();
                 header('Content-Type: application/json');
                 echo json_encode($response);
+                break;
+            case 'afs_callback':
+                $this->handlePaymentResponse($_POST, false);
+                break;
+            case 'afs_webhook':
+                $this->handlePaymentResponse($_POST, true);
                 break;
             case 'get_item_details':
                 $this->varModelObj->ListFromJSon($var[10]);
@@ -1195,6 +1253,58 @@ class orders_controller
             } catch (Exception $e) {
                 error_log("Vendor Mail Error: " . $mail->ErrorInfo);
             }
+        }
+    }
+
+    /**
+     * Handles payment success callbacks and webhooks from AFS Payment Gateway
+     */
+    public function handlePaymentResponse($data = [], $isWebhook = false)
+    {
+        $rawPayload = file_get_contents('php://input');
+        $input = !empty($rawPayload) ? json_decode($rawPayload, true) : $_POST;
+        if (empty($input)) {
+            $input = $_GET;
+        }
+
+        $jsonResponse = json_encode($input);
+
+        // Extract order_id / reference number from AFS response
+        $order_id = $input['data']['invoice']['ref'] ?? 
+                    $input['customer'][0]['reference_number'] ?? 
+                    $input['order_id'] ?? 
+                    $_GET['order_id'] ?? null;
+
+        $paymentStatus = $input['data']['invoice']['status'] ?? 
+                         $input['data']['transactions'][0]['status'] ?? 
+                         $input['status'] ?? 
+                         $input['result'] ?? '';
+
+        $isPaid = (strcasecmp($paymentStatus, 'Paid') === 0 || 
+                   strcasecmp($paymentStatus, 'SUCCESS') === 0 || 
+                   strcasecmp($paymentStatus, 'success') === 0);
+
+        if ($order_id && $isPaid) {
+            $escaped_json = $this->varDBConnection->real_escape_string($jsonResponse);
+            $escaped_order_id = $this->varDBConnection->real_escape_string($order_id);
+
+            $update_sql = "UPDATE order_details 
+                           SET payment_status = 'PAID', 
+                               payment_date = NOW(), 
+                               api_response = '$escaped_json' 
+                           WHERE order_id = '$escaped_order_id'";
+            $this->varDBConnection->query($update_sql);
+        }
+
+        if ($isWebhook) {
+            http_response_code(200);
+            echo json_encode(['status' => 'success']);
+            exit();
+        } else {
+            $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+            $baseUrl = $protocol . "://" . $_SERVER['HTTP_HOST'];
+            header("Location: $baseUrl/view/order_confirmation.php?order_id=" . urlencode($order_id ?? ''));
+            exit();
         }
     }
 }

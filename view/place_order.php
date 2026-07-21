@@ -2389,6 +2389,13 @@
                             console.log('✅ Order placed successfully! Order ID:', response.order_id);
                             console.log('Full success response:', response);
                             
+                            // If Payment Gateway URL is provided, redirect customer to complete payment
+                            if (response.payment_url) {
+                                console.log('Redirecting to Payment Gateway:', response.payment_url);
+                                window.location.href = response.payment_url;
+                                return;
+                            }
+                            
                             // Show small toast/success message
                             setupDropdown('dropdownContent', 'success', 
                                 svgSuccess + 'Order placed successfully! Order ID: ' + response.order_id, 

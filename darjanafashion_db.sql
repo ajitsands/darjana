@@ -1272,7 +1272,8 @@ CREATE TABLE `order_details` (
   `promo_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `promo_discount` decimal(10,2) DEFAULT 0.00,
   `payment_status` varchar(10) NOT NULL DEFAULT 'UNPAID',
-  `payment_date` datetime DEFAULT NULL
+  `payment_date` datetime DEFAULT NULL,
+  `api_response` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
