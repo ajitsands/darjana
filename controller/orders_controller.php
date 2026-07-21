@@ -146,15 +146,15 @@ class orders_controller
         // $array[1] = "SELECT ids, customer_name, permenant_address, postal_code, district, state, street, country, mobile_no, whatsapp_no, email_user_name 
         //      FROM customer_details WHERE ids = '" . $_SESSION['ids'] . "'";
         $array[1] = "SELECT cd.ids, cd.customer_name, cd.permenant_address, cd.postal_code, cd.district, 
-                s.state_name AS state, 
+                COALESCE(s.state_name, cd.state) AS state, 
                 cd.street, 
-                c.country, 
+                COALESCE(c.country, cd.country) AS country, 
                 cd.mobile_no,
                 cd.whatsapp_no, 
                 cd.email_user_name 
                 FROM customer_details AS cd
-                LEFT JOIN country AS c ON cd.country = c.ids
-                LEFT JOIN state AS s ON cd.state = s.ids
+                LEFT JOIN country AS c ON (cd.country = c.ids OR cd.country = c.country)
+                LEFT JOIN state AS s ON (cd.state = s.ids OR cd.state = s.state_name)
                 WHERE cd.ids = '" . $_SESSION['ids'] . "'
                 ";
         $array[2] = "SELECT 
