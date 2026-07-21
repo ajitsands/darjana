@@ -89,7 +89,7 @@ $role ='vendor';
                     
                     <?php if ($role == 'Admin' || $role == 'vendor'): ?>
                     <li class="menu-item">
-                        <a href="PaymentSettings" class="menu-link">
+                        <a href="PaymentSettings.php" class="menu-link">
                             <i class="menu-icon tf-icons ri-bank-card-line"></i>
                             <div data-i18n="Payment Settings">Payment Settings</div>
                         </a>
