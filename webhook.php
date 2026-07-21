@@ -4,7 +4,9 @@
  * Live URL: https://darjanafashion.com/webhook.php
  */
 
-// Define a secret key to prevent unauthorized calls (Change this to a strong secret key)
+header('Content-Type: text/plain; charset=utf-8');
+
+// Define a secret key to prevent unauthorized calls
 define('WEBHOOK_SECRET', 'DarjanaSecretKey2026');
 
 // Validate GitHub SHA256 Signature
@@ -15,8 +17,27 @@ if (WEBHOOK_SECRET && $signature) {
     $expected_signature = 'sha256=' . hash_hmac('sha256', $payload, WEBHOOK_SECRET);
     if (!hash_equals($expected_signature, $signature)) {
         http_response_code(403);
-        die('Access Denied: Invalid signature token.');
+        exit('Access Denied: Invalid signature token.');
     }
+}
+
+// Helper function to safely execute shell commands
+function execute_cmd($cmd) {
+    if (function_exists('shell_exec')) {
+        return shell_exec($cmd);
+    } elseif (function_exists('exec')) {
+        exec($cmd, $output, $ret);
+        return implode("\n", $output);
+    } elseif (function_exists('system')) {
+        ob_start();
+        system($cmd);
+        return ob_get_clean();
+    } elseif (function_exists('passthru')) {
+        ob_start();
+        passthru($cmd);
+        return ob_get_clean();
+    }
+    return 'Error: Shell execution functions are disabled in php.ini.';
 }
 
 // Decode event payload
@@ -24,13 +45,20 @@ $data = json_decode($payload, true);
 
 // Execute git pull when code is pushed to main branch
 if (isset($data['ref']) && $data['ref'] === 'refs/heads/main') {
-    // Execute git pull from your website root
-    $output = shell_exec('git pull origin main 2>&1');
+    $cmd = 'git pull origin main 2>&1';
+    $output = execute_cmd($cmd);
+    
+    if (empty($output)) {
+        $output = 'Git pull command executed (no output returned).';
+    }
     
     // Log deployment
-    file_put_contents(__DIR__ . '/deploy.log', date('[Y-m-d H:i:s] ') . "Deployment result: " . $output . "\n", FILE_APPEND);
+    @file_put_contents(__DIR__ . '/deploy.log', date('[Y-m-d H:i:s] ') . "Deployment result: " . $output . "\n", FILE_APPEND);
     
+    http_response_code(200);
     echo "Deployment successful:\n" . $output;
 } else {
-    echo "Notification received (Non-main branch or non-push event).";
+    http_response_code(200);
+    echo "Webhook received successfully (Event: " . ($_SERVER['HTTP_X_GITHUB_EVENT'] ?? 'unknown') . ").";
 }
+?>
