@@ -40,16 +40,19 @@ function execute_cmd($cmd) {
     return 'Error: Shell execution functions are disabled in php.ini.';
 }
 
+require_once(__DIR__ . '/sync.php');
+
 // Decode event payload
 $data = json_decode($payload, true);
 
-// Execute git pull when code is pushed to main branch
+// Execute git pull or PHP sync when code is pushed to main branch
 if (isset($data['ref']) && $data['ref'] === 'refs/heads/main') {
     $cmd = 'git pull origin main 2>&1';
     $output = execute_cmd($cmd);
     
-    if (empty($output)) {
-        $output = 'Git pull command executed (no output returned).';
+    // If shell execution is disabled, fallback to PHP Zip sync
+    if (empty($output) || strpos($output, 'disabled') !== false || strpos($output, 'Error:') !== false) {
+        $output = perform_github_sync();
     }
     
     // Log deployment
