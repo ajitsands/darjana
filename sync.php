@@ -47,11 +47,22 @@ function perform_github_sync() {
 
             sync_copy_dir_recursive($sourceDir, $extractPath);
 
-            // Sync to parallel admin document root if cPanel created it outside public_html
-            $parallelAdminPath = dirname(__DIR__) . '/admin.darjanafashion.com';
-            $sourceAdminPath   = $sourceDir . '/admin.darjanafashion.com';
-            if (is_dir($parallelAdminPath) && is_dir($sourceAdminPath)) {
-                sync_copy_dir_recursive($sourceAdminPath, $parallelAdminPath);
+            // Target all possible admin subdomain directory locations on cPanel
+            $possibleAdminPaths = [
+                __DIR__ . '/admin.darjanafashion.com',
+                __DIR__ . '/admin',
+                dirname(__DIR__) . '/admin.darjanafashion.com',
+                dirname(__DIR__) . '/admin'
+            ];
+
+            $sourceAdminPath = $sourceDir . '/admin.darjanafashion.com';
+
+            if (is_dir($sourceAdminPath)) {
+                foreach ($possibleAdminPaths as $targetPath) {
+                    if (is_dir($targetPath)) {
+                        sync_copy_dir_recursive($sourceAdminPath, $targetPath);
+                    }
+                }
             }
 
             sync_delete_dir_recursive($tempExtractDir);
