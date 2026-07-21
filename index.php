@@ -2,6 +2,18 @@
 ini_set('error_log', __DIR__ . '/my_error_log.log');
 session_start();
 
+// Support CLI development web server & fallback URI routing for localhost
+if (php_sapi_name() === 'cli-server' || (!isset($_GET['url']) && isset($_SERVER['REQUEST_URI']))) {
+    $requestUriPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    if ($requestUriPath !== '/' && file_exists(__DIR__ . $requestUriPath) && !is_dir(__DIR__ . $requestUriPath)) {
+        if (php_sapi_name() === 'cli-server') {
+            return false;
+        }
+    } else {
+        $_GET['url'] = ltrim($requestUriPath, '/');
+    }
+}
+
 // Define a base path constant to avoid relative path issues
 // define('BASE_PATH', realpath(__DIR__));
 
