@@ -7,19 +7,23 @@ class RoutingClass
   
     public function __construct()
     {
-        // Check if the request is from the correct domain
-        $allowedDomain = 'admin.darjanafashion.com';
-        $currentDomain = $_SERVER['HTTP_HOST'];
+        // Check if the request is from the correct domain or local development
+        $allowedDomains = array('admin.darjanafashion.com', 'www.admin.darjanafashion.com', 'localhost', '127.0.0.1');
+        $currentHost    = parse_url('http://' . ($_SERVER['HTTP_HOST'] ?? 'localhost'), PHP_URL_HOST);
 
-        if ($currentDomain !== $allowedDomain) {
+        if (!in_array($currentHost, $allowedDomains)) {
             header("HTTP/1.0 404 Not Found");
-            echo "<p style='background-color: #7FB131; color: white;text-align: left;;font-size:20px;padding:20px; font-family: Arial, Helvetica, sans-serif;'>Darjana Request - 404 Not Found - By ".$_SERVER['SERVER_NAME']."</p>";
+            echo "<p style='background-color: #7FB131; color: white;text-align: left;;font-size:20px;padding:20px; font-family: Arial, Helvetica, sans-serif;'>Darjana Request - 404 Not Found - By ".htmlspecialchars($_SERVER['SERVER_NAME'] ?? 'unknown')."</p>";
             exit();
         } 
 
         // Initialize encryption class
         $this->encryption = new UrlEncryption($this->key);
-        // Retrieve the requested URL
+        
+        // Retrieve the requested URL with REQUEST_URI fallback
+        if (!isset($_GET['url']) && isset($_SERVER['REQUEST_URI'])) {
+            $_GET['url'] = ltrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+        }
         $this->url = isset($_GET['url']) ? $_GET['url'] : '/';
 
         // Define the routes
@@ -67,7 +71,9 @@ class RoutingClass
             'PlatformTracking'=>'PlatformTracking',
             'PlatformTracking/'=>'PlatformTracking',
             'PaymentSettings'=>'payment_settings',
-            'PaymentSettings/'=>'payment_settings'
+            'PaymentSettings/'=>'payment_settings',
+            'paymentsettings'=>'payment_settings',
+            'paymentsettings/'=>'payment_settings'
         );
     
         // Parse the URL
