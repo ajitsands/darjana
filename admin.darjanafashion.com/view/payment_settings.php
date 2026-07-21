@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once(__DIR__ . '/../controller/payment_settings_controller.php');
 $controller = new PaymentSettingsController();
 $settings = $controller->getSettings();
