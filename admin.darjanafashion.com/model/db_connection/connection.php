@@ -13,15 +13,14 @@ class DBConnection
             // Live server environment
             $con = mysqli_connect("localhost", "darjanafashion_user", "s@nds1@b", "darjanafashion_db");
         }
-        
+
         if (mysqli_connect_errno()) {
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
             return false;
         }
-        
-        // Set UTF-8 charset for Arabic support
+
+        mysqli_query($con, "SET SESSION sql_mode = ''");
         mysqli_set_charset($con, "utf8mb4");
-        
         return $con;
     }
 }
