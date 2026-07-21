@@ -46,6 +46,14 @@ function perform_github_sync() {
             $sourceDir = !empty($extractedFolders) ? $extractedFolders[0] : $tempExtractDir;
 
             sync_copy_dir_recursive($sourceDir, $extractPath);
+
+            // Sync to parallel admin document root if cPanel created it outside public_html
+            $parallelAdminPath = dirname(__DIR__) . '/admin.darjanafashion.com';
+            $sourceAdminPath   = $sourceDir . '/admin.darjanafashion.com';
+            if (is_dir($parallelAdminPath) && is_dir($sourceAdminPath)) {
+                sync_copy_dir_recursive($sourceAdminPath, $parallelAdminPath);
+            }
+
             sync_delete_dir_recursive($tempExtractDir);
 
             return "SUCCESS: Website files synchronized cleanly from GitHub!";
