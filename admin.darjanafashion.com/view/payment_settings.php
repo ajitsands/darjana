@@ -13,7 +13,7 @@ $settings = $controller->getSettings();
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Payment Gateway Settings | Darjana Admin</title>
+    <title>Payment Gateway Settings - Darjana Admin</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
@@ -40,20 +40,17 @@ $settings = $controller->getSettings();
     <script src="../../assets/js/config.js"></script>
 </head>
 
-<body>
-    <div class="layout-wrapper layout-content-navbar">
+<body style="background-color: #f5f5f9;">
+    <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
         <div class="layout-container">
-            <?php include(__DIR__ . '/../templates/menu.php'); ?>
-
+            <?php include(__DIR__ . "/../templates/navbar.php"); ?>
             <div class="layout-page">
-                <?php include(__DIR__ . '/../templates/navbar.php'); ?>
-
                 <div class="content-wrapper">
-                    <div class="container-xxl flex-grow-1 container-p-y">
-                        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Settings /</span> Payment Gateway Credentials</h4>
-
-                        <div class="row">
-                            <div class="col-md-8 mx-auto">
+                    <?php include(__DIR__ . "/../templates/menu.php"); ?>
+                    <div class="container-fluid flex-grow-1 container-p-y">
+                        
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 col-lg-6">
                                 <div class="card mb-4 shadow-sm border-0">
                                     <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
                                         <h5 class="mb-0 text-white"><i class="ri-bank-card-line me-2"></i>AFS Payment Gateway Settings</h5>
@@ -101,7 +98,8 @@ $settings = $controller->getSettings();
                         </div>
 
                     </div>
-                    <?php include(__DIR__ . '/../templates/footer.php'); ?>
+                    <?php include(__DIR__ . "/../templates/footer.php"); ?>
+                    <div class="content-backdrop fade"></div>
                 </div>
             </div>
         </div>
