@@ -76,25 +76,31 @@ class RoutingClass
             'paymentsettings/'=>'payment_settings'
         );
     
-        // Parse the URL
-        $urlSegments = parse_url($this->url, PHP_URL_PATH);
-        $urlSegments = explode('/', trim($urlSegments, '/'));
+        // Robust case-insensitive route resolution
+        $urlPath     = parse_url($this->url, PHP_URL_PATH);
+        $urlSegments = array_values(array_filter(explode('/', trim($urlPath, '/'))));
 
-        // Reconstruct the first segment to match the defined routes
-        $firstSegment = implode('/', array_slice($urlSegments, 0, 2));
+        $routeKeys   = array_change_key_case($this->routes, CASE_LOWER);
+        $foundMethod = null;
 
-        // Route based on the first segment
-        if (isset($this->routes[$firstSegment])) {
-            $method = $this->routes[$firstSegment];
-            $this->$method($urlSegments);
-        } else if (isset($this->routes[$urlSegments[0]])) {
-            $method = $this->routes[$urlSegments[0]];
-            array_shift($urlSegments); // Remove the route part from the params
-            $this->$method($urlSegments);
+        if (empty($urlSegments)) {
+            $foundMethod = $routeKeys[''] ?? 'login';
+        } else {
+            foreach ($urlSegments as $seg) {
+                $cleanSeg = strtolower(trim($seg, '/'));
+                if (isset($routeKeys[$cleanSeg])) {
+                    $foundMethod = $routeKeys[$cleanSeg];
+                    break;
+                }
+            }
+        }
+
+        if ($foundMethod && method_exists($this, $foundMethod)) {
+            $this->$foundMethod($urlSegments);
         } else {
             // If the route doesn't exist, display a 404 error
             header("HTTP/1.0 404 Not Found");
-            echo "<p style='background-color: #7FB131; color: white;text-align: left;;font-size:20px;padding:20px; font-family: Arial, Helvetica, sans-serif;'>Darjana Request - 404 Not Found - By ".$_SERVER['SERVER_NAME']."</p>";
+            echo "<p style='background-color: #7FB131; color: white;text-align: left;font-size:20px;padding:20px; font-family: Arial, Helvetica, sans-serif;'>Darjana Request - 404 Not Found - By " . htmlspecialchars($_SERVER['SERVER_NAME'] ?? 'unknown') . "</p>";
         }
     }
 
