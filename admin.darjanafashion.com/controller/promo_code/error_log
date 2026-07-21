@@ -1,0 +1,15 @@
+[06-Mar-2026 13:05:43 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to undefined method CommonModel::InsertTable() in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/promo_code/promo_code_controller.php:99
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/promo_code/promo_code_controller.php(216): PromoCodeController->RequestAccept('add_promo_code')
+#1 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/promo_code/promo_code_controller.php on line 99
+[06-Mar-2026 13:08:31 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to undefined method CommonModel::InsertTable() in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/promo_code/promo_code_controller.php:99
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/promo_code/promo_code_controller.php(216): PromoCodeController->RequestAccept('add_promo_code')
+#1 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/promo_code/promo_code_controller.php on line 99
+[06-Mar-2026 14:08:29 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Call to undefined method CommonModel::DeleteTable() in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/promo_code/promo_code_controller.php:143
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/promo_code/promo_code_controller.php(215): PromoCodeController->RequestAccept('delete_promo_co...')
+#1 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/promo_code/promo_code_controller.php on line 143

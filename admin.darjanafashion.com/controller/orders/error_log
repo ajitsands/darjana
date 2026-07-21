@@ -1,0 +1,190 @@
+[10-Mar-2026 10:30:01 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 217
+    [1] => 216
+)
+, unit: 2
+[10-Mar-2026 10:30:01 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method OrdersController::getNextBatchNumber() in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(701): OrdersController->RequestAccept('send_to_tailori...')
+#1 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php on line 85
+[10-Mar-2026 10:33:33 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 217
+    [1] => 216
+)
+, unit: 2
+[10-Mar-2026 10:39:59 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php:274
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(181): OrdersController->handleGetTailoringBatches()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(856): OrdersController->RequestAccept('get_tailoring_b...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php on line 274
+[10-Mar-2026 10:40:07 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php:274
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(181): OrdersController->handleGetTailoringBatches()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(856): OrdersController->RequestAccept('get_tailoring_b...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php on line 274
+[10-Mar-2026 10:46:22 UTC] PHP Fatal error:  Cannot redeclare OrdersController::handleGetTailoringBatches() in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php on line 401
+[10-Mar-2026 10:46:22 UTC] PHP Fatal error:  Cannot redeclare OrdersController::handleGetTailoringBatches() in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php on line 401
+[10-Mar-2026 10:47:59 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php:273
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(181): OrdersController->handleGetTailoringBatches()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(854): OrdersController->RequestAccept('get_tailoring_b...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php on line 273
+[10-Mar-2026 11:43:19 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php:366
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(189): OrdersController->handleUpdateBatchStatus()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(857): OrdersController->RequestAccept('update_batch_st...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php on line 366
+[10-Mar-2026 11:43:26 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php:366
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(189): OrdersController->handleUpdateBatchStatus()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(857): OrdersController->RequestAccept('update_batch_st...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php on line 366
+[10-Mar-2026 11:47:59 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php:63
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php(26): TailoringSlipGenerator->fetchAssignmentDetails()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php(219): TailoringSlipGenerator->__construct(Object(mysqli))
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php on line 63
+[10-Mar-2026 11:48:09 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php:63
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php(26): TailoringSlipGenerator->fetchAssignmentDetails()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php(219): TailoringSlipGenerator->__construct(Object(mysqli))
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php on line 63
+[10-Mar-2026 12:04:47 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 208
+    [1] => 207
+)
+, unit: 1
+[11-Mar-2026 05:40:33 UTC] PHP Parse error:  syntax error, unexpected identifier "Database" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php on line 320
+[11-Mar-2026 06:02:53 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 215
+    [1] => 214
+)
+, unit: 2
+[11-Mar-2026 07:04:42 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 213
+    [1] => 212
+)
+, unit: 2
+[11-Mar-2026 07:08:21 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 204
+    [1] => 198
+)
+, unit: 2
+[11-Mar-2026 07:23:57 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 211
+    [1] => 210
+)
+, unit: 2
+[11-Mar-2026 07:42:24 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 217
+    [1] => 216
+)
+, unit: 1
+[11-Mar-2026 07:44:08 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 217
+    [1] => 216
+)
+, unit: 2
+[11-Mar-2026 09:32:50 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 216
+)
+, unit: 2
+[11-Mar-2026 10:32:41 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 215
+    [1] => 214
+)
+, unit: 2
+[12-Mar-2026 10:32:43 UTC] PHP Warning:  Undefined array key "customer_name" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php on line 319
+[12-Mar-2026 10:32:43 UTC] PHP Warning:  Undefined array key "customer_name" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php on line 319
+[17-Mar-2026 06:41:44 UTC] PHP Parse error:  syntax error, unexpected identifier "description" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php on line 360
+[17-Mar-2026 06:42:28 UTC] PHP Parse error:  syntax error, unexpected identifier "description" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/generate_tailoring_slip.php on line 360
+[17-Mar-2026 07:27:04 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php:171
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(31): UnpaidOrdersController->handleGetUnpaidOrders()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(469): UnpaidOrdersController->RequestAccept('get_unpaid_orde...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php on line 171
+[17-Mar-2026 07:27:04 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php:171
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(31): UnpaidOrdersController->handleGetUnpaidOrders()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(469): UnpaidOrdersController->RequestAccept('get_unpaid_orde...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php on line 171
+[17-Mar-2026 07:27:11 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php:171
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(31): UnpaidOrdersController->handleGetUnpaidOrders()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(469): UnpaidOrdersController->RequestAccept('get_unpaid_orde...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php on line 171
+[17-Mar-2026 07:27:12 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php:171
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(31): UnpaidOrdersController->handleGetUnpaidOrders()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(469): UnpaidOrdersController->RequestAccept('get_unpaid_orde...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php on line 171
+[17-Mar-2026 07:35:59 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php:178
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(31): UnpaidOrdersController->handleGetUnpaidOrders()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(487): UnpaidOrdersController->RequestAccept('get_unpaid_orde...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php on line 178
+[17-Mar-2026 07:35:59 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php:178
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(31): UnpaidOrdersController->handleGetUnpaidOrders()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php(487): UnpaidOrdersController->RequestAccept('get_unpaid_orde...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/unpaid_orders_controller.php on line 178
+[17-Mar-2026 07:40:29 UTC] MarkAsPaid Error: Failed to prepare update query: Unknown column 'payment_date' in 'field list'
+[17-Mar-2026 07:44:40 UTC] MarkAsPaid Error: Failed to prepare update query: Unknown column 'payment_date' in 'field list'
+[17-Mar-2026 09:26:38 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php:1092
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(193): OrdersController->handleUpdateBatchItemStatus()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(1269): OrdersController->RequestAccept('update_batch_it...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php on line 1092
+[17-Mar-2026 09:27:06 UTC] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php:1157
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(1157): mysqli_stmt->bind_param('si', 'In Progress', NULL, 6)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(197): OrdersController->handleBulkUpdateBatchItemStatus()
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(1269): OrdersController->RequestAccept('bulk_update_bat...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php on line 1157
+[17-Mar-2026 09:35:54 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php:356
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(185): OrdersController->handleGetBatchDetails()
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php(1165): OrdersController->RequestAccept('get_batch_detai...')
+#2 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/orders/orders_controller.php on line 356
+[17-Mar-2026 11:29:43 UTC] send_to_tailoring called - items: Array
+(
+    [0] => 223
+    [1] => 222
+)
+, unit: 2
+[18-Mar-2026 04:26:48 UTC] UnpaidOrdersController Error: Vendor ID not found
+[18-Mar-2026 04:26:51 UTC] UnpaidOrdersController Error: Vendor ID not found
+[18-Mar-2026 04:26:51 UTC] UnpaidOrdersController Error: Vendor ID not found
+[18-Mar-2026 04:27:02 UTC] UnpaidOrdersController Error: Vendor ID not found
+[18-Mar-2026 04:27:08 UTC] UnpaidOrdersController Error: Vendor ID not found
+[19-Mar-2026 09:17:16 UTC] UnpaidOrdersController Error: Vendor ID not found
+[19-Mar-2026 09:17:16 UTC] UnpaidOrdersController Error: Vendor ID not found
+[19-Mar-2026 09:17:21 UTC] UnpaidOrdersController Error: Vendor ID not found

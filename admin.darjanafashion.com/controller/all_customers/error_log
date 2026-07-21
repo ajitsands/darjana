@@ -1,0 +1,28 @@
+[17-Mar-2026 07:44:47 UTC] PHP Parse error:  syntax error, unexpected variable "$data", expecting "," or ";" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 46
+[17-Mar-2026 07:44:55 UTC] PHP Parse error:  syntax error, unexpected variable "$data", expecting "," or ";" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 46
+[17-Mar-2026 14:47:42 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 52
+[17-Mar-2026 14:47:42 Asia/Kolkata] PHP Warning:  Undefined array key 3 in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 55
+[17-Mar-2026 14:47:42 Asia/Kolkata] Database error in AddToTabless: Prepare failed: Query was empty | Query: 
+[17-Mar-2026 14:49:32 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 53
+[17-Mar-2026 14:49:41 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 53
+[17-Mar-2026 14:49:51 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 53
+[17-Mar-2026 14:50:54 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 53
+[17-Mar-2026 14:51:00 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 53
+[17-Mar-2026 14:52:17 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 53
+[17-Mar-2026 14:52:25 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 53
+[17-Mar-2026 14:52:31 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 53
+[17-Mar-2026 14:54:18 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 14:54:24 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 14:55:39 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 14:59:08 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 14:59:11 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 15:03:51 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 15:03:59 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 15:05:27 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 15:06:27 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 15:06:34 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 15:07:09 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 15:07:26 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 15:07:30 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 15:07:32 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54
+[17-Mar-2026 15:07:50 Asia/Kolkata] PHP Warning:  Undefined array key "customer" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/all_customers/all_customers.php on line 54

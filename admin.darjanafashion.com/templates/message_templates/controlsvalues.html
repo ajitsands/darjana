@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Form with Grouped Labels</title>
+    <style>
+        fieldset {
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        legend {
+            font-weight: bold;
+            padding: 0 10px;
+        }
+
+        label {
+            display: inline-block;
+            width: 150px;
+            margin-right: 10px;
+        }
+
+        input[type="text"], input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        br {
+            clear: both;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var jsonResponse = {"formFile": {"value": "DrivingLicenceAjit.jpg", "status": "Yes"}, "txt_phone_call": {"value": "CALL NOW", "status": "Yes"}, "txt_website_url": {"value": "https://www.sandslab.com", "status": "Yes"}, "body_variables_1": {"value": "Data", "status": "Yes"}, "body_variables_2": {"value": "Ajit Kumar", "status": "Yes"}, "body_variables_3": {"value": "12562", "status": "Yes"}, "txt_phone_number": {"value": "8075501121", "status": "Yes"}, "txt_location_name": {"value": "", "status": "No"}, "txt_selected_type": {"value": "VIDEO", "status": "Yes"}, "txt_template_body": {"value": "This is a Sample Data to Display  {{1}} This contain an Name  {{2}} and and OTP  {{3}} ", "status": "Yes"}, "txt_template_name": {"value": "NEW TEMPLATE", "status": "Yes"}, "select_header_type": {"value": "media", "status": "Yes"}, "txt_header_variable": {"value": "", "status": "No"}, "txt_template_footer": {"value": "Footer Offer", "status": "Yes"}, "txt_template_header": {"value": "", "status": "No"}, "txt_whatsapp_number": {"value": "", "status": "No"}, "template_type_Select": {"value": "MARKETING", "status": "Yes"}, "txt_location_address": {"value": "", "status": "No"}, "txt_website_url_text": {"value": "KNOW MORE", "status": "Yes"}, "txt_location_latitude": {"value": "", "status": "No"}, "txt_template_ref_name": {"value": "new_template", "status": "Yes"}, "txt_location_longitude": {"value": "", "status": "No"}, "txt_whatsapp_call_text": {"value": "", "status": "No"}, "txt_phone_call_country_code": {"value": "91", "status": "Yes"}};
+
+            var formContainer = document.getElementById("form-container");
+            var groups = {};
+
+            function createLabel(name) {
+                var labelText = name.replace(/_/g, ' ').replace(/txt|formFile|select|template|type|ref/g, '').trim();
+                labelText = labelText.charAt(0).toUpperCase() + labelText.slice(1);
+                var label = document.createElement("label");
+                label.innerHTML = labelText + ": ";
+                return label;
+            }
+
+            function getGroupName(label, key) {
+                if (key === "formFile") {
+                    return jsonResponse["txt_selected_type"].value;
+                }
+                return label.split(' ')[0];
+            }
+
+            for (var key in jsonResponse) {
+                if (jsonResponse[key].status === "Yes") {
+                    var label = createLabel(key);
+                    var groupName = getGroupName(label.innerHTML, key);
+
+                    if (!groups[groupName]) {
+                        var fieldset = document.createElement("fieldset");
+                        var legend = document.createElement("legend");
+                        legend.innerHTML = groupName;
+                        fieldset.appendChild(legend);
+                        groups[groupName] = fieldset;
+                        formContainer.appendChild(fieldset);
+                    }
+
+                    groups[groupName].appendChild(label);
+
+                    if (key === "formFile") {
+                        var fileInput = document.createElement("input");
+                        fileInput.type = "file";
+                        fileInput.name = key;
+                        groups[groupName].appendChild(fileInput);
+                    } else {
+                        var textBox = document.createElement("input");
+                        textBox.type = "text";
+                        textBox.name = key;
+                        textBox.value = jsonResponse[key].value;
+                        groups[groupName].appendChild(textBox);
+                    }
+
+                    groups[groupName].appendChild(document.createElement("br"));
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <div id="form-container"></div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+[11-Mar-2026 05:48:49 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/Report/report_controller.php(74): CommonModel->ListFromTable('SELECT order_id...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/Report/report_controller.php(90): ReportController->RequestAccept('customer_order_...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[11-Mar-2026 05:48:51 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/Report/report_controller.php(74): CommonModel->ListFromTable('SELECT order_id...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/Report/report_controller.php(90): ReportController->RequestAccept('customer_order_...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[11-Mar-2026 05:48:53 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/Report/report_controller.php(74): CommonModel->ListFromTable('SELECT order_id...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/Report/report_controller.php(90): ReportController->RequestAccept('customer_order_...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[11-Mar-2026 05:48:55 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/Report/report_controller.php(74): CommonModel->ListFromTable('SELECT order_id...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/Report/report_controller.php(90): ReportController->RequestAccept('customer_order_...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85

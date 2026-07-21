@@ -1,0 +1,375 @@
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[03-Mar-2026 09:36:18 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(132): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_dashboard_s...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[03-Mar-2026 09:36:18 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(217): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_categories_...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[03-Mar-2026 09:36:18 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(236): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_recent_orde...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 191
+[03-Mar-2026 09:36:18 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php:197
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_sales_data')
+#1 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 197
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[03-Mar-2026 09:36:18 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(241): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_top_product...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[03-Mar-2026 09:36:18 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[03-Mar-2026 09:36:18 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(246): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_customer_lo...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[03-Mar-2026 09:36:20 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[03-Mar-2026 09:36:20 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[03-Mar-2026 09:36:20 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[03-Mar-2026 09:36:20 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[03-Mar-2026 09:36:20 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[03-Mar-2026 09:36:20 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[03-Mar-2026 09:36:20 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[03-Mar-2026 09:36:20 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[03-Mar-2026 09:36:20 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[03-Mar-2026 09:36:20 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[03-Mar-2026 09:36:20 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[03-Mar-2026 09:36:20 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(252): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_inventory_s...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 06:29:57 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(217): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_categories_...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 06:29:57 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(132): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_dashboard_s...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 191
+[19-Mar-2026 06:29:57 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php:197
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_sales_data')
+#1 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 197
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 06:29:57 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(236): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_recent_orde...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 06:29:57 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(246): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_customer_lo...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 06:29:57 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 06:29:57 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(241): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_top_product...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 06:29:59 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 06:29:59 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 06:29:59 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 06:29:59 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 06:29:59 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 06:29:59 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 06:29:59 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 06:29:59 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 06:29:59 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 06:29:59 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 06:29:59 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 06:29:59 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(252): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_inventory_s...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 09:40:39 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(236): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_recent_orde...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 09:40:39 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(217): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_categories_...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 09:40:39 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(132): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_dashboard_s...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 191
+[19-Mar-2026 09:40:39 UTC] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php:197
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_sales_data')
+#1 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 197
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 09:40:39 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(241): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_top_product...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 09:40:39 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 09:40:39 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(246): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_customer_lo...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
+[19-Mar-2026 09:40:40 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 25
+[19-Mar-2026 09:40:40 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 26
+[19-Mar-2026 09:40:40 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 28
+[19-Mar-2026 09:40:40 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 34
+[19-Mar-2026 09:40:40 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 45
+[19-Mar-2026 09:40:40 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 57
+[19-Mar-2026 09:40:40 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 72
+[19-Mar-2026 09:40:40 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 86
+[19-Mar-2026 09:40:40 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 97
+[19-Mar-2026 09:40:40 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 105
+[19-Mar-2026 09:40:40 UTC] PHP Warning:  Undefined array key "vendor_id" in /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php on line 113
+[19-Mar-2026 09:40:40 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_fetch_assoc(): Argument #1 ($result) must be of type mysqli_result, bool given in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php:85
+Stack trace:
+#0 /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php(85): mysqli_fetch_assoc(false)
+#1 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(252): CommonModel->ListFromTable('SELECT \r\n      ...')
+#2 /home/darjanafashion/public_html/admin.darjanafashion.com/controller/dashboard/dashboard_controller.php(299): DashboardController->RequestAccept('get_inventory_s...')
+#3 {main}
+  thrown in /home/darjanafashion/public_html/admin.darjanafashion.com/model/common/common_functions.php on line 85
