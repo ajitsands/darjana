@@ -6,13 +6,8 @@ RewriteRule ^adminpanel(/.*)?$ - [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{HTTP_HOST} ^darjanafashion\.com$ [NC]
-RewriteRule ^(.*)$ index.php?url=$1&origin=darjanafashion.com [QSA,L]
-
-# Set PHP 7.3 handler
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php74 .php .php7 .phtml
-</IfModule>
+RewriteCond %{HTTP_HOST} (darjanafashion\.com|localhost|127\.0\.0\.1) [NC]
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
 
 # PHP 7.3 Session Settings (30 Days)
 <IfModule php7_module>

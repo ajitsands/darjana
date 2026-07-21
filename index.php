@@ -32,13 +32,13 @@ class RoutingClass
 
     public function __construct()
     {
-        // Check if the request is from the correct domain
-        $allowedDomain = 'darjanafashion.com';
-        $currentDomain = $_SERVER['HTTP_HOST'];
+        // Check if the request is from an allowed domain or local development
+        $allowedDomains = array('darjanafashion.com', 'www.darjanafashion.com', 'localhost', '127.0.0.1');
+        $currentHost    = parse_url('http://' . ($_SERVER['HTTP_HOST'] ?? 'localhost'), PHP_URL_HOST);
        
-        if ($currentDomain !== $allowedDomain) {
+        if (!in_array($currentHost, $allowedDomains)) {
             header("HTTP/1.0 404 Not Found!");
-            echo "<p style='background-color: #7FB131; color: white;text-align: left;;font-size:20px;padding:20px; font-family: Arial, Helvetica, sans-serif;'>Darjana Fashion - 404 Not Found - By ".$_SERVER['SERVER_NAME']."</p>";
+            echo "<p style='background-color: #7FB131; color: white;text-align: left;font-size:20px;padding:20px; font-family: Arial, Helvetica, sans-serif;'>Darjana Fashion - 404 Not Found - By ".htmlspecialchars($_SERVER['SERVER_NAME'] ?? 'unknown')."</p>";
             exit();
         } 
 
