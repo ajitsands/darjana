@@ -19,11 +19,21 @@ class AFSPaymentGateway
     private $username;
     private $password;
 
-    public function __construct($apiDomain = null, $username = null, $password = null)
+    public function __construct($apiDomain = null, $username = null, $password = null, $dbConnection = null)
     {
         $this->apiDomain = rtrim($apiDomain ?? AFS_API_DOMAIN, '/');
         $this->username  = $username ?? AFS_USERNAME;
         $this->password  = $password ?? AFS_PASSWORD;
+
+        // Automatically fetch active credentials from payment_settings DB table if available
+        if ($dbConnection) {
+            $res = $dbConnection->query("SELECT * FROM payment_settings WHERE is_active = 1 LIMIT 1");
+            if ($res && $row = $res->fetch_assoc()) {
+                if (!empty($row['base_url']))  $this->apiDomain = rtrim($row['base_url'], '/');
+                if (!empty($row['username']))  $this->username  = $row['username'];
+                if (!empty($row['password']))  $this->password  = $row['password'];
+            }
+        }
     }
 
     /**

@@ -665,7 +665,7 @@ class orders_controller
 
                         $payment_url = null;
                         try {
-                            $afs  = new AFSPaymentGateway();
+                            $afs  = new AFSPaymentGateway(null, null, null, $this->varDBConnection);
                             $auth = $afs->getAuthToken();
 
                             if (isset($auth['token'])) {
