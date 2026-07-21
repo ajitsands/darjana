@@ -72,8 +72,10 @@ class RoutingClass
             'PlatformTracking/'=>'PlatformTracking',
             'PaymentSettings'=>'payment_settings',
             'PaymentSettings/'=>'payment_settings',
+            'PaymentSettings.php'=>'payment_settings',
             'paymentsettings'=>'payment_settings',
-            'paymentsettings/'=>'payment_settings'
+            'paymentsettings/'=>'payment_settings',
+            'paymentsettings.php'=>'payment_settings'
         );
     
         // Robust case-insensitive route resolution
@@ -87,9 +89,14 @@ class RoutingClass
             $foundMethod = $routeKeys[''] ?? 'login';
         } else {
             foreach ($urlSegments as $seg) {
-                $cleanSeg = strtolower(trim($seg, '/'));
+                $cleanSeg      = strtolower(trim($seg, '/'));
+                $cleanSegNoPhp = preg_replace('/\.php$/i', '', $cleanSeg);
+
                 if (isset($routeKeys[$cleanSeg])) {
                     $foundMethod = $routeKeys[$cleanSeg];
+                    break;
+                } elseif (isset($routeKeys[$cleanSegNoPhp])) {
+                    $foundMethod = $routeKeys[$cleanSegNoPhp];
                     break;
                 }
             }
