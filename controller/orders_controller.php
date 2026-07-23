@@ -1299,7 +1299,7 @@ class orders_controller
             $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
             $baseUrl = $protocol . "://" . $_SERVER['HTTP_HOST'];
             $statusParam = $isPaid ? 'success' : 'failed';
-            header("Location: $baseUrl/view/order_confirmation.php?order_id=" . urlencode($order_id ?? '') . "&payment_status=" . $statusParam);
+            header("Location: $baseUrl/OrderConfirmation?order_id=" . urlencode($order_id ?? '') . "&payment_status=" . $statusParam);
             exit();
         }
     }

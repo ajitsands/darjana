@@ -1,5 +1,6 @@
 <!-- Title -->
 <title>Darjana e-shopping | Darjana Online Fashion & Lifestyle Store</title>
+<base href="/">
 
 <!-- Meta -->
 <meta charset="utf-8">
