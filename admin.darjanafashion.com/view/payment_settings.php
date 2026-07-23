@@ -61,30 +61,37 @@ $settings = $controller->getSettings();
                                             <input type="hidden" name="action" value="save_payment_settings">
                                             
                                             <div class="mb-3">
-                                                <label class="form-label font-weight-bold" for="gateway_name">Gateway Name</label>
-                                                <input type="text" class="form-control" id="gateway_name" name="gateway_name" value="<?php echo htmlspecialchars($settings['gateway_name']); ?>" required>
-                                            </div>
+                                                 <label class="form-label font-weight-bold" for="gateway_name">Gateway Name</label>
+                                                 <input type="text" class="form-control" id="gateway_name" name="gateway_name" value="<?php echo htmlspecialchars($settings['gateway_name'] ?? 'AFS Payment Gateway (OPPWA)'); ?>" required>
+                                             </div>
 
-                                            <div class="mb-3">
-                                                <label class="form-label font-weight-bold" for="base_url">API Base URL / Domain</label>
-                                                <input type="url" class="form-control" id="base_url" name="base_url" placeholder="https://invoicing.afs.com.bh" value="<?php echo htmlspecialchars($settings['base_url']); ?>" required>
-                                                <small class="form-text text-muted">Enter the complete AFS Invoicing API domain provided by your bank.</small>
-                                            </div>
+                                             <div class="mb-3">
+                                                 <label class="form-label font-weight-bold" for="base_url">API Base URL / Endpoint</label>
+                                                 <input type="url" class="form-control" id="base_url" name="base_url" placeholder="https://test.oppwa.com" value="<?php echo htmlspecialchars($settings['base_url'] ?? 'https://test.oppwa.com'); ?>" required>
+                                                 <small class="form-text text-muted">Use <code>https://test.oppwa.com</code> for testing and <code>https://oppwa.com</code> for live production.</small>
+                                             </div>
 
-                                            <div class="mb-3">
-                                                <label class="form-label font-weight-bold" for="username">API Username</label>
-                                                <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($settings['username']); ?>" required>
-                                            </div>
+                                             <div class="mb-3">
+                                                 <label class="form-label font-weight-bold" for="entity_id">Entity ID</label>
+                                                 <input type="text" class="form-control" id="entity_id" name="entity_id" value="<?php echo htmlspecialchars($settings['entity_id'] ?? ''); ?>" placeholder="8ac7a4c797662439019773da2ea107eb" required>
+                                                 <small class="form-text text-muted">Provided by AFS OPPWA portal.</small>
+                                             </div>
 
-                                            <div class="mb-3">
-                                                <label class="form-label font-weight-bold" for="password">API Password</label>
-                                                <input type="password" class="form-control" id="password" name="password" value="<?php echo htmlspecialchars($settings['password']); ?>" required>
-                                            </div>
+                                             <div class="mb-3">
+                                                 <label class="form-label font-weight-bold" for="access_token">Access Token (Bearer Auth)</label>
+                                                 <input type="text" class="form-control" id="access_token" name="access_token" value="<?php echo htmlspecialchars($settings['access_token'] ?? ''); ?>" placeholder="OGFjN2E0..." required>
+                                                 <small class="form-text text-muted">Provided by AFS OPPWA portal.</small>
+                                             </div>
 
-                                            <div class="mb-3 form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="is_active" name="is_active" <?php echo ($settings['is_active'] == 1) ? 'checked' : ''; ?>>
-                                                <label class="form-check-label font-weight-bold" for="is_active">Enable AFS Payment Gateway on Checkout</label>
-                                            </div>
+                                             <div class="mb-3">
+                                                 <label class="form-label font-weight-bold" for="currency">Default Currency</label>
+                                                 <input type="text" class="form-control" id="currency" name="currency" value="<?php echo htmlspecialchars($settings['currency'] ?? 'BHD'); ?>" placeholder="BHD" required>
+                                             </div>
+
+                                             <div class="mb-3 form-check form-switch">
+                                                 <input class="form-check-input" type="checkbox" id="is_active" name="is_active" <?php echo (($settings['is_active'] ?? 1) == 1) ? 'checked' : ''; ?>>
+                                                 <label class="form-check-label font-weight-bold" for="is_active">Enable AFS Payment Gateway on Checkout</label>
+                                             </div>
 
                                             <div class="mt-4 text-end">
                                                 <button type="submit" class="btn btn-primary btn-lg shadow-sm" id="save-btn">

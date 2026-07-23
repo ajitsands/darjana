@@ -657,7 +657,7 @@ class orders_controller
                         // SEND EMAILS TO CUSTOMER & VENDOR
                         $this->sendOrderConfirmationEmails($order_id, $this->v_email);
                         
-                        // Calculate total order amount for AFS invoice
+                        // Calculate total order amount for AFS OPPWA payment gateway
                         $tot_sql = "SELECT SUM(selling_price * quantity) AS total_amount FROM order_details WHERE order_id = '" . $this->varDBConnection->real_escape_string($order_id) . "'";
                         $tot_res = $this->varDBConnection->query($tot_sql);
                         $tot_row = $tot_res ? $tot_res->fetch_assoc() : null;
@@ -665,46 +665,29 @@ class orders_controller
 
                         $payment_url = null;
                         try {
-                            $afs  = new AFSPaymentGateway(null, null, null, $this->varDBConnection);
-                            $auth = $afs->getAuthToken();
-
-                            if (isset($auth['token'])) {
+                            $afs = new AFSPaymentGateway(null, null, null, $this->varDBConnection);
+                            if ($afs->isActive()) {
                                 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
                                 $baseUrl  = $protocol . "://" . $_SERVER['HTTP_HOST'];
+                                $finalAmount = max($orderTotal - floatval($this->promo_discount ?? 0), 0.01);
 
-                                $invoicePayload = [
-                                    'customer' => [
-                                        [
-                                            'name' => $this->v_fuName ?: ($this->customer_name ?: 'Valued Customer'),
-                                            'send_by' => 'email',
-                                            'email' => $this->v_email ?: 'info@darjanafashion.com',
-                                            'mobile' => $this->v_mobile ?: '+97300000000',
-                                            'reference_number' => $order_id
-                                        ]
-                                    ],
-                                    'sub_total' => $orderTotal,
-                                    'discount'  => floatval($this->promo_discount ?? 0),
-                                    'total'     => max($orderTotal - floatval($this->promo_discount ?? 0), 0.01),
-                                    'items'     => [
-                                        [
-                                            'description' => "Order #$order_id",
-                                            'quantity'    => 1,
-                                            'unit_price'  => $orderTotal,
-                                            'amount'      => $orderTotal
-                                        ]
-                                    ],
-                                    'success_redirect_url'         => "$baseUrl/controller/orders_controller.php?action=afs_callback&order_id=$order_id",
-                                    'failed_redirect_url'          => "$baseUrl/controller/orders_controller.php?action=afs_callback&order_id=$order_id",
-                                    'payment_confirmation_webhook' => "$baseUrl/controller/orders_controller.php?action=afs_webhook"
-                                ];
+                                $checkoutRes = $afs->createCheckoutSession([
+                                    'order_id'       => $order_id,
+                                    'amount'         => $finalAmount,
+                                    'currency'       => $afs->getCurrency(),
+                                    'customer_email' => $this->v_email ?: 'info@darjanafashion.com',
+                                    'customer_name'  => $this->v_fuName ?: ($this->customer_name ?: 'Valued Customer')
+                                ]);
 
-                                $invoiceResult = $afs->createInvoice($auth['token'], $invoicePayload);
-                                if (isset($invoiceResult['data'][0]['payment_url'])) {
-                                    $payment_url = $invoiceResult['data'][0]['payment_url'];
+                                if (!empty($checkoutRes['checkout_id'])) {
+                                    $checkout_id = $checkoutRes['checkout_id'];
+                                    $payment_url = "$baseUrl/view/pay_order.php?order_id=" . urlencode($order_id) . "&checkout_id=" . urlencode($checkout_id);
+                                } else {
+                                    error_log("AFS OPPWA Checkout Session Error: " . json_encode($checkoutRes));
                                 }
                             }
                         } catch (Exception $e) {
-                            error_log("AFS Gateway Invoice Error: " . $e->getMessage());
+                            error_log("AFS OPPWA Gateway Error: " . $e->getMessage());
                         }
 
                         $response = [
@@ -1257,7 +1240,7 @@ class orders_controller
     }
 
     /**
-     * Handles payment success callbacks and webhooks from AFS Payment Gateway
+     * Handles payment success callbacks and webhooks from AFS OPPWA Payment Gateway
      */
     public function handlePaymentResponse($data = [], $isWebhook = false)
     {
@@ -1267,29 +1250,41 @@ class orders_controller
             $input = $_GET;
         }
 
-        $jsonResponse = json_encode($input);
+        $order_id = $input['order_id'] ?? $_GET['order_id'] ?? null;
+        $resourcePath = $input['resourcePath'] ?? $_GET['resourcePath'] ?? null;
 
-        // Extract order_id / reference number from AFS response
-        $order_id = $input['data']['invoice']['ref'] ?? 
-                    $input['customer'][0]['reference_number'] ?? 
-                    $input['order_id'] ?? 
-                    $_GET['order_id'] ?? null;
+        $isPaid = false;
+        $responseDetails = $input;
 
-        $paymentStatus = $input['data']['invoice']['status'] ?? 
-                         $input['data']['transactions'][0]['status'] ?? 
-                         $input['status'] ?? 
-                         $input['result'] ?? '';
+        if ($resourcePath) {
+            try {
+                $afs = new AFSPaymentGateway(null, null, null, $this->varDBConnection);
+                $statusRes = $afs->getPaymentStatus($resourcePath);
+                $isPaid = !empty($statusRes['is_success']);
+                $responseDetails = $statusRes;
+            } catch (Exception $e) {
+                error_log("OPPWA Status Check Error: " . $e->getMessage());
+            }
+        } else {
+            // Fallback status extraction if direct payload provided
+            $paymentStatus = $input['data']['invoice']['status'] ?? 
+                             $input['data']['transactions'][0]['status'] ?? 
+                             $input['status'] ?? 
+                             $input['result'] ?? '';
+            $isPaid = (strcasecmp($paymentStatus, 'Paid') === 0 || 
+                       strcasecmp($paymentStatus, 'SUCCESS') === 0 || 
+                       strcasecmp($paymentStatus, 'success') === 0);
+        }
 
-        $isPaid = (strcasecmp($paymentStatus, 'Paid') === 0 || 
-                   strcasecmp($paymentStatus, 'SUCCESS') === 0 || 
-                   strcasecmp($paymentStatus, 'success') === 0);
+        $jsonResponse = json_encode($responseDetails);
 
-        if ($order_id && $isPaid) {
+        if ($order_id) {
             $escaped_json = $this->varDBConnection->real_escape_string($jsonResponse);
             $escaped_order_id = $this->varDBConnection->real_escape_string($order_id);
+            $statusStr = $isPaid ? 'PAID' : 'FAILED';
 
             $update_sql = "UPDATE order_details 
-                           SET payment_status = 'PAID', 
+                           SET payment_status = '$statusStr', 
                                payment_date = NOW(), 
                                api_response = '$escaped_json' 
                            WHERE order_id = '$escaped_order_id'";
@@ -1303,7 +1298,8 @@ class orders_controller
         } else {
             $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
             $baseUrl = $protocol . "://" . $_SERVER['HTTP_HOST'];
-            header("Location: $baseUrl/view/order_confirmation.php?order_id=" . urlencode($order_id ?? ''));
+            $statusParam = $isPaid ? 'success' : 'failed';
+            header("Location: $baseUrl/view/order_confirmation.php?order_id=" . urlencode($order_id ?? '') . "&payment_status=" . $statusParam);
             exit();
         }
     }
