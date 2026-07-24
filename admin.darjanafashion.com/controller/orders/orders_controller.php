@@ -208,16 +208,100 @@ class OrdersController
     }
     private function handleGetTailoringBatches()
     {
-        $start_date = $_POST['start_date'] ?? null;
-        $end_date = $_POST['end_date'] ?? null;
-        $unit_id = $_POST['unit_id'] ?? null;
-        $status = $_POST['status'] ?? null;
-        $search = $_POST['search'] ?? '';
-        $start = $_POST['start'] ?? 0;
-        $length = $_POST['length'] ?? 10;
+        $start_date = !empty($_POST['start_date']) ? $_POST['start_date'] : null;
+        $end_date   = !empty($_POST['end_date']) ? $_POST['end_date'] : null;
+        $unit_id    = !empty($_POST['unit_id']) ? $_POST['unit_id'] : null;
+        $status     = !empty($_POST['status']) ? $_POST['status'] : null;
         
+        $search = '';
+        if (isset($_POST['search'])) {
+            if (is_array($_POST['search']) && isset($_POST['search']['value'])) {
+                $search = trim($_POST['search']['value']);
+            } elseif (is_string($_POST['search'])) {
+                $search = trim($_POST['search']);
+            }
+        }
+
+        $start  = isset($_POST['start']) ? (int)$_POST['start'] : 0;
+        $length = isset($_POST['length']) ? (int)$_POST['length'] : 10;
+        if ($length <= 0) {
+            $length = 10;
+        }
+
         $vendor_id = $_SESSION["vendor_id"] ?? null;
+
+        $whereSql = "";
+        $params   = [];
+        $types    = "";
         
+        if (!empty($start_date) && !empty($end_date)) {
+            $whereSql .= " AND DATE(tb.created_at) BETWEEN ? AND ?";
+            $params[] = $start_date;
+            $params[] = $end_date;
+            $types   .= "ss";
+        } elseif (!empty($start_date)) {
+            $whereSql .= " AND DATE(tb.created_at) >= ?";
+            $params[] = $start_date;
+            $types   .= "s";
+        } elseif (!empty($end_date)) {
+            $whereSql .= " AND DATE(tb.created_at) <= ?";
+            $params[] = $end_date;
+            $types   .= "s";
+        }
+        
+        if (!empty($unit_id)) {
+            $whereSql .= " AND tb.tailoring_unit_id = ?";
+            $params[] = $unit_id;
+            $types   .= "i";
+        }
+        
+        if (!empty($status)) {
+            $whereSql .= " AND tb.status = ?";
+            $params[] = $status;
+            $types   .= "s";
+        }
+        
+        if (!empty($search)) {
+            $whereSql .= " AND (tb.batch_code LIKE ? OR tu.unit_name LIKE ?)";
+            $searchValue = "%" . $search . "%";
+            $params[] = $searchValue;
+            $params[] = $searchValue;
+            $types   .= "ss";
+        }
+
+        // 1. Total Unfiltered Records Count
+        $recordsTotal = 0;
+        $totalRecordsQuery = "SELECT COUNT(*) as total FROM tailoring_batches";
+        $stmtTotal = $this->varDBConnection->prepare($totalRecordsQuery);
+        if ($stmtTotal && $stmtTotal->execute()) {
+            $resTotal = $stmtTotal->get_result();
+            if ($resTotal && $row = $resTotal->fetch_assoc()) {
+                $recordsTotal = intval($row['total']);
+            }
+        }
+        
+        // 2. Filtered Records Count
+        $recordsFiltered = 0;
+        $countQuery = "SELECT COUNT(*) as total 
+                       FROM tailoring_batches tb
+                       JOIN tailoring_units tu ON tb.tailoring_unit_id = tu.ids
+                       LEFT JOIN user_details u ON tb.created_by = u.ids
+                       WHERE 1=1" . $whereSql;
+        
+        $stmtCount = $this->varDBConnection->prepare($countQuery);
+        if ($stmtCount) {
+            if (!empty($params)) {
+                $stmtCount->bind_param($types, ...$params);
+            }
+            if ($stmtCount->execute()) {
+                $resCount = $stmtCount->get_result();
+                if ($resCount && $row = $resCount->fetch_assoc()) {
+                    $recordsFiltered = intval($row['total']);
+                }
+            }
+        }
+        
+        // 3. Main Paginated Data Query
         $query = "SELECT 
                     tb.batch_id,
                     tb.batch_code,
@@ -231,75 +315,34 @@ class OrdersController
                 FROM tailoring_batches tb
                 JOIN tailoring_units tu ON tb.tailoring_unit_id = tu.ids
                 LEFT JOIN user_details u ON tb.created_by = u.ids
-                WHERE 1=1";
+                WHERE 1=1" . $whereSql . " ORDER BY tb.created_at DESC LIMIT ? OFFSET ?";
         
-        $countQuery = "SELECT COUNT(*) as total FROM tailoring_batches WHERE 1=1";
-        
-        $params = [];
-        $types = "";
-        
-        if ($start_date && $end_date) {
-            $query .= " AND DATE(tb.created_at) BETWEEN ? AND ?";
-            $countQuery .= " AND DATE(created_at) BETWEEN ? AND ?";
-            $params[] = $start_date;
-            $params[] = $end_date;
-            $types .= "ss";
-        }
-        
-        if ($unit_id) {
-            $query .= " AND tb.tailoring_unit_id = ?";
-            $countQuery .= " AND tailoring_unit_id = ?";
-            $params[] = $unit_id;
-            $types .= "i";
-        }
-        
-        if ($status) {
-            $query .= " AND tb.status = ?";
-            $countQuery .= " AND status = ?";
-            $params[] = $status;
-            $types .= "s";
-        }
-        
-        if (!empty($search)) {
-            $query .= " AND (tb.batch_code LIKE ? OR tu.unit_name LIKE ?)";
-            $countQuery .= " AND (batch_code LIKE ?)";
-            $searchValue = "%$search%";
-            $params[] = $searchValue;
-            $params[] = $searchValue;
-            $types .= "ss";
-        }
-        
-        // Get total count
-        $stmt = $this->varDBConnection->prepare($countQuery);
-        if (!empty($params)) {
-            $stmt->bind_param($types, ...array_slice($params, 0, substr_count($countQuery, '?')));
-        }
-        $stmt->execute();
-        $totalRecords = $stmt->get_result()->fetch_assoc()['total'];
-        
-        // Add pagination
-        $query .= " ORDER BY tb.created_at DESC LIMIT ? OFFSET ?";
-        $params[] = (int)$length;
-        $params[] = (int)$start;
-        $types .= "ii";
-        
-        $stmt = $this->varDBConnection->prepare($query);
-        if (!empty($params)) {
-            $stmt->bind_param($types, ...$params);
-        }
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
+        $queryParams = $params;
+        $queryParams[] = $length;
+        $queryParams[] = $start;
+        $queryTypes = $types . "ii";
+
         $data = [];
-        while ($row = $result->fetch_assoc()) {
-            $data[] = $row;
+        $stmtMain = $this->varDBConnection->prepare($query);
+        if ($stmtMain) {
+            if (!empty($queryParams)) {
+                $stmtMain->bind_param($queryTypes, ...$queryParams);
+            }
+            if ($stmtMain->execute()) {
+                $result = $stmtMain->get_result();
+                if ($result) {
+                    while ($row = $result->fetch_assoc()) {
+                        $data[] = $row;
+                    }
+                }
+            }
         }
         
         echo json_encode([
-            'draw' => intval($_POST['draw'] ?? 1),
-            'recordsTotal' => intval($totalRecords),
-            'recordsFiltered' => intval($totalRecords),
-            'data' => $data
+            'draw'            => intval($_POST['draw'] ?? 1),
+            'recordsTotal'    => $recordsTotal,
+            'recordsFiltered' => $recordsFiltered,
+            'data'            => $data
         ]);
     }
     

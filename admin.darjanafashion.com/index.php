@@ -54,6 +54,8 @@ class RoutingClass
             'ProductwiseReport/'=>'ProductwiseReport',
             'CustomerReport'=>'CustomerReport',
             'CustomerReport/'=>'CustomerReport',
+            'TaxReport'=>'TaxReport',
+            'TaxReport/'=>'TaxReport',
             'Promo'=>'Promo',
             'Promo/'=>'Promo',
             'TailoringUnit'=>'TailoringUnit',
@@ -212,6 +214,11 @@ class RoutingClass
     private function CustomerReport(...$params)
     {
         $this->includeWithParams("view/customer_wise_report.php", $_GET);
+    }
+
+    private function TaxReport(...$params)
+    {
+        $this->includeWithParams("view/tax_report.php", $_GET);
     }
     
     private function currency_details(...$params)

@@ -51,6 +51,19 @@ class ReportController
         $var = $this->SQLArray();
 
         switch ($FunctionEvents) {
+            case 'tax_report':
+                $startDate = $_POST['start_date'] ?? date('Y-m-01');
+                $endDate   = $_POST['end_date'] ?? date('Y-m-d');
+                $result    = $this->getTaxReportData($startDate, $endDate);
+                echo json_encode($result);
+                break;
+
+            case 'export_tax_report':
+                $startDate = $_REQUEST['start_date'] ?? date('Y-m-01');
+                $endDate   = $_REQUEST['end_date'] ?? date('Y-m-d');
+                $this->exportTaxReportToExcel($startDate, $endDate);
+                break;
+
             case 'product_wise_report':
                 $filters = $this->getDateFilters();
                 $sql = $this->buildProductReportQuery($filters);
@@ -384,6 +397,106 @@ class ReportController
                 ORDER BY c.ids DESC";
         
         return $sql;
+    }
+
+    private function getTaxReportData($startDate, $endDate) {
+        $startDateEsc = mysqli_real_escape_string($this->varDBConnection, $startDate);
+        $endDateEsc   = mysqli_real_escape_string($this->varDBConnection, $endDate);
+
+        $sql = "SELECT 
+                    od.order_id,
+                    MIN(od.order_date) AS order_date,
+                    MIN(od.customer_name) AS customer_name,
+                    MIN(od.customer_mobile_no) AS customer_phone,
+                    MIN(od.customer_email) AS customer_email,
+                    MIN(od.payment_status) AS payment_status,
+                    MIN(od.status) AS order_status,
+                    SUM(IF(od.discount_price > 0, od.discount_price, od.selling_price) * od.quantity) AS net_sales,
+                    MAX(od.tax_percentage) AS tax_percentage,
+                    SUM((IF(od.discount_price > 0, od.discount_price, od.selling_price) * od.quantity) * od.tax_percentage / 100) AS tax_amount,
+                    MAX(od.cod_fee) AS shipping_fee,
+                    SUM((IF(od.discount_price > 0, od.discount_price, od.selling_price) * od.quantity) + 
+                        ((IF(od.discount_price > 0, od.discount_price, od.selling_price) * od.quantity) * od.tax_percentage / 100)
+                    ) + MAX(od.cod_fee) AS grand_total
+                FROM order_details od
+                WHERE (od.payment_status = 'PAID' OR LOWER(od.status) IN ('delivered', 'completed'))
+                  AND DATE(od.order_date) BETWEEN '$startDateEsc' AND '$endDateEsc'
+                GROUP BY od.order_id
+                ORDER BY MIN(od.order_date) DESC";
+
+        $res = mysqli_query($this->varDBConnection, $sql);
+        $data = [];
+        
+        $totalSales = 0;
+        $totalTax = 0;
+        $totalShipping = 0;
+        $totalCollected = 0;
+
+        if ($res) {
+            while ($row = mysqli_fetch_assoc($res)) {
+                $netSales = floatval($row['net_sales']);
+                $taxAmount = floatval($row['tax_amount']);
+                $shippingFee = floatval($row['shipping_fee']);
+                $grandTotal = floatval($row['grand_total']);
+
+                $row['net_sales'] = $netSales;
+                $row['tax_amount'] = $taxAmount;
+                $row['shipping_fee'] = $shippingFee;
+                $row['grand_total'] = $grandTotal;
+
+                $totalSales += $netSales;
+                $totalTax += $taxAmount;
+                $totalShipping += $shippingFee;
+                $totalCollected += $grandTotal;
+
+                $data[] = $row;
+            }
+        }
+
+        return [
+            "success" => true,
+            "summary" => [
+                "total_sales" => round($totalSales, 3),
+                "total_tax" => round($totalTax, 3),
+                "total_shipping" => round($totalShipping, 3),
+                "total_collected" => round($totalCollected, 3),
+                "paid_orders_count" => count($data)
+            ],
+            "data" => $data
+        ];
+    }
+
+    private function exportTaxReportToExcel($startDate, $endDate) {
+        $report = $this->getTaxReportData($startDate, $endDate);
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename="TAX_Report_' . $startDate . '_to_' . $endDate . '.xls"');
+        
+        echo "Order ID\tOrder Date\tCustomer Name\tPhone\tNet Sales (BHD)\tTax %\tTax Amount (BHD)\tShipping Fee (BHD)\tGrand Total (BHD)\tPayment Status\tOrder Status\n";
+        
+        foreach ($report['data'] as $row) {
+            echo $row['order_id'] . "\t";
+            echo date('d M Y h:i A', strtotime($row['order_date'])) . "\t";
+            echo str_replace(["\n", "\r", "\t"], " ", $row['customer_name'] ?? '') . "\t";
+            echo str_replace(["\n", "\r", "\t"], " ", $row['customer_phone'] ?? '') . "\t";
+            echo number_format($row['net_sales'], 2, '.', '') . "\t";
+            echo ($row['tax_percentage'] ?? 0) . "%\t";
+            echo number_format($row['tax_amount'], 2, '.', '') . "\t";
+            echo number_format($row['shipping_fee'], 2, '.', '') . "\t";
+            echo number_format($row['grand_total'], 2, '.', '') . "\t";
+            echo ($row['payment_status'] ?: 'PAID') . "\t";
+            echo ($row['order_status'] ?? '') . "\n";
+        }
+        
+        echo "\n";
+        echo "SUMMARY\n";
+        echo "Total Sales (Excl. Tax):\t" . number_format($report['summary']['total_sales'], 2, '.', '') . " BHD\n";
+        echo "Total Tax / VAT Has to Pay:\t" . number_format($report['summary']['total_tax'], 2, '.', '') . " BHD\n";
+        echo "Total Shipping Collected:\t" . number_format($report['summary']['total_shipping'], 2, '.', '') . " BHD\n";
+        echo "Total Gross Revenue Collected:\t" . number_format($report['summary']['total_collected'], 2, '.', '') . " BHD\n";
+        echo "Total Paid Orders:\t" . $report['summary']['paid_orders_count'] . "\n";
+        
+        exit;
     }
 }
 

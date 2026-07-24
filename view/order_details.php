@@ -247,8 +247,29 @@ $(document).ready(function () {
                 const statusText = translateOrderStatus(order.status);
                 $('#orderstatus').text(statusText);
                 
-                if (order.status.toLowerCase() === 'product cancelled') {
-                    $('.btnhover20.btn-outline-danger').hide();
+                const statusLower = (order.status || '').toLowerCase().trim();
+                const cancelBtn = $('.cancel-order-btn');
+                
+                if (statusLower === 'processing' || statusLower === 'in progress' || statusLower === 'order processed' || statusLower === 'shipped' || statusLower === 'delivered') {
+                    const processStartedText = getTranslation('already_process_started') || 'Already Process Started';
+                    cancelBtn
+                        .addClass('disabled')
+                        .css({'pointer-events': 'none', 'opacity': '0.65', 'cursor': 'not-allowed'})
+                        .attr('disabled', 'disabled')
+                        .attr('data-i18n', 'already_process_started')
+                        .text(processStartedText)
+                        .show();
+                } else if (statusLower === 'product cancelled' || statusLower === 'cancelled') {
+                    cancelBtn.hide();
+                } else {
+                    const cancelOrderText = getTranslation('cancel_order') || 'Cancel Order';
+                    cancelBtn
+                        .removeClass('disabled')
+                        .css({'pointer-events': 'auto', 'opacity': '1', 'cursor': 'pointer'})
+                        .removeAttr('disabled')
+                        .attr('data-i18n', 'cancel_order')
+                        .text(cancelOrderText)
+                        .show();
                 }
             }
         });
@@ -523,6 +544,9 @@ $(document).ready(function () {
     // Handle cancellation modal
     $(document).on('click', '.btnhover20.btn-outline-danger', function (e) {
         e.preventDefault();
+        if ($(this).hasClass('disabled') || $(this).attr('disabled')) {
+            return false;
+        }
         $('#cancel_order_id').val(orderId);
         updateModalTranslations();
         $('#cancelOrderModal').modal('show');

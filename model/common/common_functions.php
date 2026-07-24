@@ -12,7 +12,7 @@ abstract class FunctionDefinitions
 	abstract public function ListFromTables($SQL, $params = []);
 	abstract public function AddToTables($SQL);
 	abstract public function AddToTable($SQL);
-	abstract public function GetSingleRow($SQL);
+	abstract public function GetSingleRow($SQL, $params = []);
 	abstract public function AddToTableWithoutReturn($SQL);
 	abstract public function ReturnCountValue($SQL);
 	abstract public function CreateDropDown($SQL, $value, $text, $controlName, $title);
@@ -131,8 +131,19 @@ class CommonModel extends FunctionDefinitions
 				throw new Exception("Prepare failed: " . mysqli_error($this->varDBConnection));
 			}
 
-			// Build type string ('s' for all types for simplicity)
-			$types = str_repeat('s', count($params));
+			// Build type string dynamically
+			$types = '';
+			foreach ($params as $param) {
+				if (is_int($param)) {
+					$types .= 'i';
+				} elseif (is_float($param)) {
+					$types .= 'd';
+				} elseif (is_numeric($param) && strpos((string)$param, '.') === false) {
+					$types .= 'i';
+				} else {
+					$types .= 's';
+				}
+			}
 			$stmt->bind_param($types, ...$params);
 
 			$stmt->execute();
@@ -227,22 +238,54 @@ class CommonModel extends FunctionDefinitions
 }
 
 
-	public function GetSingleRow($SQL)
+	public function GetSingleRow($SQL, $params = [])
 	{
 		$this->varDBConnection->query("SET character_set_client=utf8");
 		$this->varDBConnection->query("SET character_set_connection=utf8");
 		$this->varDBConnection->query("SET character_set_results=utf8");
 
-		$this->result = mysqli_query($this->varDBConnection, $SQL);
+		if (empty($params)) {
+			$this->result = mysqli_query($this->varDBConnection, $SQL);
 
-		if (!$this->result) {
-			// Log the error for debugging
-			error_log("Database query failed: " . mysqli_error($this->varDBConnection));
-			return false;
+			if (!$this->result) {
+				// Log the error for debugging
+				error_log("Database query failed: " . mysqli_error($this->varDBConnection));
+				return false;
+			}
+		} else {
+			$stmt = mysqli_prepare($this->varDBConnection, $SQL);
+			if (!$stmt) {
+				error_log("Prepare failed: " . mysqli_error($this->varDBConnection) . " Query: " . $SQL);
+				return false;
+			}
+
+			$types = '';
+			foreach ($params as $param) {
+				if (is_int($param)) {
+					$types .= 'i';
+				} elseif (is_float($param)) {
+					$types .= 'd';
+				} elseif (is_numeric($param) && strpos((string)$param, '.') === false) {
+					$types .= 'i';
+				} else {
+					$types .= 's';
+				}
+			}
+
+			$stmt->bind_param($types, ...$params);
+			$stmt->execute();
+			$this->result = $stmt->get_result();
+
+			if (!$this->result) {
+				error_log("Execute failed: " . mysqli_error($this->varDBConnection));
+				return false;
+			}
 		}
 
 		$row = mysqli_fetch_assoc($this->result);
-		mysqli_free_result($this->result);
+		if ($this->result && is_object($this->result)) {
+			mysqli_free_result($this->result);
+		}
 
 		return $row;
 	}

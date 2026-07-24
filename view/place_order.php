@@ -1151,9 +1151,9 @@
                                         const amountOffer = parseFloat(parts[8] || '0');
                                         const vendor_id = parts[9] || '';
                                         const arabic_name = parts[10] || '';
-                                        const tax_percentage = parseFloat(parts[11] || '0');
-                                        const cod_fee = parseFloat(parts[12] || '0');
-                                        const customer_desc = parts[13] || '';
+                                        const customer_desc = parts[11] || '';
+                                        const tax_percentage = parseFloat(parts[12] || '0');
+                                        const cod_fee = parseFloat(parts[13] || '0');
                                         
                                         // Determine which price to display (use offer if available)
                                         const displayPrice = amountOffer > 0 ? amountOffer : amountSelling;
@@ -2332,7 +2332,7 @@
                                 quantity: parts[2] || 'MISSING',
                                 color: parts[5] || 'MISSING',
                                 size: parts[6] || 'MISSING',
-                                length: parts[11] || 'MISSING',
+                                length: parts[14] || 'MISSING',
                                 raw: item
                             });
                         });

@@ -657,8 +657,12 @@ class orders_controller
                         // SEND EMAILS TO CUSTOMER & VENDOR
                         $this->sendOrderConfirmationEmails($order_id, $this->v_email);
                         
-                        // Calculate total order amount for AFS OPPWA payment gateway
-                        $tot_sql = "SELECT SUM(selling_price * quantity) AS total_amount FROM order_details WHERE order_id = '" . $this->varDBConnection->real_escape_string($order_id) . "'";
+                        // Calculate total order amount for AFS OPPWA payment gateway (Effective Price + Tax/VAT + COD Fee)
+                        $tot_sql = "SELECT SUM(
+                            (CASE WHEN discount_price IS NOT NULL AND discount_price > 0 THEN discount_price ELSE selling_price END * quantity)
+                            + ((CASE WHEN discount_price IS NOT NULL AND discount_price > 0 THEN discount_price ELSE selling_price END * quantity) * (tax_percentage / 100.0))
+                            + cod_fee
+                        ) AS total_amount FROM order_details WHERE order_id = '" . $this->varDBConnection->real_escape_string($order_id) . "'";
                         $tot_res = $this->varDBConnection->query($tot_sql);
                         $tot_row = $tot_res ? $tot_res->fetch_assoc() : null;
                         $orderTotal = floatval($tot_row['total_amount'] ?? 0);
@@ -722,10 +726,23 @@ class orders_controller
                 $this->varModelObj->DeleteRow($var[15]);
                 break;
             case 'cancel_order':
-                $order_id = $_POST['order_id'] ?? '';
-                $reason = $_POST['reason'] ?? 'Customer requested cancellation';
-                $cancelled_at = $_POST['cancelled_at'] ?? date('Y-m-d H:i:s');
+                $order_id = $this->varDBConnection->real_escape_string($_POST['order_id'] ?? '');
+                $reason = $this->varDBConnection->real_escape_string($_POST['reason'] ?? 'Customer requested cancellation');
+                $cancelled_at = $this->varDBConnection->real_escape_string($_POST['cancelled_at'] ?? date('Y-m-d H:i:s'));
                 if (!empty($order_id)) {
+                    $chk_sql = "SELECT status FROM order_details WHERE ids = '$order_id'";
+                    $chk_res = mysqli_query($this->varDBConnection, $chk_sql);
+                    if ($chk_res && $chk_row = mysqli_fetch_assoc($chk_res)) {
+                        $curr_status = strtolower(trim($chk_row['status']));
+                        if ($curr_status === 'processing' || $curr_status === 'in progress' || $curr_status === 'order processed' || $curr_status === 'shipped' || $curr_status === 'delivered') {
+                            echo json_encode([
+                                'status' => 'error',
+                                'message' => 'Cannot cancel order as processing has already started.'
+                            ]);
+                            break;
+                        }
+                    }
+
                     $update_query = "UPDATE order_details SET 
                                      status = 'product cancelled',
                                      cancellation_reason = '$reason', 

@@ -204,13 +204,13 @@ session_start();
         $(document).ready(function() {
             loadTailoringUnits();
             initBatchesTable();
-            
-            // Set default dates
-            let endDate = new Date();
-            let startDate = new Date();
-            startDate.setDate(startDate.getDate() - 30);
-            $('#startDate').val(startDate.toISOString().split('T')[0]);
-            $('#endDate').val(endDate.toISOString().split('T')[0]);
+
+            // Bind change events to filters for automatic reloading
+            $('#unitFilter, #statusFilter, #startDate, #endDate').on('change', function() {
+                if (batchesTable) {
+                    batchesTable.ajax.reload();
+                }
+            });
         });
 
         function loadTailoringUnits() {
@@ -247,9 +247,9 @@ session_start();
                             status: $('#statusFilter').val(),
                             start: d.start,
                             length: d.length,
-                            order_column: d.order[0].column,
-                            order_dir: d.order[0].dir,
-                            search: d.search.value,
+                            order_column: d.order[0] ? d.order[0].column : 0,
+                            order_dir: d.order[0] ? d.order[0].dir : 'desc',
+                            search: d.search ? d.search.value : '',
                             draw: d.draw
                         };
                     }
@@ -293,7 +293,9 @@ session_start();
         }
 
         $('#applyFilter').click(function() {
-            batchesTable.ajax.reload();
+            if (batchesTable) {
+                batchesTable.ajax.reload();
+            }
         });
 
         $('#resetFilter').click(function() {
@@ -301,7 +303,9 @@ session_start();
             $('#endDate').val('');
             $('#unitFilter').val('');
             $('#statusFilter').val('');
-            batchesTable.ajax.reload();
+            if (batchesTable) {
+                batchesTable.ajax.reload();
+            }
         });
 
         function viewBatch(batchId) {

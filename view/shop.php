@@ -1272,6 +1272,23 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status === 'success') {
+                        if (response.data.length === 0 && !loadMore) {
+                            const isArabic = window.currentLanguage === 'arabic';
+                            const noProductMsg = isArabic ? 'لم يتم العثور على منتجات في هذه الفئة' : 'No Products Found';
+                            
+                            $('#product-grid-container').html(
+                                `<div class="col-12 text-center py-5">
+                                    <div class="alert alert-info py-4 m-0" style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px;">
+                                        <i class="fas fa-box-open fa-3x mb-3 text-muted"></i>
+                                        <h5 class="fw-bold mb-0">${noProductMsg}</h5>
+                                    </div>
+                                </div>`
+                            );
+                            $('#load-more-btn').hide();
+                            $('#no-more-products').hide();
+                            return;
+                        }
+
                         const html = buildProductCards(response.data);
         
                         if (loadMore) {
@@ -1286,7 +1303,11 @@
                         if (response.data.length < perPage) {
                             hasMore = false;
                             $('#load-more-btn').hide();
-                            $('#no-more-products').show();
+                            if (totalLoaded > 0) {
+                                $('#no-more-products').show();
+                            } else {
+                                $('#no-more-products').hide();
+                            }
                         } else {
                             $('#load-more-btn').show();
                             $('#no-more-products').hide();

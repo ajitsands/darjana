@@ -21,28 +21,27 @@ class ProductController
  
     function buildFilterConditions($filters)
     {
-        $conditions = [];
+        $conditions = ['p.status = "Active"'];
         $params = [];
         
 
-        if (!empty($filters['cat_id'])) {
-                $conditions[] = 'p.category_id = ?';
-                $params[] = $filters['cat_id'];
-            }
-
+        if (isset($filters['cat_id']) && $filters['cat_id'] !== '' && $filters['cat_id'] !== null && $filters['cat_id'] != 0) {
+            $conditions[] = 'p.category_id = ?';
+            $params[] = (int)$filters['cat_id'];
+        }
 
         // Category filter
         if (!empty($filters['category'])) {
             $categoryIds = is_array($filters['category']) ? $filters['category'] : [$filters['category']];
             $placeholders = implode(',', array_fill(0, count($categoryIds), '?'));
             $conditions[] = "p.category_id IN ($placeholders)";
-            $params = array_merge($params, $categoryIds);
+            $params = array_merge($params, array_map('intval', $categoryIds));
         }
         
         // Price range filter
         if (!empty($filters['min_price']) && !empty($filters['max_price'])) {
             $conditions[] = "(p.amount_selling BETWEEN ? AND ?)";
-            array_push($params, $filters['min_price'], $filters['max_price']);
+            array_push($params, (float)$filters['min_price'], (float)$filters['max_price']);
         }
         
         // Color filter
@@ -81,9 +80,6 @@ class ProductController
             $conditions[] = "p.warranty_details != 'No Warranty'";
         }
         
-        // Status filter (always active)
-        $conditions[] = "p.status = 'Active'";
-        
         return [
             'conditions' => $conditions,
             'params' => $params
@@ -92,38 +88,19 @@ class ProductController
 
     function buildSortCondition($sort)
     {
-        // switch ($sortOption) {
-        //     case 'price_low_high':
-        //         return "ORDER BY p.amount_selling ASC";
-        //     case 'price_high_low':
-        //         return "ORDER BY p.amount_selling DESC";
-        //     case 'name_asc':
-        //         return "ORDER BY p.product_name ASC";
-        //     case 'name_desc':
-        //         return "ORDER BY p.product_name DESC";
-        //     case 'newest':
-        //         return "ORDER BY p.ids DESC";
-        //     case 'oldest':
-        //         return "ORDER BY p.ids ASC";
-        //     case 'discount':
-        //         return "ORDER BY (p.amount_mrp - p.amount_selling) DESC";
-        //     default:
-        //         return "ORDER BY p.ids DESC";
-        // }
-
         switch ($sort) {
             case 'Low to High':
                 return "ORDER BY p.amount_selling ASC";
             case 'High to Low':
                 return "ORDER BY p.amount_selling DESC";
             case 'latest':
-                return "ORDER BY p.ids DESC"; // Assuming ids is auto-increment
+                return "ORDER BY p.ids DESC";
             case 'Popularity':
-                return "ORDER BY p.popularity DESC"; // Add popularity column if needed
+                return "ORDER BY p.popularity DESC";
             case 'Average rating':
-                return "ORDER BY p.average_rating DESC"; // Add rating column if needed
+                return "ORDER BY p.average_rating DESC";
             default:
-                return "ORDER BY p.ids DESC"; // Default sorting
+                return "ORDER BY p.ids DESC";
         }
     }
 
@@ -132,18 +109,10 @@ class ProductController
         $productId = $_POST['product_id'] ?? null;
         $filters = $_POST['filters'] ?? [];
     
-        // IMPORTANT FIX: Properly handle cat_id from URL or AJAX
-        // if (isset($_POST['cat_id']) && $_POST['cat_id'] !== '' && $_POST['cat_id'] !== null) {
-        //     $filters['cat_id'] = $_POST['cat_id'];
-        // }
-        
         if (isset($_POST['cat_id']) && $_POST['cat_id'] !== '' && $_POST['cat_id'] !== null) {
-
-            // If category is not 0, apply filter
             if ($_POST['cat_id'] != 0) {
                 $filters['cat_id'] = $_POST['cat_id'];
             }
-        
         }
     
         $page = (int)($_POST['page'] ?? 1);
@@ -157,20 +126,10 @@ class ProductController
     
         $array = [];
     
-        // Main query with pagination (used for ALL cases - including category filter)
-        // $array[0] = "SELECT p.*, pi.product_image
-        //             FROM product_details p
-        //             LEFT JOIN product_image pi ON p.ids = pi.product_id
-        //             " . (!empty($filterConditions['conditions']) ? "WHERE " . implode(' AND ', $filterConditions['conditions']) : "") . "
-        //             AND p.status = 'Active'
-        //             GROUP BY p.ids
-        //             $sortCondition
-        //             LIMIT ? OFFSET ?";
-        
-                    
-        $array[0]="SELECT 
+        $whereSql = "WHERE " . implode(' AND ', $filterConditions['conditions']);
+
+        $array[0] = "SELECT 
             p.*,
-        
             (
                 SELECT pi.product_image
                 FROM product_image pi
@@ -179,25 +138,15 @@ class ProductController
                 ORDER BY pi.is_primary DESC, pi.ids ASC
                 LIMIT 1
             ) AS product_image
-        
         FROM product_details p
-        
-        " . (!empty($filterConditions['conditions']) 
-                ? "WHERE " . implode(' AND ', $filterConditions['conditions']) . " AND p.status = 'Active'"
-                : "WHERE p.status = 'Active'"
-        ) . "
-        
+        $whereSql
         $sortCondition
-        
-        LIMIT ? OFFSET ?";            
-                    
-                    
+        LIMIT ? OFFSET ?";
     
         // Count query (used to get correct total count)
         $array[1] = "SELECT COUNT(DISTINCT p.ids) as total
                     FROM product_details p
-                    " . (!empty($filterConditions['conditions']) ? "WHERE " . implode(' AND ', $filterConditions['conditions']) : "") . "
-                    AND p.status = 'Active'";
+                    $whereSql";
     
         // Other filter option queries
         $array[2] = "SELECT ids, category_type as name FROM category_details WHERE status = 'Active'";
@@ -225,13 +174,13 @@ class ProductController
             $array[10] = "UPDATE product_details SET clicks = clicks + 1 WHERE ids = $productId";
         }
     
-        // Add pagination params
-        $filterConditions['params'][] = $perPage;
-        $filterConditions['params'][] = $offset;
+        $queryParams = $filterConditions['params'];
+        $queryParams[] = $perPage;
+        $queryParams[] = $offset;
     
         return [
             'queries' => $array,
-            'params' => $filterConditions['params']
+            'params' => $queryParams
         ];
     }
 

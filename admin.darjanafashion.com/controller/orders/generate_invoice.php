@@ -66,11 +66,11 @@ class InvoiceGenerator {
                 od.country AS country_id,           -- Keep the ID if needed
                 c.country AS country_name,          -- Get actual country name
                 od.postal_code,
-                pd.cod_fee AS shipping_fee,
-                pd.tax_percentage,
+                od.cod_fee AS shipping_fee,
+                od.tax_percentage,
                 od.vendor_id
             FROM order_details od
-            JOIN product_details pd ON od.product_id = pd.ids
+            LEFT JOIN product_details pd ON od.product_id = pd.ids
             LEFT JOIN country c ON od.country = c.ids   -- Join with country table
             WHERE od.order_id = ? 
               AND od.ids IN ($placeholders)
@@ -101,31 +101,21 @@ class InvoiceGenerator {
     }
 
     private function calculateUnitPrice($order) {
-        $product_cost = $order['product_cost'];
-        $selling_price = $order['selling_price'];
-        $discount_price = $order['discount_price'];
+        $product_cost = isset($order['product_cost']) ? (float)$order['product_cost'] : 0;
+        $selling_price = isset($order['selling_price']) ? (float)$order['selling_price'] : 0;
+        $discount_price = isset($order['discount_price']) ? (float)$order['discount_price'] : 0;
 
-        // Priority logic
-        if ($product_cost !== null && $selling_price !== null && $discount_price !== null) {
-            // All three prices exist
-            return ($discount_price < $selling_price) ? $discount_price : $selling_price;
-        } elseif ($product_cost !== null && $selling_price !== null) {
-            // Only product_cost and selling_price exist
-            return $selling_price;
-        } elseif ($product_cost !== null && $discount_price !== null) {
-            // Only product_cost and discount_price exist
+        // Priority logic:
+        // 1. If discount_price is present and > 0, return discount_price
+        // 2. Else if selling_price is present and > 0, return selling_price
+        // 3. Else if product_cost is present and > 0, return product_cost
+        if ($discount_price > 0) {
             return $discount_price;
-        } elseif ($product_cost !== null) {
-            // Only product_cost exists
+        } elseif ($selling_price > 0) {
+            return $selling_price;
+        } elseif ($product_cost > 0) {
             return $product_cost;
-        } elseif ($selling_price !== null) {
-            // Only selling_price exists
-            return $selling_price;
-        } elseif ($discount_price !== null) {
-            // Only discount_price exists
-            return $discount_price;
         } else {
-            // No price found
             return 0;
         }
     }
@@ -253,15 +243,73 @@ class InvoiceGenerator {
 
     private function generateInvoiceHTML() {
         $mainOrder = $this->orders[0];
+
+        $formatComma = function($text) {
+            return preg_replace('/,\s*/', ', ', trim($text));
+        };
     
-        $vendorAddress = '
-            <strong>Darjana Fashion</strong><br>
-            ' . htmlspecialchars($this->vendor['first_name'] . ' ' . $this->vendor['second_name']) . '<br>
-            ' . htmlspecialchars($this->vendor['address']) . '<br>
-            ' . htmlspecialchars($this->vendor['street']) . '<br>
-            ' . htmlspecialchars($this->vendor['district']) . ' - ' . htmlspecialchars($this->vendor['pickup_pincode']) . '<br>
-            ' . htmlspecialchars($this->vendor['state']) . ', ' . htmlspecialchars($this->vendor['country']) . '<br>
-            Email: ' . htmlspecialchars($this->vendor['gmail_id']);
+        // Clean customer address formatting with proper comma spacing
+        $addressLines = [];
+        if (!empty($mainOrder['customer_address'])) {
+            $addressLines[] = htmlspecialchars($formatComma($mainOrder['customer_address']));
+        }
+        if (!empty($mainOrder['street']) && $mainOrder['street'] !== ($mainOrder['customer_address'] ?? '')) {
+            $addressLines[] = htmlspecialchars($formatComma($mainOrder['street']));
+        }
+        
+        $cityPost = array_filter([$mainOrder['city'] ?? '', $mainOrder['postal_code'] ?? '']);
+        if (!empty($cityPost)) {
+            $addressLines[] = htmlspecialchars(implode(' - ', $cityPost));
+        }
+        
+        $stateCountry = array_filter([$mainOrder['state'] ?? '', $mainOrder['country_name'] ?? '']);
+        if (!empty($stateCountry)) {
+            $addressLines[] = htmlspecialchars(implode(', ', $stateCountry));
+        }
+
+        $contactLines = [];
+        if (!empty($mainOrder['customer_phone'])) {
+            $contactLines[] = 'Ph: ' . htmlspecialchars($mainOrder['customer_phone']);
+        }
+        if (!empty($mainOrder['customer_email'])) {
+            $contactLines[] = 'Email: ' . htmlspecialchars($mainOrder['customer_email']);
+        }
+
+        $custAddressHTML = implode('<br>', $addressLines);
+        if (!empty($contactLines)) {
+            $custAddressHTML .= (!empty($custAddressHTML) ? '<br>' : '') . implode('<br>', $contactLines);
+        }
+
+        // Clean vendor address formatting
+        $vLines = [];
+        $vLines[] = '<strong>Darjana Fashion</strong>';
+        
+        $vendorName = trim(($this->vendor['first_name'] ?? '') . ' ' . ($this->vendor['second_name'] ?? ''));
+        if (!empty($vendorName)) {
+            $vLines[] = htmlspecialchars($vendorName);
+        }
+        if (!empty($this->vendor['address'])) {
+            $vLines[] = htmlspecialchars($this->vendor['address']);
+        }
+        if (!empty($this->vendor['street']) && $this->vendor['street'] !== ($this->vendor['address'] ?? '')) {
+            $vLines[] = htmlspecialchars($this->vendor['street']);
+        }
+        
+        $vDistrictPin = array_filter([$this->vendor['district'] ?? '', $this->vendor['pickup_pincode'] ?? '']);
+        if (!empty($vDistrictPin)) {
+            $vLines[] = htmlspecialchars(implode(' - ', $vDistrictPin));
+        }
+
+        $vStateCountry = array_filter([$this->vendor['state'] ?? '', $this->vendor['country'] ?? '']);
+        if (!empty($vStateCountry)) {
+            $vLines[] = htmlspecialchars(implode(', ', $vStateCountry));
+        }
+
+        if (!empty($this->vendor['gmail_id'])) {
+            $vLines[] = 'Email: ' . htmlspecialchars($this->vendor['gmail_id']);
+        }
+
+        $vendorAddress = implode('<br>', $vLines);
     
         $html = '
         <style>
@@ -344,40 +392,31 @@ class InvoiceGenerator {
     
             <div class="spacer"></div>
     
-            <table width="100%" cellpadding="4" class="bordered" style="font-size:10px;">
-                <tr>
+            <table width="100%" cellpadding="6" class="bordered" style="font-size:10px;">
+                <!-- Top Row: Invoice Number & Date in a single line -->
+                <tr style="background-color: #f8f9fa; border-bottom: 1px solid #ccc;">
                     <td width="50%">
-                        <table width="100%" style="font-size:10px;">
-                            <tr><td class="invoice-title">Invoice#</td><td>: ' . htmlspecialchars($mainOrder['order_id']) . '</td></tr>
-                            <tr><td class="invoice-title">Invoice Date</td><td>: ' . date('d M Y', strtotime($mainOrder['order_date'])) . '</td></tr>
-                        </table>
+                        <span class="invoice-title">Invoice#:</span> ' . htmlspecialchars($mainOrder['order_id']) . '
                     </td>
-                    <td width="50%">
-                        <table width="100%" style="font-size:10px;">
-                            <tr>
-                                <td width="50%" class="invoice-title">&nbsp;&nbsp;Bill To</td>
-                                <td width="50%" class="invoice-title">&nbsp;&nbsp;Ship To</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>' . htmlspecialchars($mainOrder['customer_name']) . '</strong><br>
-                                    ' . htmlspecialchars($mainOrder['street']) . '<br>
-                                    ' . htmlspecialchars($mainOrder['city']) . ' - ' . htmlspecialchars($mainOrder['postal_code']) . '<br>
-                                    ' . htmlspecialchars($mainOrder['state']) . ', ' . htmlspecialchars($mainOrder['country_name']) . '  <!-- Use country_name here -->
-                                </td>
-                                <td>
-                                    <strong>' . htmlspecialchars($mainOrder['customer_name']) . '</strong><br>
-                                    ' . htmlspecialchars($mainOrder['street']) . '<br>
-                                    ' . htmlspecialchars($mainOrder['city']) . ' - ' . htmlspecialchars($mainOrder['postal_code']) . '<br>
-                                    ' . htmlspecialchars($mainOrder['state']) . ', ' . htmlspecialchars($mainOrder['country_name']) . '  <!-- Use country_name here -->
-                                </td>
-                            </tr>
-                        </table>
+                    <td width="50%" class="text-right">
+                        <span class="invoice-title">Invoice Date:</span> ' . date('d M Y', strtotime($mainOrder['order_date'])) . '
+                    </td>
+                </tr>
+                <!-- Bottom Row: Bill To (Left 50%) and Ship To (Right 50%) -->
+                <tr>
+                    <td width="50%" style="border-right: 1px solid #ccc; vertical-align: top; font-size: 9px; line-height: 1.4;">
+                        <span class="invoice-title">Bill To</span><br>
+                        <strong>' . htmlspecialchars($mainOrder['customer_name']) . '</strong><br>
+                        ' . $custAddressHTML . '
+                    </td>
+                    <td width="50%" style="vertical-align: top; font-size: 9px; line-height: 1.4;">
+                        <span class="invoice-title">Ship To</span><br>
+                        <strong>' . htmlspecialchars($mainOrder['customer_name']) . '</strong><br>
+                        ' . $custAddressHTML . '
                     </td>
                 </tr>
             </table>
     
-            <!-- Rest of your HTML remains the same -->
             <div class="spacer"></div>
     
             <table class="table">
@@ -434,7 +473,6 @@ class InvoiceGenerator {
                         </table>
                     </td>
                 </tr>
-                <br><br>
                 <tr>
                     <td colspan="7" class="footer-note">
                         This is a computer-generated invoice. No signature is required. Please retain this document for your records. For any inquiries, contact the address or email provided above. Thank you for your business.

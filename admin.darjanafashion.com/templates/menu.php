@@ -156,6 +156,13 @@ $role ='vendor';
                     </li>
 
                     <li class="menu-item">
+                        <a href="TaxReport" class="menu-link">
+                            <i class="menu-icon tf-icons ri-percent-line"></i>
+                            <div data-i18n="TAX Report">TAX Report</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
                         <a href="AllCustomers" class="menu-link">
                             <i class="menu-icon tf-icons ri-account-circle-line"></i>
                             <div data-i18n="All Customers">All Customers</div>
