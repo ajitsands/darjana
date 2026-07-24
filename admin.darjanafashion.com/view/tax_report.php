@@ -84,8 +84,9 @@ session_start();
             const gatewayFeeAmount = totalSales * (feePct / 100);
             const netAmountCollected = totalSales - gatewayFeeAmount;
 
-            $('#cardGatewayFeeAmount').text(gatewayFeeAmount.toFixed(2) + ' BHD');
+            $('#cardBeforeGateway').text(totalSales.toFixed(2) + ' BHD');
             $('#cardNetCollected').text(netAmountCollected.toFixed(2) + ' BHD');
+            $('#cardGatewayFeeAmount').text('-' + gatewayFeeAmount.toFixed(2) + ' BHD (' + feePct.toFixed(1) + '%)');
         }
 
         function loadTaxReportData() {
@@ -229,7 +230,7 @@ session_start();
             loadTaxReportData();
 
             // Real-time automatic calculation when typing in Gateway Fee text box inside the card
-            $('#cardGatewayFeeInput').on('input change keyup', function() {
+            $(document).on('input change keyup', '#cardGatewayFeeInput', function() {
                 calculateGatewayNet();
             });
 
