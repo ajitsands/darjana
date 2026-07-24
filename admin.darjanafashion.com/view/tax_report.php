@@ -21,8 +21,8 @@ session_start();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <style>
-        @media (min-width: 1200px) {
-            .col-xl-2-4 {
+        @media (min-width: 992px) {
+            .col-lg-2-4 {
                 flex: 0 0 auto;
                 width: 20%;
             }
