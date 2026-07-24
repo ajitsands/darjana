@@ -492,12 +492,19 @@ class ReportController
             echo ($row['order_status'] ?? '') . "\n";
         }
         
+        $feePct = floatval($_REQUEST['gateway_fee_percent'] ?? 0);
+        $gatewayFeeAmount = $report['summary']['total_sales'] * ($feePct / 100);
+        $netCollected = $report['summary']['total_sales'] - $gatewayFeeAmount;
+
         echo "\n";
         echo "SUMMARY\n";
         echo "Total Sales (Excl. Tax):\t" . number_format($report['summary']['total_sales'], 2, '.', '') . " BHD\n";
         echo "Total Tax / VAT Has to Pay:\t" . number_format($report['summary']['total_tax'], 2, '.', '') . " BHD\n";
         echo "Total Shipping Collected:\t" . number_format($report['summary']['total_shipping'], 2, '.', '') . " BHD\n";
         echo "Total Gross Revenue Collected:\t" . number_format($report['summary']['total_collected'], 2, '.', '') . " BHD\n";
+        echo "Gateway Fee (%):\t" . number_format($feePct, 2, '.', '') . "%\n";
+        echo "Gateway Fee Amount:\t" . number_format($gatewayFeeAmount, 2, '.', '') . " BHD\n";
+        echo "Net Amount Collected (Sales - Gateway Fee):\t" . number_format($netCollected, 2, '.', '') . " BHD\n";
         echo "Total Paid Orders:\t" . $report['summary']['paid_orders_count'] . "\n";
         
         exit;

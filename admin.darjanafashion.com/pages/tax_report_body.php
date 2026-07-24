@@ -3,7 +3,7 @@
     <div class="col-12 d-flex justify-content-between align-items-center">
         <div>
             <h4 class="fw-bold mb-1"><i class="ri-percent-line text-primary me-2"></i>TAX & VAT Report</h4>
-            <p class="text-muted mb-0">Overview of Sales & VAT/Tax collected for Paid Orders</p>
+            <p class="text-muted mb-0">Overview of Sales, VAT/Tax, and Payment Gateway Fee Deductions for Paid Orders</p>
         </div>
         <div>
             <button id="exportExcelBtn" class="btn btn-success">
@@ -13,11 +13,11 @@
     </div>
 </div>
 
-<!-- KPI Cards -->
-<div class="row mb-4">
-    <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
+<!-- KPI Cards (5 Cards) -->
+<div class="row mb-4 g-3">
+    <div class="col-sm-6 col-lg-4 col-xl-2-4">
         <div class="card h-100 border-0 shadow-sm">
-            <div class="card-body">
+            <div class="card-body p-3">
                 <div class="d-flex align-items-center mb-2">
                     <div class="avatar me-3">
                         <span class="avatar-initial rounded bg-label-primary">
@@ -26,16 +26,16 @@
                     </div>
                     <div>
                         <h6 class="mb-0 text-muted small">Total Sales (Excl. Tax)</h6>
-                        <h4 class="mb-0 fw-bold" id="cardTotalSales">0.00 BHD</h4>
+                        <h5 class="mb-0 fw-bold text-dark" id="cardTotalSales">0.00 BHD</h5>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
+    <div class="col-sm-6 col-lg-4 col-xl-2-4">
         <div class="card h-100 border-0 shadow-sm border-start border-warning border-4">
-            <div class="card-body">
+            <div class="card-body p-3">
                 <div class="d-flex align-items-center mb-2">
                     <div class="avatar me-3">
                         <span class="avatar-initial rounded bg-label-warning">
@@ -44,43 +44,64 @@
                     </div>
                     <div>
                         <h6 class="mb-0 text-muted small">Tax / VAT Has to Pay</h6>
-                        <h4 class="mb-0 fw-bold text-warning" id="cardTotalTax">0.00 BHD</h4>
+                        <h5 class="mb-0 fw-bold text-warning" id="cardTotalTax">0.00 BHD</h5>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-sm-6 col-lg-3 mb-3 mb-sm-0">
+    <div class="col-sm-6 col-lg-4 col-xl-2-4">
         <div class="card h-100 border-0 shadow-sm">
-            <div class="card-body">
+            <div class="card-body p-3">
                 <div class="d-flex align-items-center mb-2">
                     <div class="avatar me-3">
-                        <span class="avatar-initial rounded bg-label-success">
+                        <span class="avatar-initial rounded bg-label-info">
                             <i class="ri-bank-card-line ri-24px"></i>
                         </span>
                     </div>
                     <div>
                         <h6 class="mb-0 text-muted small">Total Gross Collected</h6>
-                        <h4 class="mb-0 fw-bold text-success" id="cardTotalCollected">0.00 BHD</h4>
+                        <h5 class="mb-0 fw-bold text-info" id="cardTotalCollected">0.00 BHD</h5>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-sm-6 col-lg-3">
+    <div class="col-sm-6 col-lg-6 col-xl-2-4">
+        <div class="card h-100 border-0 shadow-sm border-start border-success border-4">
+            <div class="card-body p-3">
+                <div class="d-flex align-items-center mb-1">
+                    <div class="avatar me-3">
+                        <span class="avatar-initial rounded bg-label-success">
+                            <i class="ri-wallet-3-line ri-24px"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 text-muted small">Net Amount Collected</h6>
+                        <h5 class="mb-0 fw-bold text-success" id="cardNetCollected">0.00 BHD</h5>
+                        <small class="text-muted" style="font-size: 0.75rem;">
+                            Gateway Fee: <span id="cardGatewayFeeAmount" class="fw-semibold text-danger">0.00 BHD (0%)</span>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-6 col-xl-2-4">
         <div class="card h-100 border-0 shadow-sm">
-            <div class="card-body">
+            <div class="card-body p-3">
                 <div class="d-flex align-items-center mb-2">
                     <div class="avatar me-3">
-                        <span class="avatar-initial rounded bg-label-info">
+                        <span class="avatar-initial rounded bg-label-secondary">
                             <i class="ri-shopping-bag-3-line ri-24px"></i>
                         </span>
                     </div>
                     <div>
                         <h6 class="mb-0 text-muted small">Paid Orders Count</h6>
-                        <h4 class="mb-0 fw-bold" id="cardPaidCount">0</h4>
+                        <h5 class="mb-0 fw-bold" id="cardPaidCount">0</h5>
                     </div>
                 </div>
             </div>
@@ -88,19 +109,26 @@
     </div>
 </div>
 
-<!-- Date Filter Card -->
+<!-- Date & Gateway Fee Filter Card -->
 <div class="card mb-4">
     <div class="card-body">
         <div class="row align-items-end g-3">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label class="form-label fw-medium">Start Date</label>
                 <input type="date" id="startDate" class="form-control" placeholder="Start Date">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label class="form-label fw-medium">End Date</label>
                 <input type="date" id="endDate" class="form-control" placeholder="End Date">
             </div>
-            <div class="col-md-4 d-flex gap-2">
+            <div class="col-md-3">
+                <label class="form-label fw-medium">Gateway Fee %</label>
+                <div class="input-group">
+                    <input type="number" id="gatewayFeePercent" class="form-control" step="0.01" min="0" max="100" value="0.00" placeholder="e.g. 2.5">
+                    <span class="input-group-text">%</span>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex gap-2">
                 <button id="applyFilter" class="btn btn-primary flex-grow-1">
                     <i class="ri-filter-3-line me-1"></i> Apply Filter
                 </button>

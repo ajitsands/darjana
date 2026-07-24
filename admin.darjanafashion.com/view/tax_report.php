@@ -20,6 +20,15 @@ session_start();
     <link rel="stylesheet" href="../../assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
+    <style>
+        @media (min-width: 1200px) {
+            .col-xl-2-4 {
+                flex: 0 0 auto;
+                width: 20%;
+            }
+        }
+    </style>
+
     <script src="../../assets/vendor/js/helpers.js"></script>
     <script src="../../assets/vendor/js/template-customizer.js"></script>
     <script src="../../assets/js/config.js"></script>
@@ -54,6 +63,7 @@ session_start();
 
     <script>
         let taxTable;
+        let currentSummary = { total_sales: 0, total_tax: 0, total_collected: 0, paid_orders_count: 0 };
 
         function getDefaultMonthRange() {
             const now = new Date();
@@ -64,6 +74,17 @@ session_start();
             const startDate = `${year}-${month}-01`;
             const endDate = `${year}-${month}-${day}`;
             return { startDate, endDate };
+        }
+
+        function calculateGatewayNet() {
+            const feePct = parseFloat($('#gatewayFeePercent').val()) || 0;
+            const totalSales = currentSummary.total_sales || 0;
+            
+            const gatewayFeeAmount = totalSales * (feePct / 100);
+            const netAmountCollected = totalSales - gatewayFeeAmount;
+
+            $('#cardGatewayFeeAmount').text(gatewayFeeAmount.toFixed(2) + ' BHD (' + feePct.toFixed(2) + '%)');
+            $('#cardNetCollected').text(netAmountCollected.toFixed(2) + ' BHD');
         }
 
         function loadTaxReportData() {
@@ -96,17 +117,22 @@ session_start();
                 },
                 success: function(res) {
                     if (res && res.success) {
+                        // Store summary
+                        currentSummary = res.summary || {};
+                        
                         // Update Summary KPI Cards
-                        const summary = res.summary || {};
-                        $('#cardTotalSales').text((summary.total_sales || 0).toFixed(2) + ' BHD');
-                        $('#cardTotalTax').text((summary.total_tax || 0).toFixed(2) + ' BHD');
-                        $('#cardTotalCollected').text((summary.total_collected || 0).toFixed(2) + ' BHD');
-                        $('#cardPaidCount').text(summary.paid_orders_count || 0);
+                        $('#cardTotalSales').text((currentSummary.total_sales || 0).toFixed(2) + ' BHD');
+                        $('#cardTotalTax').text((currentSummary.total_tax || 0).toFixed(2) + ' BHD');
+                        $('#cardTotalCollected').text((currentSummary.total_collected || 0).toFixed(2) + ' BHD');
+                        $('#cardPaidCount').text(currentSummary.paid_orders_count || 0);
+
+                        // Recalculate Net Amount after Gateway Fee
+                        calculateGatewayNet();
 
                         // Reinitialize DataTable with data
                         initTaxTable(res.data || []);
                     } else {
-                        Swal.fire('Error', res.message || 'Failed to load Tax Report data', 'error');
+                        Swal.fire('Error', (res && res.message) ? res.message : 'Failed to load Tax Report data', 'error');
                     }
                 },
                 error: function() {
@@ -201,6 +227,11 @@ session_start();
             // Load initial report data for current month
             loadTaxReportData();
 
+            // Real-time calculation when Gateway Fee % is updated
+            $('#gatewayFeePercent').on('input change keyup', function() {
+                calculateGatewayNet();
+            });
+
             // Apply filter button click
             $('#applyFilter').on('click', function() {
                 loadTaxReportData();
@@ -211,6 +242,7 @@ session_start();
                 const range = getDefaultMonthRange();
                 $('#startDate').val(range.startDate);
                 $('#endDate').val(range.endDate);
+                $('#gatewayFeePercent').val('0.00');
                 loadTaxReportData();
             });
 
@@ -218,7 +250,8 @@ session_start();
             $('#exportExcelBtn').on('click', function() {
                 const startDate = $('#startDate').val();
                 const endDate = $('#endDate').val();
-                window.location.href = `../controller/Report/report_controller.php?action=export_tax_report&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+                const feePct = $('#gatewayFeePercent').val() || 0;
+                window.location.href = `../controller/Report/report_controller.php?action=export_tax_report&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}&gateway_fee_percent=${encodeURIComponent(feePct)}`;
             });
         });
     </script>
