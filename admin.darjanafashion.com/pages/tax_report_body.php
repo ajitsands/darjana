@@ -69,10 +69,11 @@
         </div>
     </div>
 
+    <!-- Net Amount Collected Card with Direct Embedded Input Box -->
     <div class="col-sm-6 col-lg-6 col-xl-2-4">
         <div class="card h-100 border-0 shadow-sm border-start border-success border-4">
             <div class="card-body p-3">
-                <div class="d-flex align-items-center mb-1">
+                <div class="d-flex align-items-center mb-2">
                     <div class="avatar me-3">
                         <span class="avatar-initial rounded bg-label-success">
                             <i class="ri-wallet-3-line ri-24px"></i>
@@ -81,10 +82,19 @@
                     <div>
                         <h6 class="mb-0 text-muted small">Net Amount Collected</h6>
                         <h5 class="mb-0 fw-bold text-success" id="cardNetCollected">0.00 BHD</h5>
-                        <small class="text-muted" style="font-size: 0.75rem;">
-                            Gateway Fee: <span id="cardGatewayFeeAmount" class="fw-semibold text-danger">0.00 BHD (0%)</span>
-                        </small>
                     </div>
+                </div>
+                <div class="pt-2 border-top d-flex align-items-center justify-content-between">
+                    <small class="text-muted fw-medium me-1">Gateway Fee %:</small>
+                    <div class="input-group input-group-sm" style="width: 100px;">
+                        <input type="number" id="cardGatewayFeeInput" class="form-control form-control-sm text-end fw-bold" step="0.1" min="0" max="100" value="2.5" placeholder="2.5">
+                        <span class="input-group-text px-1">%</span>
+                    </div>
+                </div>
+                <div class="mt-1 text-end">
+                    <small class="text-muted" style="font-size: 0.72rem;">
+                        Fee Deducted: <span id="cardGatewayFeeAmount" class="fw-semibold text-danger">0.00 BHD</span>
+                    </small>
                 </div>
             </div>
         </div>
@@ -109,26 +119,19 @@
     </div>
 </div>
 
-<!-- Date & Gateway Fee Filter Card -->
+<!-- Date Filter Card -->
 <div class="card mb-4">
     <div class="card-body">
         <div class="row align-items-end g-3">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label class="form-label fw-medium">Start Date</label>
                 <input type="date" id="startDate" class="form-control" placeholder="Start Date">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label class="form-label fw-medium">End Date</label>
                 <input type="date" id="endDate" class="form-control" placeholder="End Date">
             </div>
-            <div class="col-md-3">
-                <label class="form-label fw-medium">Gateway Fee %</label>
-                <div class="input-group">
-                    <input type="number" id="gatewayFeePercent" class="form-control" step="0.01" min="0" max="100" value="0.00" placeholder="e.g. 2.5">
-                    <span class="input-group-text">%</span>
-                </div>
-            </div>
-            <div class="col-md-3 d-flex gap-2">
+            <div class="col-md-4 d-flex gap-2">
                 <button id="applyFilter" class="btn btn-primary flex-grow-1">
                     <i class="ri-filter-3-line me-1"></i> Apply Filter
                 </button>

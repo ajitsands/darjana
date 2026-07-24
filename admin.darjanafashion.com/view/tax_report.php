@@ -77,13 +77,14 @@ session_start();
         }
 
         function calculateGatewayNet() {
-            const feePct = parseFloat($('#gatewayFeePercent').val()) || 0;
+            const feeVal = $('#cardGatewayFeeInput').val();
+            const feePct = (feeVal !== '' && !isNaN(feeVal)) ? parseFloat(feeVal) : 2.5;
             const totalSales = currentSummary.total_sales || 0;
             
             const gatewayFeeAmount = totalSales * (feePct / 100);
             const netAmountCollected = totalSales - gatewayFeeAmount;
 
-            $('#cardGatewayFeeAmount').text(gatewayFeeAmount.toFixed(2) + ' BHD (' + feePct.toFixed(2) + '%)');
+            $('#cardGatewayFeeAmount').text(gatewayFeeAmount.toFixed(2) + ' BHD');
             $('#cardNetCollected').text(netAmountCollected.toFixed(2) + ' BHD');
         }
 
@@ -227,8 +228,8 @@ session_start();
             // Load initial report data for current month
             loadTaxReportData();
 
-            // Real-time calculation when Gateway Fee % is updated
-            $('#gatewayFeePercent').on('input change keyup', function() {
+            // Real-time automatic calculation when typing in Gateway Fee text box inside the card
+            $('#cardGatewayFeeInput').on('input change keyup', function() {
                 calculateGatewayNet();
             });
 
@@ -242,7 +243,7 @@ session_start();
                 const range = getDefaultMonthRange();
                 $('#startDate').val(range.startDate);
                 $('#endDate').val(range.endDate);
-                $('#gatewayFeePercent').val('0.00');
+                $('#cardGatewayFeeInput').val('2.5');
                 loadTaxReportData();
             });
 
@@ -250,7 +251,7 @@ session_start();
             $('#exportExcelBtn').on('click', function() {
                 const startDate = $('#startDate').val();
                 const endDate = $('#endDate').val();
-                const feePct = $('#gatewayFeePercent').val() || 0;
+                const feePct = $('#cardGatewayFeeInput').val() || 2.5;
                 window.location.href = `../controller/Report/report_controller.php?action=export_tax_report&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}&gateway_fee_percent=${encodeURIComponent(feePct)}`;
             });
         });
