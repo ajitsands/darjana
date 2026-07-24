@@ -405,7 +405,7 @@ class ReportController
 
         $sql = "SELECT 
                     od.order_id,
-                    MIN(od.order_date) AS order_date,
+                    MIN(od.placed_date) AS order_date,
                     MIN(od.customer_name) AS customer_name,
                     MIN(od.customer_mobile_no) AS customer_phone,
                     MIN(od.customer_email) AS customer_email,
@@ -420,37 +420,41 @@ class ReportController
                     ) + MAX(od.cod_fee) AS grand_total
                 FROM order_details od
                 WHERE (od.payment_status = 'PAID' OR LOWER(od.status) IN ('delivered', 'completed'))
-                  AND DATE(od.order_date) BETWEEN '$startDateEsc' AND '$endDateEsc'
+                  AND DATE(od.placed_date) BETWEEN '$startDateEsc' AND '$endDateEsc'
                 GROUP BY od.order_id
-                ORDER BY MIN(od.order_date) DESC";
+                ORDER BY MIN(od.placed_date) DESC";
 
         $res = mysqli_query($this->varDBConnection, $sql);
+        if (!$res) {
+            return [
+                "success" => false,
+                "message" => "Database Query Error: " . mysqli_error($this->varDBConnection)
+            ];
+        }
+
         $data = [];
-        
         $totalSales = 0;
         $totalTax = 0;
         $totalShipping = 0;
         $totalCollected = 0;
 
-        if ($res) {
-            while ($row = mysqli_fetch_assoc($res)) {
-                $netSales = floatval($row['net_sales']);
-                $taxAmount = floatval($row['tax_amount']);
-                $shippingFee = floatval($row['shipping_fee']);
-                $grandTotal = floatval($row['grand_total']);
+        while ($row = mysqli_fetch_assoc($res)) {
+            $netSales = floatval($row['net_sales']);
+            $taxAmount = floatval($row['tax_amount']);
+            $shippingFee = floatval($row['shipping_fee']);
+            $grandTotal = floatval($row['grand_total']);
 
-                $row['net_sales'] = $netSales;
-                $row['tax_amount'] = $taxAmount;
-                $row['shipping_fee'] = $shippingFee;
-                $row['grand_total'] = $grandTotal;
+            $row['net_sales'] = $netSales;
+            $row['tax_amount'] = $taxAmount;
+            $row['shipping_fee'] = $shippingFee;
+            $row['grand_total'] = $grandTotal;
 
-                $totalSales += $netSales;
-                $totalTax += $taxAmount;
-                $totalShipping += $shippingFee;
-                $totalCollected += $grandTotal;
+            $totalSales += $netSales;
+            $totalTax += $taxAmount;
+            $totalShipping += $shippingFee;
+            $totalCollected += $grandTotal;
 
-                $data[] = $row;
-            }
+            $data[] = $row;
         }
 
         return [
