@@ -70,4 +70,26 @@ mysqli_query($con, "ALTER TABLE `product_details` MODIFY COLUMN `category_id` VA
 mysqli_query($con, "ALTER TABLE `product_details` MODIFY COLUMN `category_name` VARCHAR(500) NULL");
 echo "<p style='color:green;'>✅ Updated 'category_id' to VARCHAR(255) in 'product_details' table for multi-category support.</p>";
 
+// 4. Update sync.php and webhook.php directly from GitHub
+$syncCode = @file_get_contents('https://raw.githubusercontent.com/ajitsands/darjana/main/sync.php');
+if ($syncCode && strlen($syncCode) > 100) {
+    @file_put_contents(__DIR__ . '/sync.php', $syncCode);
+    echo "<p style='color:green;'>✅ Updated 'sync.php' on live server.</p>";
+}
+
+$webhookCode = @file_get_contents('https://raw.githubusercontent.com/ajitsands/darjana/main/webhook.php');
+if ($webhookCode && strlen($webhookCode) > 100) {
+    @file_put_contents(__DIR__ . '/webhook.php', $webhookCode);
+    echo "<p style='color:green;'>✅ Updated 'webhook.php' on live server.</p>";
+}
+
+// 5. Execute full site sync from GitHub
+if (file_exists(__DIR__ . '/sync.php')) {
+    require_once __DIR__ . '/sync.php';
+    if (function_exists('perform_github_sync')) {
+        $syncRes = perform_github_sync();
+        echo "<p style='color:blue; font-weight:bold;'>🚀 Code Sync Result: $syncRes</p>";
+    }
+}
 ?>
+
