@@ -144,7 +144,7 @@
                     <div class="col-md-5">
                         <label for="product_color">Product Color & Hex Code  <span style="color: red;"> *</span></label>
                         <div class="input-group color-row-item">
-                            <input type="color" class="form-control form-control-color color-picker-input" value="#FF0000" style="max-width: 42px; height: 31px; padding: 2px; cursor: pointer;" title="Click to open Color Picker Popup">
+                            <input type="color" class="form-control form-control-color color-picker-input" value="#FF0000" style="width: 50px; min-width: 50px; height: 38px; padding: 3px; border: 2px solid #ccc; border-radius: 6px; cursor: pointer;" title="Click to open Color Picker Popup">
                             <input type="text" class="form-control form-control-sm color-hex-input" placeholder="#HEX" value="#FF0000" style="max-width: 105px;">
                             <select class="form-select form-select-sm color-preset-select" style="max-width: 95px;">
                                 <option value="">Presets</option>

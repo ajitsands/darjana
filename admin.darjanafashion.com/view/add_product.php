@@ -1165,7 +1165,7 @@
             }
 
             var html = '<div class="input-group input-group-merge mt-2 color-row-item" data-id="' + idVal + '">' +
-                '<input type="color" class="form-control form-control-color color-picker-input" value="' + escapeHtml(hexVal) + '" style="max-width: 42px; height: 31px; padding: 2px; cursor: pointer;" title="Click to open Color Picker Popup">' +
+                '<input type="color" class="form-control form-control-color color-picker-input" value="' + escapeHtml(hexVal) + '" style="width: 50px; min-width: 50px; height: 38px; padding: 3px; border: 2px solid #ccc; border-radius: 6px; cursor: pointer;" title="Click to open Color Picker Popup">' +
                 '<input type="text" class="form-control form-control-sm color-hex-input" placeholder="#HEX" value="' + escapeHtml(hexVal) + '" style="max-width: 105px;">' +
                 '<select class="form-select form-select-sm color-preset-select" style="max-width: 95px;">' +
                 '<option value="">Presets</option>' +
