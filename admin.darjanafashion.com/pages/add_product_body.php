@@ -170,6 +170,12 @@
                                 <option value="Lavender" data-hex="#E6E6FA">Lavender</option>
                                 <option value="Orange" data-hex="#FFA500">Orange</option>
                                 <option value="Rose" data-hex="#FF007F">Rose</option>
+                                <option value="Black, White & Brown" data-hex="#000000/#FFFFFF/#A52A2A">Black, White & Brown (3-Color Mix)</option>
+                                <option value="Black & White" data-hex="#000000/#FFFFFF">Black & White (2-Color Mix)</option>
+                                <option value="Red & White" data-hex="#FF0000/#FFFFFF">Red & White</option>
+                                <option value="Blue & White" data-hex="#0000FF/#FFFFFF">Blue & White</option>
+                                <option value="Navy & Gold" data-hex="#000080/#FFD700">Navy & Gold</option>
+                                <option value="Multicolor" data-hex="#FF0000/#00FF00/#0000FF">Multicolor</option>
                             </select>
                             <input type="text" id="product_color" class="form-control form-control-sm color-name-input" placeholder="Color Name (e.g. Red)" value="Red">
                             <button type="button" class="btn btn-primary btn-sm" id="add_new_color"><i class="bi bi-plus"></i></button>

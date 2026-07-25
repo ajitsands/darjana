@@ -2690,6 +2690,48 @@ if ($row = mysqli_fetch_assoc($result)) {
             $('#size-options').html(sizeOptions);
         }
 
+        function resolveColorBackground(colorName, colorCode, colorMap) {
+            let hexList = [];
+
+            if (colorCode && colorCode.includes('/')) {
+                hexList = colorCode.split('/').map(s => s.trim()).filter(s => s.startsWith('#'));
+            } else if (colorCode && colorCode.includes(',')) {
+                hexList = colorCode.split(',').map(s => s.trim()).filter(s => s.startsWith('#'));
+            } else if (colorCode && colorCode.startsWith('#')) {
+                hexList = [colorCode.trim()];
+            }
+
+            if (hexList.length <= 1) {
+                let nameParts = colorName.split(/[,&\+/]/).map(s => s.trim()).filter(s => s.length > 0 && s.toLowerCase() !== 'and');
+                if (nameParts.length > 1) {
+                    hexList = [];
+                    nameParts.forEach(p => {
+                        let upper = p.toUpperCase();
+                        if (colorMap[upper]) {
+                            hexList.push(colorMap[upper]);
+                        } else if (p.startsWith('#')) {
+                            hexList.push(p);
+                        } else {
+                            hexList.push('#888888');
+                        }
+                    });
+                }
+            }
+
+            if (hexList.length === 0) {
+                let upper = colorName.toUpperCase();
+                hexList = [colorMap[upper] || '#888888'];
+            }
+
+            if (hexList.length === 1) {
+                return `background-color: ${hexList[0]};`;
+            } else {
+                let step = 360 / hexList.length;
+                let stops = hexList.map((h, i) => `${h} ${Math.round(i * step)}deg ${Math.round((i + 1) * step)}deg`).join(', ');
+                return `background: conic-gradient(${stops});`;
+            }
+        }
+
         function updateColorOptions(colors) {
             const colorMap = {
                 'RED': '#FF0000',
@@ -2740,12 +2782,9 @@ if ($row = mysqli_fetch_assoc($result)) {
                         colorCode = rawStr;
                     } else {
                         colorName = rawStr;
-                        colorCode = colorMap[rawStr.toUpperCase()] || '#888888';
                     }
                     
-                    if (!colorCode || !colorCode.startsWith('#')) {
-                        colorCode = colorMap[colorName.toUpperCase()] || '#888888';
-                    }
+                    const backgroundStyle = resolveColorBackground(colorName, colorCode, colorMap);
 
                     const displayColorName = colorName.startsWith('#') 
                         ? colorName 
@@ -2760,8 +2799,8 @@ if ($row = mysqli_fetch_assoc($result)) {
                                 ${index === 0 ? 'checked' : ''}>
                             <label for="color-option-${index}" class="color-swatch-label rounded-circle me-2" 
                                 title="${displayColorName}"
-                                style="width: 36px; height: 36px; display: inline-block; cursor: pointer; vertical-align: middle; background-color: ${colorCode}; 
-                                ${colorName.toUpperCase() === 'WHITE' || colorName.toUpperCase() === 'OFF WHITE' || colorCode.toUpperCase() === '#FFFFFF' ? 'border: 2px solid #ccc !important;' : 'border: 1px solid rgba(0,0,0,0.15);'}">
+                                style="width: 36px; height: 36px; display: inline-block; cursor: pointer; vertical-align: middle; ${backgroundStyle} 
+                                ${colorName.toUpperCase() === 'WHITE' || colorName.toUpperCase() === 'OFF WHITE' ? 'border: 2px solid #ccc !important;' : 'border: 1px solid rgba(0,0,0,0.15);'}">
                             </label>
                             <span class="color-text-name small fw-medium" style="font-size: 14px; cursor: pointer; text-transform: capitalize;">${displayColorName}</span>
                         </div>
