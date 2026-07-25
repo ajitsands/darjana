@@ -71,13 +71,13 @@ mysqli_query($con, "ALTER TABLE `product_details` MODIFY COLUMN `category_name` 
 echo "<p style='color:green;'>✅ Updated 'category_id' to VARCHAR(255) in 'product_details' table for multi-category support.</p>";
 
 // 4. Update sync.php and webhook.php directly from GitHub
-$syncCode = @file_get_contents('https://raw.githubusercontent.com/ajitsands/darjana/main/sync.php');
+$syncCode = @file_get_contents('https://raw.githubusercontent.com/ajitsands/darjana/main/sync.php?v=' . time());
 if ($syncCode && strlen($syncCode) > 100) {
     @file_put_contents(__DIR__ . '/sync.php', $syncCode);
     echo "<p style='color:green;'>✅ Updated 'sync.php' on live server.</p>";
 }
 
-$webhookCode = @file_get_contents('https://raw.githubusercontent.com/ajitsands/darjana/main/webhook.php');
+$webhookCode = @file_get_contents('https://raw.githubusercontent.com/ajitsands/darjana/main/webhook.php?v=' . time());
 if ($webhookCode && strlen($webhookCode) > 100) {
     @file_put_contents(__DIR__ . '/webhook.php', $webhookCode);
     echo "<p style='color:green;'>✅ Updated 'webhook.php' on live server.</p>";
