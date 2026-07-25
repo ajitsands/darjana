@@ -561,88 +561,39 @@ if ($row = mysqli_fetch_assoc($result)) {
     
         .color-option label {
             display: inline-block;
-            width: 40px;
-            height: 40px;
+            width: 36px !important;
+            height: 36px !important;
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid #e0e0e0;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: none !important;
+            margin-right: 6px;
+            margin-bottom: 0;
+            vertical-align: middle;
         }
     
-        /* Selected color style - GOLD THEME */
+        /* Selected color style - CLEAN DARK BORDER (NO OUT GLOW / NO GOLD CENTER SQUARE) */
         .color-option input[type="radio"]:checked + label {
-           border: 3px solid #dec978 !important;
-        box-shadow: 0 0 0 2px rgb(245 235 174), 0 0 15px rgb(255 239 165);
-                transform: scale(1.1);
-                z-index: 2;
-                
-            }
+            border: 3px solid #111111 !important;
+            box-shadow: none !important;
+            transform: scale(1.05);
+            z-index: 2;
+        }
         
-            /* Checkmark for selected color - GOLD THEME (SQUARE) */
-            .color-option input[type="radio"]:checked + label::after {
-                content: "";
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 14px;
-                height: 14px;
-                background-color: #dcc574 !important;
-                border: 2px solid #333;
-                border-radius: 0 !important;
-                z-index: 3;
-            }
+        .color-option input[type="radio"]:checked + label::after,
+        .color-option label::after {
+            display: none !important;
+            content: none !important;
+        }
         
-            /* Special handling for dark colors */
-            .color-option input[value="BLACK"]:checked + label::after,
-            .color-option input[value="NAVY"]:checked + label::after,
-            .color-option input[value="DARK_BLUE"]:checked + label::after,
-            .color-option input[value="DARK_GREEN"]:checked + label::after,
-            .color-option input[value="BROWN"]:checked + label::after,
-            .color-option input[value="PURPLE"]:checked + label::after,
-            .color-option input[value="MAROON"]:checked + label::after {
-                background-color: #FFD700 !important;
-                border-color: #333;
-            }
-        
-            /* Special handling for light colors */
-            .color-option input[value="WHITE"]:checked + label,
-            .color-option input[value="white"]:checked + label,
-            .color-option input[value="GOLD"]:checked + label,
-            .color-option input[value="gold"]:checked + label,
-            .color-option input[value="SILVER"]:checked + label,
-            .color-option input[value="silver"]:checked + label,
-            .color-option input[value="BEIGE"]:checked + label,
-            .color-option input[value="CREAM"]:checked + label,
-            .color-option input[value="IVORY"]:checked + label,
-            .color-option input[value="LIGHT_YELLOW"]:checked + label {
-                border: 3px solid #FFD700 !important;
-            }
-        
-            .color-option input[value="WHITE"]:checked + label::after,
-            .color-option input[value="white"]:checked + label::after,
-            .color-option input[value="GOLD"]:checked + label::after,
-            .color-option input[value="gold"]:checked + label::after,
-            .color-option input[value="SILVER"]:checked + label::after,
-            .color-option input[value="silver"]:checked + label::after,
-            .color-option input[value="BEIGE"]:checked + label::after,
-            .color-option input[value="CREAM"]:checked + label::after,
-            .color-option input[value="IVORY"]:checked + label::after,
-            .color-option input[value="LIGHT_YELLOW"]:checked + label::after {
-                background-color: #333 !important;
-                border: 2px solid #FFD700 !important;
-            }
-        
-            /* Hover effect with gold theme */
-            .color-option label:hover {
-                transform: scale(1.08);
-                border-color: #FFD700;
-                box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
-                z-index: 1;
-            }
+        .color-option label:hover {
+            transform: scale(1.05);
+            border-color: #333;
+            box-shadow: none !important;
+        }
         
             /* ========== SIZE OPTIONS STYLING - GOLD THEME ========== */
             .product-size .btn-group {
@@ -2776,23 +2727,39 @@ if ($row = mysqli_fetch_assoc($result)) {
 
             if (validColors.length > 0) {
                 validColors.forEach((color, index) => {
-                    const rawColor = color.toString().trim();
-                    const colorName = rawColor.toUpperCase();
-                    const colorCode = colorMap[colorName] || (colorName.startsWith('#') ? colorName : '#888888');
+                    const rawStr = color.toString().trim();
+                    let colorName = rawStr;
+                    let colorCode = '';
                     
+                    if (rawStr.includes('::')) {
+                        const parts = rawStr.split('::');
+                        colorName = parts[0].trim();
+                        colorCode = parts[1].trim();
+                    } else if (rawStr.startsWith('#')) {
+                        colorName = rawStr;
+                        colorCode = rawStr;
+                    } else {
+                        colorName = rawStr;
+                        colorCode = colorMap[rawStr.toUpperCase()] || '#888888';
+                    }
+                    
+                    if (!colorCode || !colorCode.startsWith('#')) {
+                        colorCode = colorMap[colorName.toUpperCase()] || '#888888';
+                    }
+
                     colorOptions += `
-                        <div class="color-option d-inline-flex align-items-center me-3 mb-2 p-1 rounded" style="cursor: pointer;">
-                            <input type="radio" class="form-check-input me-1" 
+                        <div class="color-option d-inline-flex align-items-center me-3 mb-2 p-1" style="cursor: pointer;">
+                            <input type="radio" class="form-check-input d-none" 
                                 id="color-option-${index}" 
                                 name="product_color" 
-                                value="${rawColor}"
-                                ${index === 0 ? 'checked' : ''}
-                                style="cursor: pointer;">
-                            <label for="color-option-${index}" class="color-swatch-label rounded-circle me-1" 
-                                style="width: 22px; height: 22px; display: inline-block; cursor: pointer; vertical-align: middle; background-color: ${colorCode}; 
-                                ${colorName === 'WHITE' || colorName === 'OFF WHITE' || colorCode.toUpperCase() === '#FFFFFF' ? 'border: 2px solid #ccc;' : 'border: 1px solid rgba(0,0,0,0.1);'}">
+                                value="${rawStr}"
+                                ${index === 0 ? 'checked' : ''}>
+                            <label for="color-option-${index}" class="color-swatch-label rounded-circle me-2" 
+                                title="${colorName}"
+                                style="width: 36px; height: 36px; display: inline-block; cursor: pointer; vertical-align: middle; background-color: ${colorCode}; 
+                                ${colorName.toUpperCase() === 'WHITE' || colorName.toUpperCase() === 'OFF WHITE' || colorCode.toUpperCase() === '#FFFFFF' ? 'border: 2px solid #ccc !important;' : 'border: 1px solid rgba(0,0,0,0.15);'}">
                             </label>
-                            <span class="color-text-name small fw-medium" style="cursor: pointer;">${rawColor}</span>
+                            <span class="color-text-name small fw-medium" style="font-size: 14px; cursor: pointer;">${colorName}</span>
                         </div>
                     `;
                 });
@@ -2801,16 +2768,10 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
             $('#color-options').html(colorOptions);
             
-            // Add click handler for visual feedback
-            $('.color-option').on('click', function() {
+            $('.color-option').off('click').on('click', function() {
                 $('.color-option input').prop('checked', false);
                 $(this).find('input').prop('checked', true);
-                $('.color-option label').removeClass('active');
-                $(this).find('label').addClass('active');
             });
-            
-            // Initialize first color as selected
-            $('.color-option:first-child label').addClass('active');
         }
 
         function updateProductMetadata(product) {

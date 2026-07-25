@@ -141,36 +141,38 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <label for="product_color">Product Color  <span style="color: red;"> *</span></label>
-                        <div class="input-group">
-                            <select class="form-select form-select-sm color-preset-select" style="max-width: 120px;">
-                                <option value="">-- Preset --</option>
-                                <option value="Black">Black</option>
-                                <option value="White">White</option>
-                                <option value="Red">Red</option>
-                                <option value="Blue">Blue</option>
-                                <option value="Green">Green</option>
-                                <option value="Navy">Navy</option>
-                                <option value="Pink">Pink</option>
-                                <option value="Gold">Gold</option>
-                                <option value="Silver">Silver</option>
-                                <option value="Yellow">Yellow</option>
-                                <option value="Purple">Purple</option>
-                                <option value="Gray">Gray</option>
-                                <option value="Brown">Brown</option>
-                                <option value="Beige">Beige</option>
-                                <option value="Maroon">Maroon</option>
-                                <option value="Olive">Olive</option>
-                                <option value="Burgundy">Burgundy</option>
-                                <option value="Teal">Teal</option>
-                                <option value="Cream">Cream</option>
-                                <option value="Lavender">Lavender</option>
-                                <option value="Orange">Orange</option>
-                                <option value="Rose">Rose</option>
+                    <div class="col-md-5">
+                        <label for="product_color">Product Color & Hex Code  <span style="color: red;"> *</span></label>
+                        <div class="input-group color-row-item">
+                            <input type="color" class="form-control form-control-color color-picker-input" value="#FF0000" style="max-width: 42px; height: 31px; padding: 2px; cursor: pointer;" title="Click to open Color Picker Popup">
+                            <input type="text" class="form-control form-control-sm color-hex-input" placeholder="#HEX" value="#FF0000" style="max-width: 105px;">
+                            <select class="form-select form-select-sm color-preset-select" style="max-width: 95px;">
+                                <option value="">Presets</option>
+                                <option value="Black" data-hex="#000000">Black</option>
+                                <option value="White" data-hex="#FFFFFF">White</option>
+                                <option value="Red" data-hex="#FF0000">Red</option>
+                                <option value="Blue" data-hex="#0000FF">Blue</option>
+                                <option value="Green" data-hex="#008000">Green</option>
+                                <option value="Navy" data-hex="#000080">Navy</option>
+                                <option value="Pink" data-hex="#FFC0CB">Pink</option>
+                                <option value="Gold" data-hex="#FFD700">Gold</option>
+                                <option value="Silver" data-hex="#C0C0C0">Silver</option>
+                                <option value="Yellow" data-hex="#FFFF00">Yellow</option>
+                                <option value="Purple" data-hex="#800080">Purple</option>
+                                <option value="Gray" data-hex="#808080">Gray</option>
+                                <option value="Brown" data-hex="#A52A2A">Brown</option>
+                                <option value="Beige" data-hex="#F5F5DC">Beige</option>
+                                <option value="Maroon" data-hex="#800000">Maroon</option>
+                                <option value="Olive" data-hex="#808000">Olive</option>
+                                <option value="Burgundy" data-hex="#800020">Burgundy</option>
+                                <option value="Teal" data-hex="#008080">Teal</option>
+                                <option value="Cream" data-hex="#FFFDD0">Cream</option>
+                                <option value="Lavender" data-hex="#E6E6FA">Lavender</option>
+                                <option value="Orange" data-hex="#FFA500">Orange</option>
+                                <option value="Rose" data-hex="#FF007F">Rose</option>
                             </select>
-                            <input type="text" id="product_color" name="product_color[]" class="form-control form-control-sm" placeholder="Enter Product Color" />
-                            <button type="button" class="btn btn-primary" id="add_new_color"><i class="bi bi-plus"></i></button>
+                            <input type="text" id="product_color" class="form-control form-control-sm color-name-input" placeholder="Color Name (e.g. Red)" value="Red">
+                            <button type="button" class="btn btn-primary btn-sm" id="add_new_color"><i class="bi bi-plus"></i></button>
                         </div>
                         <div id="color_fields_container"></div>
                     </div>

@@ -1137,36 +1137,102 @@
             $('#edit_sub_category_id').val('');
         });
 
-        function getColorPresetSelectHtml(selectedColor) {
-            selectedColor = selectedColor || '';
-            var presetColors = [
-                'Black', 'White', 'Red', 'Blue', 'Green', 'Navy', 'Pink', 'Gold', 
-                'Silver', 'Yellow', 'Purple', 'Gray', 'Brown', 'Beige', 'Maroon', 
-                'Olive', 'Burgundy', 'Teal', 'Cream', 'Lavender', 'Orange', 'Rose'
-            ];
-            var html = '<select class="form-select form-select-sm color-preset-select" style="max-width: 120px;"><option value="">-- Preset --</option>';
-            presetColors.forEach(function(c) {
-                var isSel = selectedColor && selectedColor.toLowerCase() === c.toLowerCase() ? 'selected' : '';
-                html += `<option value="${c}" ${isSel}>${c}</option>`;
-            });
-            html += '</select>';
+        function createColorRowHtml(rawVal, idVal) {
+            rawVal = rawVal || '';
+            idVal = idVal || '';
+            
+            var nameVal = '';
+            var hexVal = '#FF0000';
+            
+            if (rawVal.includes('::')) {
+                var parts = rawVal.split('::');
+                nameVal = parts[0].trim();
+                hexVal = parts[1].trim();
+            } else if (rawVal.startsWith('#')) {
+                nameVal = rawVal;
+                hexVal = rawVal;
+            } else {
+                nameVal = rawVal;
+                var colorMap = {
+                    'BLACK': '#000000', 'WHITE': '#FFFFFF', 'RED': '#FF0000', 'BLUE': '#0000FF',
+                    'GREEN': '#008000', 'NAVY': '#000080', 'PINK': '#FFC0CB', 'GOLD': '#FFD700',
+                    'SILVER': '#C0C0C0', 'YELLOW': '#FFFF00', 'PURPLE': '#800080', 'GRAY': '#808080',
+                    'BROWN': '#A52A2A', 'BEIGE': '#F5F5DC', 'MAROON': '#800000', 'OLIVE': '#808000',
+                    'BURGUNDY': '#800020', 'TEAL': '#008080', 'CREAM': '#FFFDD0', 'LAVENDER': '#E6E6FA',
+                    'ORANGE': '#FFA500', 'ROSE': '#FF007F'
+                };
+                hexVal = colorMap[rawVal.toUpperCase()] || '#FF0000';
+            }
+
+            var html = '<div class="input-group input-group-merge mt-2 color-row-item" data-id="' + idVal + '">' +
+                '<input type="color" class="form-control form-control-color color-picker-input" value="' + escapeHtml(hexVal) + '" style="max-width: 42px; height: 31px; padding: 2px; cursor: pointer;" title="Click to open Color Picker Popup">' +
+                '<input type="text" class="form-control form-control-sm color-hex-input" placeholder="#HEX" value="' + escapeHtml(hexVal) + '" style="max-width: 105px;">' +
+                '<select class="form-select form-select-sm color-preset-select" style="max-width: 95px;">' +
+                '<option value="">Presets</option>' +
+                '<option value="Black" data-hex="#000000">Black</option>' +
+                '<option value="White" data-hex="#FFFFFF">White</option>' +
+                '<option value="Red" data-hex="#FF0000">Red</option>' +
+                '<option value="Blue" data-hex="#0000FF">Blue</option>' +
+                '<option value="Green" data-hex="#008000">Green</option>' +
+                '<option value="Navy" data-hex="#000080">Navy</option>' +
+                '<option value="Pink" data-hex="#FFC0CB">Pink</option>' +
+                '<option value="Gold" data-hex="#FFD700">Gold</option>' +
+                '<option value="Silver" data-hex="#C0C0C0">Silver</option>' +
+                '<option value="Yellow" data-hex="#FFFF00">Yellow</option>' +
+                '<option value="Purple" data-hex="#800080">Purple</option>' +
+                '<option value="Gray" data-hex="#808080">Gray</option>' +
+                '<option value="Brown" data-hex="#A52A2A">Brown</option>' +
+                '<option value="Beige" data-hex="#F5F5DC">Beige</option>' +
+                '<option value="Maroon" data-hex="#800000">Maroon</option>' +
+                '<option value="Olive" data-hex="#808000">Olive</option>' +
+                '<option value="Burgundy" data-hex="#800020">Burgundy</option>' +
+                '<option value="Teal" data-hex="#008080">Teal</option>' +
+                '<option value="Cream" data-hex="#FFFDD0">Cream</option>' +
+                '<option value="Lavender" data-hex="#E6E6FA">Lavender</option>' +
+                '<option value="Orange" data-hex="#FFA500">Orange</option>' +
+                '<option value="Rose" data-hex="#FF007F">Rose</option>' +
+                '</select>' +
+                '<input type="text" class="form-control form-control-sm color-name-input" placeholder="Color Name (e.g. Red)" value="' + escapeHtml(nameVal) + '">';
+            
+            if (idVal !== '') {
+                html += '<input type="hidden" name="product_color_id[]" value="' + idVal + '" />';
+            }
+            
+            html += '<button type="button" class="btn btn-danger btn-sm remove-field"><i class="bi bi-x-lg"></i></button>' +
+                '</div>';
+                
             return html;
         }
 
+        // Color interaction handlers
+        $(document).on('input change', '.color-picker-input', function() {
+            var hex = $(this).val();
+            $(this).closest('.color-row-item').find('.color-hex-input').val(hex);
+        });
+
+        $(document).on('input change', '.color-hex-input', function() {
+            var hex = $(this).val().trim();
+            if (/^#[0-9A-F]{6}$/i.test(hex) || /^#[0-9A-F]{3}$/i.test(hex)) {
+                $(this).closest('.color-row-item').find('.color-picker-input').val(hex);
+            }
+        });
+
         $(document).on('change', '.color-preset-select', function() {
-            var val = $(this).val();
+            var $opt = $(this).find('option:selected');
+            var val = $opt.val();
+            var hex = $opt.data('hex');
+            var $row = $(this).closest('.color-row-item');
             if (val) {
-                $(this).closest('.input-group').find('input[name="product_color[]"], input[placeholder="Enter Product Color"]').val(val);
+                $row.find('.color-name-input').val(val);
+            }
+            if (hex) {
+                $row.find('.color-hex-input').val(hex);
+                $row.find('.color-picker-input').val(hex);
             }
         });
 
         $('#add_new_color').on('click', function() {
-            var newColorField = '<div class="input-group input-group-merge mt-2 dynamic_color">' +
-                getColorPresetSelectHtml() +
-                '<input type="text" class="form-control form-control-sm" name="product_color[]" placeholder="Enter Product Color" />' +
-                '<button type="button" class="btn btn-danger remove-field"><i class="bi bi-x-lg"></i> </button>' +
-                '</div>';
-            $('#color_fields_container').append(newColorField);
+            $('#color_fields_container').append(createColorRowHtml('', ''));
         });
 
         $('#add_new_size').on('click', function() {
@@ -2022,10 +2088,21 @@
             formData.append('primary_image', $('input[name="primary_image"]:checked').val() || '');
             
             // Collect colors
-            $('input[name="product_color[]"], input[placeholder="Enter Product Color"]').each(function() {
-                var cVal = $(this).val() ? $(this).val().trim() : '';
-                if (cVal) {
-                    formData.append('product_color[]', cVal);
+            $('.color-row-item').each(function() {
+                var name = $(this).find('.color-name-input').val() ? $(this).find('.color-name-input').val().trim() : '';
+                var hex = $(this).find('.color-hex-input').val() ? $(this).find('.color-hex-input').val().trim() : '';
+                
+                var colorStr = '';
+                if (name && hex) {
+                    colorStr = name + '::' + hex;
+                } else if (name) {
+                    colorStr = name;
+                } else if (hex) {
+                    colorStr = hex;
+                }
+                
+                if (colorStr) {
+                    formData.append('product_color[]', colorStr);
                 }
             });
             
@@ -2321,16 +2398,8 @@
                         $('#edit_color_fields_container').html('');
                         for (var i = 0; i < productColors.length; i++) {
                             var colorVal = productColors[i].color || '';
-                            var newColorField = '<div class="input-group input-group-merge mt-2" data-id="' +
-                                productColors[i].id + '">' +
-                                getColorPresetSelectHtml(colorVal) +
-                                '<input type="text" class="form-control" name="product_color[]" value="' +
-                                escapeHtml(colorVal) + '" placeholder="Product Color" />' +
-                                '<input type="hidden" name="product_color_id[]" value="' +
-                                productColors[i].id + '" />' +
-                                '<button type="button" class="btn btn-danger remove-field">Remove</button>' +
-                                '</div>';
-                            $('#edit_color_fields_container').append(newColorField);
+                            var colorId = productColors[i].id || '';
+                            $('#edit_color_fields_container').append(createColorRowHtml(colorVal, colorId));
                         }
                         
                         // Populate sizes
@@ -2542,13 +2611,7 @@
         });
 
         $('#add_edit_color').on('click', function() {
-            var newColorField = '<div class="input-group input-group-merge mt-2" data-id="">' +
-                getColorPresetSelectHtml() +
-                '<input type="text" class="form-control" name="product_color[]" placeholder="Enter Product Color" />' +
-                '<input type="hidden" name="product_color_id[]" value="" />' +
-                '<button type="button" class="btn btn-danger remove-field">Remove</button>' +
-                '</div>';
-            $('#edit_color_fields_container').append(newColorField);
+            $('#edit_color_fields_container').append(createColorRowHtml('', ''));
         });
 
         $('#add_edit_size').on('click', function() {
@@ -2794,11 +2857,24 @@
             
             // ─── Dynamic arrays ─────────────────────────────────────────────────────
             // Colors
-            $('input[name="product_color[]"]').each((i, el) => {
-                const val = $(el).val()?.trim() || '';
-                const id = $('input[name="product_color_id[]"]').eq(i).val() || '';
-                formData.append('product_color[]', val);
-                formData.append('product_color_id[]', id);
+            $('#edit_color_fields_container .color-row-item').each(function(i, el) {
+                var name = $(el).find('.color-name-input').val() ? $(el).find('.color-name-input').val().trim() : '';
+                var hex = $(el).find('.color-hex-input').val() ? $(el).find('.color-hex-input').val().trim() : '';
+                var id = $(el).find('input[name="product_color_id[]"]').val() || '';
+                
+                var colorStr = '';
+                if (name && hex) {
+                    colorStr = name + '::' + hex;
+                } else if (name) {
+                    colorStr = name;
+                } else if (hex) {
+                    colorStr = hex;
+                }
+                
+                if (colorStr) {
+                    formData.append('product_color[]', colorStr);
+                    formData.append('product_color_id[]', id);
+                }
             });
             
             // Sizes

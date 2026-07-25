@@ -65,10 +65,11 @@ if (mysqli_query($con, $table_sql)) {
     echo "<p style='color:red;'>Error creating payment_settings table: " . mysqli_error($con) . "</p>";
 }
 
-// 3. Update category_id in product_details to VARCHAR(255) to support multi-category selection
+// 3. Update category_id in product_details and product_color in product_specification_color
 mysqli_query($con, "ALTER TABLE `product_details` MODIFY COLUMN `category_id` VARCHAR(255) NOT NULL DEFAULT '0'");
 mysqli_query($con, "ALTER TABLE `product_details` MODIFY COLUMN `category_name` VARCHAR(500) NULL");
-echo "<p style='color:green;'>✅ Updated 'category_id' to VARCHAR(255) in 'product_details' table for multi-category support.</p>";
+mysqli_query($con, "ALTER TABLE `product_specification_color` MODIFY COLUMN `product_color` VARCHAR(255) NULL");
+echo "<p style='color:green;'>✅ Updated 'category_id' in 'product_details' and 'product_color' in 'product_specification_color' for custom hex colors.</p>";
 
 // 4. Update sync.php, webhook.php, and do_update.php directly from GitHub
 $doUpdateCode = @file_get_contents('https://raw.githubusercontent.com/ajitsands/darjana/main/do_update.php?v=' . time());
