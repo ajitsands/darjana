@@ -8,10 +8,13 @@
 @ini_set('memory_limit', '512M');
 
 function perform_github_sync() {
-    // Direct zip URL on GitHub codeload to avoid redirect issues
     $zipUrl = "https://codeload.github.com/ajitsands/darjana/zip/refs/heads/main";
     $zipFile = __DIR__ . '/repo_update.zip';
     $extractPath = __DIR__;
+
+    if (!is_writable($extractPath)) {
+        return "ERROR: Root directory " . $extractPath . " is not writable by web server user.";
+    }
 
     $opts = [
         "http" => [
@@ -31,9 +34,11 @@ function perform_github_sync() {
     if ($data && strlen($data) > 1000) {
         @file_put_contents($zipFile, $data);
     } else {
-        // Fallback to cURL if stream_context fails
         $ch = curl_init($zipUrl);
-        $fp = fopen($zipFile, 'wb');
+        $fp = @fopen($zipFile, 'wb');
+        if (!$fp) {
+            return "ERROR: Could not create file " . $zipFile . " (permission denied).";
+        }
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -46,8 +51,15 @@ function perform_github_sync() {
         fclose($fp);
     }
 
-    if (!file_exists($zipFile) || filesize($zipFile) < 1000) {
-        return "Failed to download update from GitHub. Zip file missing or invalid size (" . @filesize($zipFile) . " bytes).";
+    if (!file_exists($zipFile)) {
+        return "ERROR: Zip file repo_update.zip could not be created on server.";
+    }
+
+    $fileSize = filesize($zipFile);
+    if ($fileSize < 1000) {
+        $contentSample = @file_get_contents($zipFile);
+        @unlink($zipFile);
+        return "ERROR: Downloaded Zip file is too small ($fileSize bytes). Sample: " . htmlspecialchars(substr($contentSample, 0, 200));
     }
 
     if (class_exists('ZipArchive')) {
@@ -55,7 +67,11 @@ function perform_github_sync() {
         $openResult = $zip->open($zipFile);
         if ($openResult === TRUE) {
             $tempExtractDir = __DIR__ . '/temp_sync_' . time();
-            @mkdir($tempExtractDir, 0777, true);
+            if (!@mkdir($tempExtractDir, 0777, true)) {
+                @unlink($zipFile);
+                return "ERROR: Could not create temp directory $tempExtractDir (permission denied).";
+            }
+
             $zip->extractTo($tempExtractDir);
             $zip->close();
             @unlink($zipFile);
@@ -63,10 +79,8 @@ function perform_github_sync() {
             $extractedFolders = glob($tempExtractDir . '/darjana-*');
             $sourceDir = !empty($extractedFolders) ? $extractedFolders[0] : $tempExtractDir;
 
-            // Fast selective sync (skipping heavy upload folders to finish in 1 second)
             sync_copy_dir_recursive($sourceDir, $extractPath);
 
-            // Sync to parallel admin folder if cPanel created it outside public_html
             $parallelAdminPath = dirname(__DIR__) . '/admin.darjanafashion.com';
             $sourceAdminPath   = $sourceDir . '/admin.darjanafashion.com';
             if (is_dir($parallelAdminPath) && is_dir($sourceAdminPath)) {
@@ -78,10 +92,11 @@ function perform_github_sync() {
             return "SUCCESS: Website & Admin files synchronized cleanly from GitHub!";
         } else {
             @unlink($zipFile);
-            return "Failed to open downloaded Zip archive (ZipArchive Error Code: $openResult).";
+            return "ERROR: ZipArchive open failed with error code: $openResult";
         }
     } else {
-        return "PHP ZipArchive extension is disabled on server.";
+        @unlink($zipFile);
+        return "ERROR: PHP ZipArchive extension is disabled on server.";
     }
 }
 
