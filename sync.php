@@ -8,30 +8,52 @@
 @ini_set('memory_limit', '512M');
 
 function perform_github_sync() {
-    $zipUrl = "https://github.com/ajitsands/darjana/archive/refs/heads/main.zip";
+    // Direct zip URL on GitHub codeload to avoid redirect issues
+    $zipUrl = "https://codeload.github.com/ajitsands/darjana/zip/refs/heads/main";
     $zipFile = __DIR__ . '/repo_update.zip';
     $extractPath = __DIR__;
 
-    $ch = curl_init($zipUrl);
-    $fp = fopen($zipFile, 'wb');
-    curl_setopt($ch, CURLOPT_FILE, $fp);
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-    curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-    fclose($fp);
+    $opts = [
+        "http" => [
+            "method" => "GET",
+            "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)\r\n",
+            "follow_location" => 1,
+            "timeout" => 60
+        ],
+        "ssl" => [
+            "verify_peer" => false,
+            "verify_peer_name" => false
+        ]
+    ];
+    $context = stream_context_create($opts);
+    $data = @file_get_contents($zipUrl, false, $context);
 
-    if ($httpCode !== 200 || !file_exists($zipFile) || filesize($zipFile) < 100) {
-        return "Failed to download update from GitHub. HTTP Code: $httpCode";
+    if ($data && strlen($data) > 1000) {
+        @file_put_contents($zipFile, $data);
+    } else {
+        // Fallback to cURL if stream_context fails
+        $ch = curl_init($zipUrl);
+        $fp = fopen($zipFile, 'wb');
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+        curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        fclose($fp);
+    }
+
+    if (!file_exists($zipFile) || filesize($zipFile) < 1000) {
+        return "Failed to download update from GitHub. Zip file missing or invalid size (" . @filesize($zipFile) . " bytes).";
     }
 
     if (class_exists('ZipArchive')) {
         $zip = new ZipArchive();
-        if ($zip->open($zipFile) === TRUE) {
+        $openResult = $zip->open($zipFile);
+        if ($openResult === TRUE) {
             $tempExtractDir = __DIR__ . '/temp_sync_' . time();
             @mkdir($tempExtractDir, 0777, true);
             $zip->extractTo($tempExtractDir);
@@ -55,7 +77,8 @@ function perform_github_sync() {
 
             return "SUCCESS: Website & Admin files synchronized cleanly from GitHub!";
         } else {
-            return "Failed to open downloaded Zip archive.";
+            @unlink($zipFile);
+            return "Failed to open downloaded Zip archive (ZipArchive Error Code: $openResult).";
         }
     } else {
         return "PHP ZipArchive extension is disabled on server.";
