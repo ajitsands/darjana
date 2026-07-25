@@ -144,7 +144,32 @@
                     <div class="col-md-3">
                         <label for="product_color">Product Color  <span style="color: red;"> *</span></label>
                         <div class="input-group">
-                            <input type="text" id="product_color" class="form-control form-control-sm" placeholder="Enter Product Color" />
+                            <select class="form-select form-select-sm color-preset-select" style="max-width: 120px;">
+                                <option value="">-- Preset --</option>
+                                <option value="Black">Black</option>
+                                <option value="White">White</option>
+                                <option value="Red">Red</option>
+                                <option value="Blue">Blue</option>
+                                <option value="Green">Green</option>
+                                <option value="Navy">Navy</option>
+                                <option value="Pink">Pink</option>
+                                <option value="Gold">Gold</option>
+                                <option value="Silver">Silver</option>
+                                <option value="Yellow">Yellow</option>
+                                <option value="Purple">Purple</option>
+                                <option value="Gray">Gray</option>
+                                <option value="Brown">Brown</option>
+                                <option value="Beige">Beige</option>
+                                <option value="Maroon">Maroon</option>
+                                <option value="Olive">Olive</option>
+                                <option value="Burgundy">Burgundy</option>
+                                <option value="Teal">Teal</option>
+                                <option value="Cream">Cream</option>
+                                <option value="Lavender">Lavender</option>
+                                <option value="Orange">Orange</option>
+                                <option value="Rose">Rose</option>
+                            </select>
+                            <input type="text" id="product_color" name="product_color[]" class="form-control form-control-sm" placeholder="Enter Product Color" />
                             <button type="button" class="btn btn-primary" id="add_new_color"><i class="bi bi-plus"></i></button>
                         </div>
                         <div id="color_fields_container"></div>

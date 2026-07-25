@@ -1137,12 +1137,36 @@
             $('#edit_sub_category_id').val('');
         });
 
+        function getColorPresetSelectHtml(selectedColor) {
+            selectedColor = selectedColor || '';
+            var presetColors = [
+                'Black', 'White', 'Red', 'Blue', 'Green', 'Navy', 'Pink', 'Gold', 
+                'Silver', 'Yellow', 'Purple', 'Gray', 'Brown', 'Beige', 'Maroon', 
+                'Olive', 'Burgundy', 'Teal', 'Cream', 'Lavender', 'Orange', 'Rose'
+            ];
+            var html = '<select class="form-select form-select-sm color-preset-select" style="max-width: 120px;"><option value="">-- Preset --</option>';
+            presetColors.forEach(function(c) {
+                var isSel = selectedColor && selectedColor.toLowerCase() === c.toLowerCase() ? 'selected' : '';
+                html += `<option value="${c}" ${isSel}>${c}</option>`;
+            });
+            html += '</select>';
+            return html;
+        }
+
+        $(document).on('change', '.color-preset-select', function() {
+            var val = $(this).val();
+            if (val) {
+                $(this).closest('.input-group').find('input[name="product_color[]"], input[placeholder="Enter Product Color"]').val(val);
+            }
+        });
+
         $('#add_new_color').on('click', function() {
             var newColorField = '<div class="input-group input-group-merge mt-2 dynamic_color">' +
-                '<input type="text" class="form-control form-control-sm" placeholder="Enter Product Color" />' +
+                getColorPresetSelectHtml() +
+                '<input type="text" class="form-control form-control-sm" name="product_color[]" placeholder="Enter Product Color" />' +
                 '<button type="button" class="btn btn-danger remove-field"><i class="bi bi-x-lg"></i> </button>' +
                 '</div>';
-            $('#product_color').parent().append(newColorField);
+            $('#color_fields_container').append(newColorField);
         });
 
         $('#add_new_size').on('click', function() {
@@ -1998,8 +2022,11 @@
             formData.append('primary_image', $('input[name="primary_image"]:checked').val() || '');
             
             // Collect colors
-            $('input[placeholder="Enter Product Color"]').each(function() {
-                formData.append('product_color[]', $(this).val().trim());
+            $('input[name="product_color[]"], input[placeholder="Enter Product Color"]').each(function() {
+                var cVal = $(this).val() ? $(this).val().trim() : '';
+                if (cVal) {
+                    formData.append('product_color[]', cVal);
+                }
             });
             
             // Collect sizes
@@ -2293,10 +2320,12 @@
                         // Populate colors
                         $('#edit_color_fields_container').html('');
                         for (var i = 0; i < productColors.length; i++) {
+                            var colorVal = productColors[i].color || '';
                             var newColorField = '<div class="input-group input-group-merge mt-2" data-id="' +
                                 productColors[i].id + '">' +
+                                getColorPresetSelectHtml(colorVal) +
                                 '<input type="text" class="form-control" name="product_color[]" value="' +
-                                escapeHtml(productColors[i].color || '') + '" placeholder="Product Color" />' +
+                                escapeHtml(colorVal) + '" placeholder="Product Color" />' +
                                 '<input type="hidden" name="product_color_id[]" value="' +
                                 productColors[i].id + '" />' +
                                 '<button type="button" class="btn btn-danger remove-field">Remove</button>' +
@@ -2514,6 +2543,7 @@
 
         $('#add_edit_color').on('click', function() {
             var newColorField = '<div class="input-group input-group-merge mt-2" data-id="">' +
+                getColorPresetSelectHtml() +
                 '<input type="text" class="form-control" name="product_color[]" placeholder="Enter Product Color" />' +
                 '<input type="hidden" name="product_color_id[]" value="" />' +
                 '<button type="button" class="btn btn-danger remove-field">Remove</button>' +

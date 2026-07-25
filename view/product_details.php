@@ -2743,7 +2743,7 @@ if ($row = mysqli_fetch_assoc($result)) {
             const colorMap = {
                 'RED': '#FF0000',
                 'BLUE': '#0000FF',
-                'GREEN': '#00FF00',
+                'GREEN': '#008000',
                 'BLACK': '#000000',
                 'WHITE': '#FFFFFF',
                 'ORANGE': '#FFA500',
@@ -2753,27 +2753,46 @@ if ($row = mysqli_fetch_assoc($result)) {
                 'YELLOW': '#FFFF00',
                 'PURPLE': '#800080',
                 'GRAY': '#808080',
+                'GREY': '#808080',
                 'BROWN': '#A52A2A',
-                'BEIGE': '#F5F5DC'
+                'BEIGE': '#F5F5DC',
+                'MAROON': '#800000',
+                'OLIVE': '#808000',
+                'BURGUNDY': '#800020',
+                'TEAL': '#008080',
+                'CREAM': '#FFFDD0',
+                'LAVENDER': '#E6E6FA',
+                'CHARCOAL': '#36454F',
+                'ROSE': '#FF007F',
+                'NAVY': '#000080',
+                'LIGHT BLUE': '#ADD8E6',
+                'DARK BLUE': '#00008B',
+                'KHAKI': '#F0E68C',
+                'OFF WHITE': '#FAFAFA'
             };
         
             let colorOptions = '';
-            if (colors.length > 0) {
-                colors.forEach((color, index) => {
-                    const colorName = color.toUpperCase();
-                    const colorCode = colorMap[colorName] || '#CCCCCC';
+            const validColors = (colors || []).filter(c => c && c.toString().trim() !== '' && c.toString().trim().toLowerCase() !== 'none');
+
+            if (validColors.length > 0) {
+                validColors.forEach((color, index) => {
+                    const rawColor = color.toString().trim();
+                    const colorName = rawColor.toUpperCase();
+                    const colorCode = colorMap[colorName] || (colorName.startsWith('#') ? colorName : '#888888');
                     
                     colorOptions += `
-                        <div class="color-option">
-                            <input type="radio" class="form-check-input" 
+                        <div class="color-option d-inline-flex align-items-center me-3 mb-2 p-1 rounded" style="cursor: pointer;">
+                            <input type="radio" class="form-check-input me-1" 
                                 id="color-option-${index}" 
                                 name="product_color" 
-                                value="${colorName}"
-                                ${index === 0 ? 'checked' : ''}>
-                            <label for="color-option-${index}" 
-                                style="background-color: ${colorCode}; 
-                                ${colorName === 'WHITE' ? 'border: 2px solid #ddd;' : ''}">
+                                value="${rawColor}"
+                                ${index === 0 ? 'checked' : ''}
+                                style="cursor: pointer;">
+                            <label for="color-option-${index}" class="color-swatch-label rounded-circle me-1" 
+                                style="width: 22px; height: 22px; display: inline-block; cursor: pointer; vertical-align: middle; background-color: ${colorCode}; 
+                                ${colorName === 'WHITE' || colorName === 'OFF WHITE' || colorCode.toUpperCase() === '#FFFFFF' ? 'border: 2px solid #ccc;' : 'border: 1px solid rgba(0,0,0,0.1);'}">
                             </label>
+                            <span class="color-text-name small fw-medium" style="cursor: pointer;">${rawColor}</span>
                         </div>
                     `;
                 });
