@@ -43,10 +43,18 @@
                                     <!-- Images will be populated by JavaScript -->
                                 </div>
                             </div>
-                            <!-- Thumbnail Swiper -->
-                            <div class="swiper product-gallery-swiper thumb-swiper-lg">
-                                <div class="swiper-wrapper">
-                                    <!-- Thumbnails will be populated by JavaScript -->
+                            <!-- Thumbnail Swiper Container with Navigation Arrows -->
+                            <div class="thumb-swiper-container position-relative">
+                                <div class="swiper-button-prev thumb-btn-prev">
+                                    <i class="feather icon-chevron-left fa fa-chevron-left"></i>
+                                </div>
+                                <div class="swiper product-gallery-swiper thumb-swiper-lg">
+                                    <div class="swiper-wrapper">
+                                        <!-- Thumbnails will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                                <div class="swiper-button-next thumb-btn-next">
+                                    <i class="feather icon-chevron-right fa fa-chevron-right"></i>
                                 </div>
                             </div>
                         </div>

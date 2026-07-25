@@ -601,22 +601,38 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             /* ========== SIZE OPTIONS STYLING - GOLD THEME ========== */
             .product-size .btn-group {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+            }
+
+            .product-size .btn-check {
+                position: absolute !important;
+                clip: rect(0, 0, 0, 0) !important;
+                opacity: 0 !important;
+                width: 0 !important;
+                height: 0 !important;
+                pointer-events: none !important;
             }
         
             .product-size .btn {
-                min-width: 45px;
-                padding: 0.6rem 1rem;
+                flex: 0 0 auto !important;
+                min-width: 44px;
+                height: 44px;
+                padding: 0 6px;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
                 margin-right: 0;
                 margin-bottom: 0;
-                font-size: 0.95rem;
+                font-size: 0.92rem;
                 border: 2px solid #e0e0e0;
                 background: white;
                 color: #333;
                 transition: all 0.3s ease;
-                border-radius: 50 !important;
+                border-radius: 50% !important;
                 font-weight: 600;
                 text-transform: uppercase;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -1194,18 +1210,34 @@ if ($row = mysqli_fetch_assoc($result)) {
                 font-weight: 500;
             }
             .product-length .btn-group {
-                flex-wrap: wrap;
-                gap: 8px;
-                /* Optional: better visual grouping */
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
                 padding: 4px 0;
+            }
+
+            .product-length .btn-check {
+                position: absolute !important;
+                clip: rect(0, 0, 0, 0) !important;
+                opacity: 0 !important;
+                width: 0 !important;
+                height: 0 !important;
+                pointer-events: none !important;
             }
             
             .product-length .btn {
-                min-width: 45px;
-                padding: 0.6rem 1rem;
+                flex: 0 0 auto !important;
+                min-width: 44px;
+                height: 44px;
+                padding: 0 6px;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
                 margin-right: 0;
                 margin-bottom: 0;
-                font-size: 0.95rem;
+                font-size: 0.92rem;
                 border: 2px solid #e0e0e0;
                 background: white;
                 color: #333;
@@ -1233,12 +1265,18 @@ if ($row = mysqli_fetch_assoc($result)) {
                 box-shadow: 0 5px 10px rgba(255, 215, 0, 0.25);
             }
             
-            /* Make even smaller on mobile if needed */
+            /* Responsive layout for mobile */
             @media (max-width: 576px) {
-                .product-length .btn {
-                    min-width: 42px;
-                    padding: 0.5rem 0.8rem;
-                    font-size: 0.88rem;
+                .product-length .btn-group,
+                .product-size .btn-group {
+                    gap: 6px !important;
+                }
+                .product-length .btn,
+                .product-size .btn {
+                    min-width: 38px !important;
+                    height: 38px !important;
+                    padding: 0 4px !important;
+                    font-size: 0.85rem !important;
                 }
             }
             .para-text {

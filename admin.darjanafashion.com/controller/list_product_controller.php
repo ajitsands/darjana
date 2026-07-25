@@ -22,7 +22,7 @@ class ListProductController
                 LEFT JOIN product_specification_color psc ON pd.ids = psc.product_id 
                 LEFT JOIN product_specification_size pss ON pd.ids = pss.product_id 
                 WHERE pd.status = 'Active' 
-                AND (:category_id = '' OR pd.category_id = :category_id)
+                AND (:category_id = '' OR FIND_IN_SET(:category_id, REPLACE(pd.category_id, ' ', '')) > 0)
                 AND (:sub_category_id = '' OR pd.sub_category_id = :sub_category_id)
                 AND (:color = '' OR psc.product_color = :color)
                 AND (:size = '' OR pss.product_size = :size)

@@ -26,16 +26,21 @@ class ProductController
         
 
         if (isset($filters['cat_id']) && $filters['cat_id'] !== '' && $filters['cat_id'] !== null && $filters['cat_id'] != 0) {
-            $conditions[] = 'p.category_id = ?';
+            $conditions[] = 'FIND_IN_SET(?, REPLACE(p.category_id, " ", ""))';
             $params[] = (int)$filters['cat_id'];
         }
 
         // Category filter
         if (!empty($filters['category'])) {
             $categoryIds = is_array($filters['category']) ? $filters['category'] : [$filters['category']];
-            $placeholders = implode(',', array_fill(0, count($categoryIds), '?'));
-            $conditions[] = "p.category_id IN ($placeholders)";
-            $params = array_merge($params, array_map('intval', $categoryIds));
+            $catConds = [];
+            foreach ($categoryIds as $cId) {
+                $catConds[] = 'FIND_IN_SET(?, REPLACE(p.category_id, " ", ""))';
+                $params[] = (int)$cId;
+            }
+            if (!empty($catConds)) {
+                $conditions[] = '(' . implode(' OR ', $catConds) . ')';
+            }
         }
         
         // Price range filter
@@ -424,7 +429,7 @@ class ProductController
         
         // Add category filter if provided
         if (isset($cat_id) && is_numeric($cat_id) && (int)$cat_id > 0) {
-            $query .= " AND p.category_id = " . (int)$cat_id;
+            $query .= " AND FIND_IN_SET(" . (int)$cat_id . ", REPLACE(p.category_id, ' ', ''))";
         }
         
         // Add search filter if provided

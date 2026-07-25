@@ -495,14 +495,15 @@ if ($row = mysqli_fetch_assoc($result)) {
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             border: 2px solid transparent;
-            width: 100px;
-            height: 100px;
+            width: 100%;
+            height: 75px;
             object-fit: cover;
+            display: block;
         }
     
         /* Active thumbnail with gold border */
         .thumb-swiper-lg .swiper-slide-thumb-active img {
-            border: 2px solid #FFD700;
+            border: 2px solid #FFD700 !important;
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
             opacity: 1;
         }
@@ -645,22 +646,38 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             /* ========== SIZE OPTIONS STYLING - GOLD THEME ========== */
             .product-size .btn-group {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+            }
+
+            .product-size .btn-check {
+                position: absolute !important;
+                clip: rect(0, 0, 0, 0) !important;
+                opacity: 0 !important;
+                width: 0 !important;
+                height: 0 !important;
+                pointer-events: none !important;
             }
         
             .product-size .btn {
-                min-width: 45px;
-                padding: 0.6rem 1rem;
+                flex: 0 0 auto !important;
+                min-width: 44px;
+                height: 44px;
+                padding: 0 6px;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
                 margin-right: 0;
                 margin-bottom: 0;
-                font-size: 0.95rem;
+                font-size: 0.92rem;
                 border: 2px solid #e0e0e0;
                 background: white;
                 color: #333;
                 transition: all 0.3s ease;
-                border-radius: 50 !important;
+                border-radius: 50% !important;
                 font-weight: 600;
                 text-transform: uppercase;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -799,48 +816,63 @@ if ($row = mysqli_fetch_assoc($result)) {
                 border-radius: 0 !important;
             }
         
-            /* Thumbnail Swiper Styling */
+            /* Thumbnail Swiper Container & Navigation Styling */
+            .thumb-swiper-container {
+                position: relative;
+                width: 100%;
+                margin-top: 15px;
+                padding: 0 35px;
+            }
+
             .thumb-swiper-lg {
                 overflow: hidden;
-                margin-top: 15px;
+                width: 100%;
+                position: relative;
             }
         
             .thumb-swiper-lg .swiper-slide {
                 opacity: 0.6;
                 transition: opacity 0.3s ease, border 0.3s ease;
                 cursor: pointer;
-                width: auto;
             }
         
             .thumb-swiper-lg .swiper-slide-thumb-active {
                 opacity: 1;
             }
         
-            .thumb-swiper-lg .swiper-wrapper {
-                transform: none !important;
-                display: flex;
-                justify-content: center;
-                gap: 10px;
-            }
-        
             .thumb-btn-prev,
             .thumb-btn-next {
-                width: 30px;
-                height: 30px;
+                width: 28px;
+                height: 28px;
                 background: #fff;
-                border-radius: 0 !important;
+                border-radius: 50% !important;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
                 cursor: pointer;
                 transition: all 0.3s ease;
                 position: absolute;
                 z-index: 10;
                 top: 50%;
                 transform: translateY(-50%);
-                border: 2px solid #FFD700;
+                border: 1px solid #FFD700;
                 color: #000;
+                font-size: 12px;
+                margin: 0;
+            }
+
+            .thumb-btn-prev::after,
+            .thumb-btn-next::after {
+                display: none !important;
+            }
+
+            .thumb-btn-prev {
+                left: 0;
+            }
+
+            .thumb-btn-next {
+                right: 0;
             }
         
             .thumb-btn-prev:hover,
@@ -848,6 +880,13 @@ if ($row = mysqli_fetch_assoc($result)) {
                 background: #FFD700;
                 color: #000;
                 border-color: #000;
+            }
+
+            .thumb-btn-prev.swiper-button-disabled,
+            .thumb-btn-next.swiper-button-disabled {
+                opacity: 0.3;
+                cursor: default;
+                pointer-events: none;
             }
         
             /* Product tag badges with gold theme */
@@ -1238,18 +1277,34 @@ if ($row = mysqli_fetch_assoc($result)) {
                 font-weight: 500;
             }
             .product-length .btn-group {
-                flex-wrap: wrap;
-                gap: 8px;
-                /* Optional: better visual grouping */
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
                 padding: 4px 0;
+            }
+
+            .product-length .btn-check {
+                position: absolute !important;
+                clip: rect(0, 0, 0, 0) !important;
+                opacity: 0 !important;
+                width: 0 !important;
+                height: 0 !important;
+                pointer-events: none !important;
             }
             
             .product-length .btn {
-                min-width: 45px;
-                padding: 0.6rem 1rem;
+                flex: 0 0 auto !important;
+                min-width: 44px;
+                height: 44px;
+                padding: 0 6px;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
                 margin-right: 0;
                 margin-bottom: 0;
-                font-size: 0.95rem;
+                font-size: 0.92rem;
                 border: 2px solid #e0e0e0;
                 background: white;
                 color: #333;
@@ -1277,12 +1332,18 @@ if ($row = mysqli_fetch_assoc($result)) {
                 box-shadow: 0 5px 10px rgba(255, 215, 0, 0.25);
             }
             
-            /* Make even smaller on mobile if needed */
+            /* Responsive layout for mobile */
             @media (max-width: 576px) {
-                .product-length .btn {
-                    min-width: 42px;
-                    padding: 0.5rem 0.8rem;
-                    font-size: 0.88rem;
+                .product-length .btn-group,
+                .product-size .btn-group {
+                    gap: 6px !important;
+                }
+                .product-length .btn,
+                .product-size .btn {
+                    min-width: 38px !important;
+                    height: 38px !important;
+                    padding: 0 4px !important;
+                    font-size: 0.85rem !important;
                 }
             }
             .para-text {
@@ -2781,9 +2842,19 @@ if ($row = mysqli_fetch_assoc($result)) {
             updatePageTranslations();
         }
 
+        let mainSwiperInstance = null;
+        let thumbSwiperInstance = null;
+
         function initializePlugins() {
+            if (mainSwiperInstance && typeof mainSwiperInstance.destroy === 'function') {
+                try { mainSwiperInstance.destroy(true, true); } catch(e) {}
+            }
+            if (thumbSwiperInstance && typeof thumbSwiperInstance.destroy === 'function') {
+                try { thumbSwiperInstance.destroy(true, true); } catch(e) {}
+            }
+
             // Initialize main gallery swiper
-            const mainSwiper = new Swiper('.product-gallery-swiper2', {
+            mainSwiperInstance = new Swiper('.product-gallery-swiper2', {
                 slidesPerView: 1,
                 spaceBetween: 10,
                 navigation: {
@@ -2792,30 +2863,45 @@ if ($row = mysqli_fetch_assoc($result)) {
                 },
             });
         
-            // Initialize thumbnail swiper
-            const thumbSwiper = new Swiper('.thumb-swiper-lg', {
-                slidesPerView: 'auto', // Show all thumbnails or adjust based on design
+            // Initialize thumbnail swiper with left & right navigation arrows
+            thumbSwiperInstance = new Swiper('.thumb-swiper-lg', {
+                slidesPerView: 4,
                 spaceBetween: 10,
-                watchSlidesVisibility: true, // Highlight active thumbnail
-                centerInsufficientSlides: true, // Center if fewer thumbnails
-                allowTouchMove: false, // Prevent sliding of thumbnails via touch/drag
-                // Disable freeMode and watchSlidesProgress to prevent auto-sliding
+                watchSlidesProgress: true,
+                centerInsufficientSlides: true,
+                allowTouchMove: true,
+                navigation: {
+                    nextEl: '.thumb-btn-next',
+                    prevEl: '.thumb-btn-prev',
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 3,
+                        spaceBetween: 8
+                    },
+                    480: {
+                        slidesPerView: 4,
+                        spaceBetween: 10
+                    }
+                }
             });
         
-            // Handle thumbnail clicks to control main swiper
-            $('.thumb-swiper-lg .swiper-slide').on('click', function () {
-                const index = $(this).index(); // Get the index of the clicked thumbnail
-                mainSwiper.slideTo(index); // Move main swiper to corresponding slide
-                // Update active thumbnail
+            // Handle thumbnail clicks to control main swiper (delegated event)
+            $('.thumb-swiper-lg').off('click', '.swiper-slide').on('click', '.swiper-slide', function () {
+                const index = $(this).index();
+                mainSwiperInstance.slideTo(index);
                 $('.thumb-swiper-lg .swiper-slide').removeClass('swiper-slide-thumb-active');
                 $(this).addClass('swiper-slide-thumb-active');
             });
         
             // Sync active thumbnail when main swiper changes
-            mainSwiper.on('slideChange', function () {
-                const activeIndex = mainSwiper.activeIndex;
+            mainSwiperInstance.on('slideChange', function () {
+                const activeIndex = mainSwiperInstance.activeIndex;
                 $('.thumb-swiper-lg .swiper-slide').removeClass('swiper-slide-thumb-active');
                 $('.thumb-swiper-lg .swiper-slide').eq(activeIndex).addClass('swiper-slide-thumb-active');
+                if (thumbSwiperInstance && typeof thumbSwiperInstance.slideTo === 'function') {
+                    thumbSwiperInstance.slideTo(activeIndex);
+                }
             });
         
             // Initialize related products swiper

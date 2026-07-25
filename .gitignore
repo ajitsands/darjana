@@ -8,3 +8,5 @@ BackUP.zip
 session/*
 cache/*
 error_log/*
+*.log
+

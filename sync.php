@@ -7,14 +7,6 @@
 @set_time_limit(300);
 @ini_set('memory_limit', '512M');
 
-$secret = 'DarjanaSecretKey2026';
-$providedKey = $_GET['key'] ?? $_POST['key'] ?? '';
-
-if ($providedKey !== $secret) {
-    http_response_code(403);
-    die("Access Denied: Invalid Key.");
-}
-
 function perform_github_sync() {
     $zipUrl = "https://github.com/ajitsands/darjana/archive/refs/heads/main.zip";
     $zipFile = __DIR__ . '/repo_update.zip';
@@ -103,6 +95,17 @@ function sync_delete_dir_recursive($dir) {
     return @rmdir($dir);
 }
 
-$res = perform_github_sync();
-echo "<h2>$res</h2>";
+// Only execute standalone key check when accessed directly via browser/HTTP
+if (basename($_SERVER['SCRIPT_FILENAME'] ?? '') === 'sync.php') {
+    $secret = 'DarjanaSecretKey2026';
+    $providedKey = $_GET['key'] ?? $_POST['key'] ?? '';
+
+    if ($providedKey !== $secret) {
+        http_response_code(403);
+        die("Access Denied: Invalid Key.");
+    }
+
+    $res = perform_github_sync();
+    echo "<h2>$res</h2>";
+}
 ?>

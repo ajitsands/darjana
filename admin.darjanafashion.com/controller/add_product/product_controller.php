@@ -80,7 +80,7 @@ class ProductController
         
         
         $vendor_id = $_SESSION["vendor_id"] ?? 0;
-        $array[1] = "SELECT * FROM product_details WHERE vendor_id = '" . $vendor_id . "' ORDER BY ids DESC";
+        $array[1] = "SELECT p.*, (SELECT pi.product_image FROM product_image pi WHERE pi.product_id = p.ids AND pi.status = 'Active' ORDER BY pi.is_primary DESC, pi.ids ASC LIMIT 1) AS product_image FROM product_details p WHERE p.vendor_id = '" . $vendor_id . "' ORDER BY p.ids DESC";
         $array[2] = "SELECT ids FROM product_details ORDER BY ids DESC LIMIT 1;";
         $array[3] = "UPDATE product_details SET status ='" . $this->new_status . "'  WHERE ids ='" . $this->product_ids . "' ";
         $array[4] = "DELETE FROM product_details WHERE ids ='" . $this->productId . "' ";
@@ -99,10 +99,10 @@ class ProductController
         $array[15] = "SELECT * FROM category_details where  ids !='0'";
         $array[16] = "UPDATE category_details SET category_type='" . $this->categoryName . "' WHERE ids ='" . $this->categoryId . "' ";
         $vendor_id = $_SESSION["vendor_id"] ?? '';
-        $array[17] = "SELECT * FROM product_details WHERE vendor_id = '" . $vendor_id . "' AND featured = 'yes' ORDER BY ids DESC";
-        $array[18] = "SELECT * FROM product_details WHERE vendor_id = '" . $vendor_id . "' AND collection_type = 'summer' ORDER BY ids DESC";
-        $array[19] = "SELECT * FROM product_details WHERE vendor_id = '" . $vendor_id . "' AND collection_type = 'winter' ORDER BY ids DESC";
-        $array[20] = "SELECT * FROM product_details WHERE vendor_id = '" . $vendor_id . "' AND collection_type = 'monsoon' ORDER BY ids DESC";
+        $array[17] = "SELECT p.*, (SELECT pi.product_image FROM product_image pi WHERE pi.product_id = p.ids AND pi.status = 'Active' ORDER BY pi.is_primary DESC, pi.ids ASC LIMIT 1) AS product_image FROM product_details p WHERE p.vendor_id = '" . $vendor_id . "' AND p.featured = 'yes' ORDER BY p.ids DESC";
+        $array[18] = "SELECT p.*, (SELECT pi.product_image FROM product_image pi WHERE pi.product_id = p.ids AND pi.status = 'Active' ORDER BY pi.is_primary DESC, pi.ids ASC LIMIT 1) AS product_image FROM product_details p WHERE p.vendor_id = '" . $vendor_id . "' AND p.collection_type = 'summer' ORDER BY p.ids DESC";
+        $array[19] = "SELECT p.*, (SELECT pi.product_image FROM product_image pi WHERE pi.product_id = p.ids AND pi.status = 'Active' ORDER BY pi.is_primary DESC, pi.ids ASC LIMIT 1) AS product_image FROM product_details p WHERE p.vendor_id = '" . $vendor_id . "' AND p.collection_type = 'winter' ORDER BY p.ids DESC";
+        $array[20] = "SELECT p.*, (SELECT pi.product_image FROM product_image pi WHERE pi.product_id = p.ids AND pi.status = 'Active' ORDER BY pi.is_primary DESC, pi.ids ASC LIMIT 1) AS product_image FROM product_details p WHERE p.vendor_id = '" . $vendor_id . "' AND p.collection_type = 'monsoon' ORDER BY p.ids DESC";
         $array[21] = "UPDATE product_details SET featured = 'no' WHERE ids = '" . $this->product_ids . "'";
         $array[22] = "UPDATE product_details SET collection_type = '' WHERE ids = '" . $this->product_ids . "'";
         $array[23] = "UPDATE product_details SET current_display = 0";
@@ -686,6 +686,7 @@ class ProductController
                 // Escape strings
                 $productDescription = $this->varDBConnection->real_escape_string($productDescription);
                 $productDescriptionArabic = $this->varDBConnection->real_escape_string($productDescriptionArabic);
+                $categoryId = $this->varDBConnection->real_escape_string($categoryId);
                 $categoryName = $this->varDBConnection->real_escape_string($categoryName);
                 $subCategoryName = $this->varDBConnection->real_escape_string($subCategoryName);
                 $productName = $this->varDBConnection->real_escape_string($productName);

@@ -146,7 +146,7 @@ class ProductDetailsController
                     LEFT JOIN sub_category_details scd ON pd.sub_category_id = scd.ids
                     LEFT JOIN product_image pi ON pd.ids = pi.product_id AND pi.status = 'Active'
                     WHERE 
-                        pd.category_id = (SELECT category_id FROM product_details WHERE ids = $productId)
+                        EXISTS (SELECT 1 FROM product_details target WHERE target.ids = $productId AND (FIND_IN_SET(pd.category_id, REPLACE(target.category_id, ' ', '')) > 0 OR FIND_IN_SET(target.category_id, REPLACE(pd.category_id, ' ', '')) > 0 OR pd.category_id = target.category_id))
                         AND pd.ids != $productId 
                         AND pd.status = 'Active'
                     GROUP BY pd.ids

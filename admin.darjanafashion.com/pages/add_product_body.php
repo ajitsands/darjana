@@ -15,8 +15,7 @@
                     <div class="col-md-4">
                         <div class="input-group input-group-merge">
                             <div class="form-floating form-floating-outline">
-                                <select id="category_name" class="form-control form-control-sm" required>
-                                    <option value="">Select Category</option>
+                                <select id="category_name" class="form-control form-control-sm" multiple="multiple" required>
                                     <option value="add_new_category">Add New Category</option>
                                 </select>
                                 <label for="category_name">Category Name<span style="color: red;"> *</span></label>
@@ -271,6 +270,7 @@
                             <tr>
                                 <th></th>
                                 <th>Sl No</th>
+                                <th>Image</th>
                                 <th>Product Name</th>
                                 <th>Category</th>
                                 <th>Brand Name</th>
@@ -459,8 +459,7 @@
                             <label for="edit_category_name" class="form-label fw-bold">
                                 <i class="fas fa-layer-group me-2"></i>Category Name
                             </label>
-                            <select id="edit_category_name" class="form-select shadow-sm" required>
-                                <option value="">Select Category</option>
+                            <select id="edit_category_name" class="form-select shadow-sm" multiple="multiple" required>
                             </select>
                         </div>
                         <div class="col-md-6 mb-3" style="display:none;">
