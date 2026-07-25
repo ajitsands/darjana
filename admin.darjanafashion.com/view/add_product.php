@@ -1758,13 +1758,13 @@
             if (!Array.isArray(categoryIdsRaw)) {
                 categoryIdsRaw = [categoryIdsRaw];
             }
-            categoryIdsRaw = categoryIdsRaw.filter(function(v) { return v && v !== 'add_new_category'; });
+            categoryIdsRaw = categoryIdsRaw.filter(function(v) { return v && v !== 'add_new_category' && v !== ''; });
             
             var categoryNamesArr = [];
             $('#category_name option:selected').each(function() {
                 var val = $(this).val();
                 var txt = $(this).text().trim();
-                if (val && val !== 'add_new_category' && txt !== '') {
+                if (val && val !== 'add_new_category' && val !== '' && !txt.includes('Please Select')) {
                     categoryNamesArr.push(txt);
                 }
             });
@@ -2674,13 +2674,13 @@
             if (!Array.isArray(editCatVals)) {
                 editCatVals = [editCatVals];
             }
-            editCatVals = editCatVals.filter(function(v) { return v && v !== 'add_new_category'; });
+            editCatVals = editCatVals.filter(function(v) { return v && v !== 'add_new_category' && v !== ''; });
             
             var editCatNamesArr = [];
             $('#edit_category_name option:selected').each(function() {
                 var txt = $(this).text().trim();
                 var val = $(this).val();
-                if (val && val !== 'add_new_category' && txt !== '') {
+                if (val && val !== 'add_new_category' && val !== '' && !txt.includes('Please Select')) {
                     editCatNamesArr.push(txt);
                 }
             });
@@ -2874,12 +2874,13 @@
                 },
                 success: function(response) {
                     var categories = JSON.parse(response);
-                    var options = '<option value="" disabled selected>- Please Select -</option>';
+                    var options = '';
                     categories.forEach(function(category) {
                         options += `<option value="${category.ids}">${category.category_type}</option>`;
                     });
                     options += '<option value="add_new_category">Add New Category</option>';
-                    $('#category_name').html(options).trigger('change');
+                    $('#category_name').html(options);
+                    $('#category_name').val(null).trigger('change');
                 },
                 error: function() {
                     console.error('Error fetching categories');
