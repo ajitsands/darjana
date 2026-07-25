@@ -2092,6 +2092,10 @@
                 var name = $(this).find('.color-name-input').val() ? $(this).find('.color-name-input').val().trim() : '';
                 var hex = $(this).find('.color-hex-input').val() ? $(this).find('.color-hex-input').val().trim() : '';
                 
+                if (name && !name.startsWith('#')) {
+                    name = name.toLowerCase().replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+                }
+
                 var colorStr = '';
                 if (name && hex) {
                     colorStr = name + '::' + hex;
@@ -2862,6 +2866,10 @@
                 var hex = $(el).find('.color-hex-input').val() ? $(el).find('.color-hex-input').val().trim() : '';
                 var id = $(el).find('input[name="product_color_id[]"]').val() || '';
                 
+                if (name && !name.startsWith('#')) {
+                    name = name.toLowerCase().replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+                }
+
                 var colorStr = '';
                 if (name && hex) {
                     colorStr = name + '::' + hex;

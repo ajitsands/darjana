@@ -2747,6 +2747,10 @@ if ($row = mysqli_fetch_assoc($result)) {
                         colorCode = colorMap[colorName.toUpperCase()] || '#888888';
                     }
 
+                    const displayColorName = colorName.startsWith('#') 
+                        ? colorName 
+                        : colorName.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+
                     colorOptions += `
                         <div class="color-option d-inline-flex align-items-center me-3 mb-2 p-1" style="cursor: pointer;">
                             <input type="radio" class="form-check-input d-none" 
@@ -2755,11 +2759,11 @@ if ($row = mysqli_fetch_assoc($result)) {
                                 value="${rawStr}"
                                 ${index === 0 ? 'checked' : ''}>
                             <label for="color-option-${index}" class="color-swatch-label rounded-circle me-2" 
-                                title="${colorName}"
+                                title="${displayColorName}"
                                 style="width: 36px; height: 36px; display: inline-block; cursor: pointer; vertical-align: middle; background-color: ${colorCode}; 
                                 ${colorName.toUpperCase() === 'WHITE' || colorName.toUpperCase() === 'OFF WHITE' || colorCode.toUpperCase() === '#FFFFFF' ? 'border: 2px solid #ccc !important;' : 'border: 1px solid rgba(0,0,0,0.15);'}">
                             </label>
-                            <span class="color-text-name small fw-medium" style="font-size: 14px; cursor: pointer;">${colorName}</span>
+                            <span class="color-text-name small fw-medium" style="font-size: 14px; cursor: pointer; text-transform: capitalize;">${displayColorName}</span>
                         </div>
                     `;
                 });
