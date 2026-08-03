@@ -548,7 +548,8 @@ $txt = [
         align-items: center;
     }
 
-    /* Sub-menu pointer / dropdown arrow styling - White and clearly visible */
+    /* Small dropdown arrow icon next to ABAYAS on mobile slider menu & desktop */
+    .abayas-dropdown-arrow,
     .sub-menu-down > a > i,
     .menu-item-has-children > a > i,
     .has-mega-menu > a > i,
@@ -558,11 +559,27 @@ $txt = [
         color: #ffffff !important;
         display: inline-block !important;
         vertical-align: middle !important;
-        font-size: 12px !important;
-        margin-left: 6px !important;
+        font-size: 11px !important;
+        margin-left: 8px !important;
         opacity: 1 !important;
         visibility: visible !important;
         background: transparent !important;
+    }
+
+    @media (max-width: 991.98px) {
+        .header-nav .nav > li.sub-menu-down > a,
+        .header-nav .nav > li.menu-item-has-children > a {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 100% !important;
+        }
+
+        .abayas-dropdown-arrow {
+            font-size: 12px !important;
+            color: #ffffff !important;
+            margin-left: auto !important;
+        }
     }
     
     
@@ -621,9 +638,9 @@ $txt = [
                         <!-- Dynamic categories will be inserted here -->
                         <!--<span id="div_menu_list_category"></span>-->
                         <li class="has-mega-menu sub-menu-down menu-item-has-children">
-                            <a href="javascript:void(0);">
+                            <a href="javascript:void(0);" style="display:inline-flex; align-items:center; justify-content:space-between;">
                                 <span><?= $txt['abayas'] ?></span>
-                                <i class="fas fa-chevron-down ms-1" style="font-size:12px; color:#ffffff !important; display:inline-block !important; vertical-align:middle;"></i>
+                                <i class="fas fa-chevron-down abayas-dropdown-arrow" style="font-size:11px; margin-left:8px; color:#ffffff !important; display:inline-block !important; vertical-align:middle;"></i>
                             </a>
                         
                             <ul class="sub-menu" id="div_menu_list_category_data">
