@@ -133,12 +133,10 @@ $txt = [
             gap: 8px !important;
         }
 
-        /* ✅ Menu and Submenu Links - Poppins Bold (700) */
+        /* ✅ Top Level Main Menu Items - White */
         .header-nav.w3menu .nav > li > a,
         .header-nav .nav > li > a,
-        .navbar-nav > li > a,
-        .navbar-nav a,
-        .nav-link {
+        .navbar-nav > li > a {
             font-family: 'Poppins', sans-serif !important;
             font-weight: 700 !important;
             letter-spacing: 0.1em !important;
@@ -147,14 +145,25 @@ $txt = [
             font-size: 13px !important;
         }
 
+        /* ✅ Dropdown Submenu Links - Dark Gray Black (#292929) */
         .header-nav .sub-menu li > a,
         .header-nav .sub-menu a,
-        .sub-menu a {
+        .sub-menu li > a,
+        .sub-menu a,
+        ul.sub-menu a,
+        ul.sub-menu li a {
             font-family: 'Poppins', sans-serif !important;
             font-weight: 700 !important;
             font-size: 12px !important;
             letter-spacing: 0.05em !important;
             text-transform: uppercase !important;
+            color: #292929 !important;
+        }
+
+        .header-nav .sub-menu li > a:hover,
+        .header-nav .sub-menu a:hover,
+        .sub-menu a:hover {
+            color: #D4AF37 !important;
         }
 
         .nav-link {
