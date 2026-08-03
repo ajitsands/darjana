@@ -27,23 +27,35 @@
       .login-card {
           background: #ffffff;
           border-radius: 16px;
-          padding: 40px 36px;
+          padding: 0;
           width: 100%;
           max-width: 440px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03);
+          box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
           border: 1px solid #e8ecf1;
+          overflow: hidden;
       }
 
-      .login-brand {
+      /* ── Black Top Header Area for Logo ── */
+      .login-card-header {
+          background: #111111;
+          padding: 30px 25px 25px;
           text-align: center;
-          margin-bottom: 24px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
       }
 
-      .login-brand img {
-          max-height: 60px;
-          max-width: 180px;
+      .login-card-header img {
+          max-height: 55px;
+          max-width: 220px;
+          width: auto;
           object-fit: contain;
-          margin-bottom: 15px;
+          display: inline-block;
+      }
+
+      .login-card-body {
+          padding: 32px 35px 35px;
       }
 
       .login-title {
@@ -176,6 +188,7 @@
           width: 100% !important;
           cursor: pointer !important;
           transition: all 0.2s ease !important;
+          margin-bottom: 12px !important;
           text-decoration: none !important;
       }
 
