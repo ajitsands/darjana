@@ -702,7 +702,7 @@ $txt = [
                         <?php endif; ?>
                     </ul>
                     
-                    <div class="dz-social-icon" style="text-align: center; margin: 25px auto 15px; width: 100%; display: flex; justify-content: center;">
+                    <div class="dz-social-icon d-lg-none" style="text-align: center; margin: 25px auto 15px; width: 100%; display: flex; justify-content: center;">
                         <ul style="display: flex; gap: 20px; justify-content: center; align-items: center; padding: 0; margin: 0; list-style: none;">
                             <li>
                                 <a target="_blank" href="https://www.instagram.com/dar_jana_?igsh=b3VvY3hpejJ0aDZi" title="Instagram" style="width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; background: #383838; color: #ffffff; border-radius: 50%; transition: all 0.3s ease;">
