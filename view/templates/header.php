@@ -124,26 +124,44 @@ $txt = [
 
         .navbar-nav > li > a {
             padding: 8px 12px !important;
-            font-size: 14px !important;
-            font-family: "Montserrat", sans-serif !important;
+            font-size: 13px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 700 !important;
         }
 
         .header-right {
             gap: 8px !important;
         }
 
-        /* ✅ Desktop menu color white */
-        .header-nav.w3menu .nav > li > a {
-            font-family: "Instrument Sans", sans-serif !important;
-            letter-spacing: 0.18em !important;
+        /* ✅ Menu and Submenu Links - Poppins Bold (700) */
+        .header-nav.w3menu .nav > li > a,
+        .header-nav .nav > li > a,
+        .navbar-nav > li > a,
+        .navbar-nav a,
+        .nav-link {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.1em !important;
             text-transform: uppercase !important;
             color: #ffffff !important;
+            font-size: 13px !important;
+        }
+
+        .header-nav .sub-menu li > a,
+        .header-nav .sub-menu a,
+        .sub-menu a {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 700 !important;
             font-size: 12px !important;
+            letter-spacing: 0.05em !important;
+            text-transform: uppercase !important;
         }
 
         .nav-link {
             padding: 4px 8px !important;
             font-size: 13px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 700 !important;
         }
 
     }
@@ -492,7 +510,7 @@ $txt = [
         display: block;
     }
 
-    .title, .product-name, .btn, .price, .navbar-nav, .badge, .size-label, .color-label, .form-select, .spec-list, .spec-heading, .spec-content {
+    .title, .product-name, .btn, .price, .badge, .size-label, .color-label, .form-select, .spec-list, .spec-heading, .spec-content {
         font-family: "Instrument Sans", sans-serif !important;
         text-transform: uppercase !important;
     }
