@@ -33,15 +33,19 @@
     .btn-gold,
     a.btn-gold,
     #cartplaceorder-btn {
+        background: #292929 !important;        /* overrides theme's radial-gradient */
         background-color: #292929 !important;
+        background-image: none !important;
         border-color: #292929 !important;
         color: #ffffff !important;
-        transition: background-color 0.2s ease, border-color 0.2s ease !important;
+        transition: background 0.2s ease, border-color 0.2s ease !important;
     }
     .btn-gold:hover,
     a.btn-gold:hover,
     #cartplaceorder-btn:hover {
+        background: #111111 !important;
         background-color: #111111 !important;
+        background-image: none !important;
         border-color: #111111 !important;
         color: #ffffff !important;
     }
