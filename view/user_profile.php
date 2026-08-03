@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-    /* Apply Montserrat font to all text elements */
+    /* Global Poppins font for Profile page */
     body,
     h1, h2, h3, h4, h5, h6,
     p, span, div,
@@ -16,8 +16,7 @@
     .btn, .price,
     .modal-content,
     .navbar-nav {
-        font-family: "Instrument Sans", sans-serif !important;
-        /* text-transform: uppercase !important; */
+        font-family: 'Poppins', sans-serif !important;
         letter-spacing: 0.5px !important;
     }
     a {
@@ -32,7 +31,7 @@
         letter-spacing: normal !important;
     }
     :root {
-        --primary-color: #4361ee;
+        --primary-color: #292929;      /* dark gray-black for buttons */
         --secondary-color: #3f37c9;
         --accent-color: #4895ef;
         --light-color: #f8f9fa;
