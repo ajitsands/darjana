@@ -54,9 +54,9 @@
     }
 
     .profile-header {
-        background: #FEEB9D; /* light yellow tone */
+        background: linear-gradient(135deg, #d4d4d4 0%, #C0C0C0 50%, #a8a8a8 100%); /* Silver */
         padding: 20px;
-        color: #333; /* darker text for better contrast */
+        color: #333;
         position: relative;
         text-align: center;
     }
