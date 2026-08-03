@@ -98,15 +98,27 @@ $txt = [
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
-/* All Main Menu and Submenu Links - Poppins Bold (700) */
+/* All Main Menu and Submenu Links - Poppins Bold (700) & CAPITALS ONLY */
+.header-nav,
+.header-nav *,
+.header-nav a,
+.header-nav span,
+.header-nav li,
 .header-nav .nav > li > a,
-.header-nav .sub-menu li > a,
+.header-nav .sub-menu,
 .header-nav .sub-menu a,
-.header-nav.w3menu .nav > li > a,
-.navbar-nav > li > a,
-.header-nav a {
+.navbar-nav,
+.navbar-nav *,
+.navbar-nav a,
+.navbar-nav span,
+.sub-menu,
+.sub-menu a,
+.sub-menu li a,
+.mega-menu,
+.mega-menu a {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 700 !important;
+    text-transform: uppercase !important;
 }
 
 /* Desktop/Laptop - Reduce header size through spacing */
