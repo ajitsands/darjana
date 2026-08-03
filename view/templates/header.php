@@ -675,16 +675,16 @@ $txt = [
                         <?php endif; ?>
                     </ul>
                     
-                    <div class="dz-social-icon">
-                        <ul>
+                    <div class="dz-social-icon" style="text-align: center; margin: 25px auto 15px; width: 100%; display: flex; justify-content: center;">
+                        <ul style="display: flex; gap: 20px; justify-content: center; align-items: center; padding: 0; margin: 0; list-style: none;">
                             <li>
-                                <a target="_blank" href="https://www.instagram.com/dar_jana_?igsh=b3VvY3hpejJ0aDZi" title="Instagram">
-                                    <i class="fab fa-instagram fa-brands fa-instagram"></i>
+                                <a target="_blank" href="https://www.instagram.com/dar_jana_?igsh=b3VvY3hpejJ0aDZi" title="Instagram" style="width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; background: #383838; color: #ffffff; border-radius: 50%; transition: all 0.3s ease;">
+                                    <i class="fab fa-instagram fa-brands fa-instagram" style="font-size: 24px; color: #ffffff;"></i>
                                 </a>
                             </li>
                             <li>
-                                <a target="_blank" href="https://www.tiktok.com/@dar_jana_?_r=1&_t=ZS-98a0TvcKGOb" title="TikTok">
-                                    <i class="fab fa-tiktok fa-brands fa-tiktok"></i>
+                                <a target="_blank" href="https://www.tiktok.com/@dar_jana_?_r=1&_t=ZS-98a0TvcKGOb" title="TikTok" style="width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; background: #383838; color: #ffffff; border-radius: 50%; transition: all 0.3s ease;">
+                                    <i class="fab fa-tiktok fa-brands fa-tiktok" style="font-size: 24px; color: #ffffff;"></i>
                                 </a>
                             </li>
                         </ul>
