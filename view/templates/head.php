@@ -77,8 +77,28 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css" />
 
+<!-- Poppins – Global Default Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
 <style>
+    /* ── Global Poppins font – applies to every page ── */
+    body,
+    body *:not(i):not([class*="fa-"]):not([class*="flaticon"]):not([class*="iconly"]) {
+        font-family: 'Poppins', sans-serif !important;
+    }
+
+    /* Preserve icon fonts — do NOT override Font Awesome / Flaticon / Iconly */
+    i,
+    [class*="fa-"],
+    [class*="flaticon"],
+    [class*="iconly"],
+    .fa, .fas, .far, .fal, .fab, .fad {
+        font-family: inherit; /* let icon stylesheet control these */
+    }
+
     .header-nav.w3menu .nav > li .sub-menu li > a {
-    padding: 5px 10px;
-}
+        padding: 5px 10px;
+    }
 </style>
