@@ -14,7 +14,7 @@
             <h2 class="profile-title" id="customer_name"></h2>
             <div class="profile-email" id="email_id_span"></div>
             <button id="editProfile" class="edit-profile-btn" title="Edit Profile">
-                <i class="fas fa-edit" style="color:red;"></i>
+                <i class="fas fa-edit" style="color:#292929;"></i>
             </button>
         </div>
 

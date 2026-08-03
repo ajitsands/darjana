@@ -101,7 +101,7 @@
     }
 
     .profile-email {
-        color: red;
+        color: #292929;
         font-size: 0.9rem;
     }
 
@@ -128,7 +128,7 @@
 
     .section-title {
         font-size: 1.1rem;
-        color: #cc0d39;
+        color: #292929;
         margin-bottom: 15px;
         padding-bottom: 8px;
         border-bottom: 1px solid #eee;
