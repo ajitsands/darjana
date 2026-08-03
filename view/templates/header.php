@@ -548,12 +548,21 @@ $txt = [
         align-items: center;
     }
 
-    .sub-menu-down > a i {
-        display: inline-block !important;
-        margin-left: 6px;
-        font-size: 16px;
-        background: transparent !important;
+    /* Sub-menu pointer / dropdown arrow styling - White and clearly visible */
+    .sub-menu-down > a > i,
+    .menu-item-has-children > a > i,
+    .has-mega-menu > a > i,
+    .sub-menu-down > a:after,
+    .menu-item-has-children > a:after,
+    .has-mega-menu > a:after {
         color: #ffffff !important;
+        display: inline-block !important;
+        vertical-align: middle !important;
+        font-size: 12px !important;
+        margin-left: 6px !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: transparent !important;
     }
     
     
@@ -611,10 +620,10 @@ $txt = [
                         </li>
                         <!-- Dynamic categories will be inserted here -->
                         <!--<span id="div_menu_list_category"></span>-->
-                        <li class="sub-menu-down">
-                            <a href="#">
+                        <li class="has-mega-menu sub-menu-down menu-item-has-children">
+                            <a href="javascript:void(0);">
                                 <span><?= $txt['abayas'] ?></span>
-                                <i class="ri-arrow-down-s-line"></i>
+                                <i class="fas fa-chevron-down ms-1" style="font-size:12px; color:#ffffff !important; display:inline-block !important; vertical-align:middle;"></i>
                             </a>
                         
                             <ul class="sub-menu" id="div_menu_list_category_data">
