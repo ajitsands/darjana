@@ -4,7 +4,7 @@
 <head>
     <?php include("templates/head.php"); ?>
     <style>
-    /* Apply Montserrat font to all text elements */
+    /* ── Global Poppins font for Cart page ── */
     body,
     h1, h2, h3, h4, h5, h6,
     p, span, div,
@@ -16,7 +16,7 @@
     .total .price, .save-text,
     .product-meta, .current-prices,
     .original-price, .product-item-totle {
-        font-family: "Montserrat", sans-serif !important;
+        font-family: 'Poppins', sans-serif !important;
         text-transform: uppercase !important;
         letter-spacing: 0.5px !important;
     }
@@ -24,9 +24,36 @@
     /* Modal specific */
     .modal-content,
     .modal-actions button {
-        font-family: "Montserrat", sans-serif !important;
+        font-family: 'Poppins', sans-serif !important;
         text-transform: uppercase !important;
         letter-spacing: 0.5px !important;
+    }
+
+    /* ── Buttons: Shop More & Place Order – Dark Gray Black ── */
+    .btn-gold,
+    a.btn-gold,
+    #cartplaceorder-btn {
+        background-color: #292929 !important;
+        border-color: #292929 !important;
+        color: #ffffff !important;
+        transition: background-color 0.2s ease, border-color 0.2s ease !important;
+    }
+    .btn-gold:hover,
+    a.btn-gold:hover,
+    #cartplaceorder-btn:hover {
+        background-color: #111111 !important;
+        border-color: #111111 !important;
+        color: #ffffff !important;
+    }
+
+    /* ── Cart Total side panel: remove rounded border ── */
+    .cart-detail,
+    .cart-detail .info-box,
+    div.cart-detail {
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        outline: none !important;
     }
 
     /* Input fields exception */
