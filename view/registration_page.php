@@ -25,28 +25,45 @@ $redirect = $_SESSION['redirect_after_registration'] ?? 'index.php';
 <head>
     <?php include("templates/head.php"); ?>
     <style>
-     /* Apply Montserrat font to all text elements */
-   
+    /* Apply Poppins font to all text elements */
+    body, html,
     h1, h2, h3, h4, h5, h6,
-    p, span,
+    p, span, div,
     .title, .product-name,
     .btn, .price,
     .modal-content,
     .navbar-nav {
-        font-family: "Montserrat", sans-serif !important;
-        text-transform: uppercase !important;
+        font-family: 'Poppins', sans-serif !important;
         letter-spacing: 0.5px !important;
     }
-    body,div{
-        font-family: "Montserrat", sans-serif !important;
-        letter-spacing: 0.5px !important;
+    
+    .otp-section {
+        display: none;
     }
-        .otp-section {
-            display: none;
-        }
-        input{
-            text-transform: none;
-        }
+    
+    input {
+        text-transform: none;
+    }
+
+    /* ── Dark Gray-Black Buttons on Registration ── */
+    .btn-primary,
+    #customer_register,
+    #verify_otp {
+        background: #292929 !important;
+        background-color: #292929 !important;
+        background-image: none !important;
+        border-color: #292929 !important;
+        color: #ffffff !important;
+        transition: all 0.2s ease !important;
+    }
+    .btn-primary:hover,
+    #customer_register:hover,
+    #verify_otp:hover {
+        background: #111111 !important;
+        background-color: #111111 !important;
+        border-color: #111111 !important;
+        color: #ffffff !important;
+    }
     </style>
 </head>
 
