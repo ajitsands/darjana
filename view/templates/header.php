@@ -424,6 +424,33 @@ $txt = [
             z-index: 20 !important;
             margin: 0 !important;
         }
+
+        /* Prevent 3-line hamburger icon from transforming into X icon on click */
+        .navicon.open span:nth-child(1),
+        .navbar-toggler:not(.collapsed) span:nth-child(1) {
+            top: 13px !important;
+            width: 22px !important;
+            transform: none !important;
+            -webkit-transform: none !important;
+        }
+
+        .navicon.open span:nth-child(2),
+        .navbar-toggler:not(.collapsed) span:nth-child(2) {
+            top: 22px !important;
+            width: 25px !important;
+            opacity: 1 !important;
+            left: 0 !important;
+            transform: none !important;
+            -webkit-transform: none !important;
+        }
+
+        .navicon.open span:nth-child(3),
+        .navbar-toggler:not(.collapsed) span:nth-child(3) {
+            top: 32px !important;
+            width: 20px !important;
+            transform: none !important;
+            -webkit-transform: none !important;
+        }
     }
     @media (min-width: 992px) {
 
