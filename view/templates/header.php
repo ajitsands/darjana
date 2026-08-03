@@ -503,21 +503,112 @@ $txt = [
         border-bottom: none !important;
     }
 
+    /* ── Submenu dropdown: BELOW the menu item, not to the side ── */
     .has-mega-menu {
-        position: relative;
+        position: relative !important;
     }
 
-    .has-mega-menu .sub-menu {
-        position: absolute;
-        left: 0;
-        top: 100%;
-        display: none;
-        background: #fff;
-        list-style: none;
+    /* DESKTOP: Drop straight down below the parent menu item */
+    @media (min-width: 992px) {
+        .header-nav .nav > li.menu-item-has-children > .sub-menu,
+        .header-nav .nav > li.has-mega-menu > .sub-menu,
+        .has-mega-menu > .sub-menu {
+            position: absolute !important;
+            top: 100% !important;       /* directly below the menu item */
+            left: 0 !important;         /* aligned to left edge of parent */
+            right: auto !important;
+            margin-left: 0 !important;
+            margin-top: 0 !important;
+            min-width: 200px !important;
+            width: max-content !important;
+            background: #ffffff !important;
+            list-style: none !important;
+            padding: 10px 0 !important;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+            border-radius: 0 0 6px 6px !important;
+            border-top: 2px solid #D4AF37 !important;
+            z-index: 9999 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            display: block !important;
+            transform: translateY(8px) !important;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s !important;
+        }
+
+        .header-nav .nav > li.menu-item-has-children:hover > .sub-menu,
+        .header-nav .nav > li.has-mega-menu:hover > .sub-menu,
+        .has-mega-menu:hover > .sub-menu {
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+            transform: translateY(0) !important;
+        }
+
+        /* Submenu item links */
+        .header-nav .nav > li > .sub-menu li a,
+        .has-mega-menu > .sub-menu li a {
+            display: block !important;
+            padding: 9px 20px !important;
+            color: #292929 !important;
+            font-size: 12px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            white-space: nowrap !important;
+            transition: color 0.18s, padding-left 0.18s !important;
+        }
+
+        .header-nav .nav > li > .sub-menu li a:hover,
+        .has-mega-menu > .sub-menu li a:hover {
+            color: #D4AF37 !important;
+            padding-left: 26px !important;
+        }
     }
 
-    .has-mega-menu:hover .sub-menu {
-        display: block;
+    /* MOBILE: sub-menu stays inline (static), no absolute positioning */
+    @media (max-width: 991.98px) {
+        .header-nav .nav > li.menu-item-has-children > .sub-menu,
+        .has-mega-menu > .sub-menu {
+            position: static !important;
+            top: auto !important;
+            left: auto !important;
+            box-shadow: none !important;
+            border-top: 1px solid rgba(255,255,255,0.15) !important;
+            background: rgba(255,255,255,0.04) !important;
+            padding: 6px 0 !important;
+            margin: 0 !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+            transition: none !important;
+            display: none !important;   /* JS overrides with inline style */
+        }
+
+        /* JS sets inline style="display:block" – this just keeps .open as fallback */
+        .header-nav .nav > li.menu-item-has-children.open > .sub-menu,
+        .has-mega-menu.open > .sub-menu {
+            display: block !important;
+        }
+
+        .has-mega-menu > .sub-menu li a,
+        .header-nav .nav > li > .sub-menu li a {
+            padding: 10px 30px !important;
+            color: #292929 !important;
+            font-size: 12px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            display: block !important;
+            letter-spacing: 0.04em !important;
+        }
+
+        .has-mega-menu > .sub-menu li a:hover,
+        .header-nav .nav > li > .sub-menu li a:hover {
+            color: #D4AF37 !important;
+            padding-left: 36px !important;
+        }
     }
 
     .title, .product-name, .btn, .price, .badge, .size-label, .color-label, .form-select, .spec-list, .spec-heading, .spec-content {
@@ -543,42 +634,82 @@ $txt = [
             }
             
             
-        .sub-menu-down > a {
-        display: flex;
-        align-items: center;
+    /* ── Submenu Arrow Indicator ──────────────────────────────────────────────
+       Only menu items with class .menu-item-has-children get a visible arrow.
+       Works on both DESKTOP (white on black bar) and MOBILE (dark gray).
+    ─────────────────────────────────────────────────────────────────────────── */
+
+    /* Anchor inside a parent-menu item: flex row so text + arrow align */
+    li.menu-item-has-children > a {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
     }
 
-    /* Small dropdown arrow icon next to ABAYAS on mobile slider menu & desktop */
-    .abayas-dropdown-arrow,
-    .sub-menu-down > a > i,
-    .menu-item-has-children > a > i,
-    .has-mega-menu > a > i,
-    .sub-menu-down > a:after,
-    .menu-item-has-children > a:after,
-    .has-mega-menu > a:after {
-        color: #ffffff !important;
+    /* Base arrow icon styles — shared between desktop & mobile */
+    li.menu-item-has-children > a > i.submenu-arrow-icon {
+        /* Reset ALL theme overrides */
         display: inline-block !important;
-        vertical-align: middle !important;
-        font-size: 11px !important;
-        margin-left: 8px !important;
-        opacity: 1 !important;
         visibility: visible !important;
+        opacity: 1 !important;
+        float: none !important;
+        position: static !important;
+        width: auto !important;
+        height: auto !important;
+        line-height: normal !important;
+        text-align: left !important;
         background: transparent !important;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-size: 11px !important;
+        font-family: "Font Awesome 5 Free" !important;
+        font-weight: 900 !important;
+        z-index: auto !important;
+        flex-shrink: 0 !important;
+        transition: transform 0.25s ease !important;
     }
 
+    /* Reset the theme's :before content override on mobile */
+    li.menu-item-has-children > a > i.submenu-arrow-icon::before {
+        content: "\f078" !important;   /* fa-chevron-down always */
+    }
+
+    /* ── DESKTOP: white arrow on black header ── */
+    @media (min-width: 992px) {
+        li.menu-item-has-children > a {
+            display: inline-flex !important;
+        }
+        li.menu-item-has-children > a > i.submenu-arrow-icon {
+            color: #ffffff !important;
+        }
+        /* Rotate up on hover */
+        li.menu-item-has-children:hover > a > i.submenu-arrow-icon {
+            transform: rotate(180deg) !important;
+        }
+    }
+
+    /* ── MOBILE: dark gray arrow, pushed to right edge ── */
     @media (max-width: 991.98px) {
-        .header-nav .nav > li.sub-menu-down > a,
-        .header-nav .nav > li.menu-item-has-children > a {
+        li.menu-item-has-children > a {
             display: flex !important;
             justify-content: space-between !important;
             align-items: center !important;
             width: 100% !important;
         }
 
-        .abayas-dropdown-arrow {
-            font-size: 12px !important;
-            color: #ffffff !important;
+        li.menu-item-has-children > a > i.submenu-arrow-icon {
+            color: #292929 !important;   /* dark gray-black, matches menu font */
+            font-size: 11px !important;
             margin-left: auto !important;
+        }
+
+        /* Rotate down→up when submenu is open */
+        li.menu-item-has-children.open > a > i.submenu-arrow-icon {
+            transform: rotate(180deg) !important;
         }
     }
     
@@ -638,9 +769,9 @@ $txt = [
                         <!-- Dynamic categories will be inserted here -->
                         <!--<span id="div_menu_list_category"></span>-->
                         <li class="has-mega-menu sub-menu-down menu-item-has-children">
-                            <a href="javascript:void(0);" style="display:inline-flex; align-items:center; justify-content:space-between;">
+                            <a href="javascript:void(0);">
                                 <span><?= $txt['abayas'] ?></span>
-                                <i class="fas fa-chevron-down abayas-dropdown-arrow" style="font-size:11px; margin-left:8px; color:#ffffff !important; display:inline-block !important; vertical-align:middle;"></i>
+                                <i class="fas fa-chevron-down submenu-arrow-icon" aria-hidden="true"></i>
                             </a>
                         
                             <ul class="sub-menu" id="div_menu_list_category_data">
@@ -1126,7 +1257,7 @@ document.getElementById('currencySwitcher').addEventListener('click', function(e
     }
 });
 
-// Close when clicking outside
+// Close currency dropdown when clicking outside
 document.addEventListener('click', function(e) {
     if (!document.getElementById('currencySwitcher').contains(e.target) &&
         !document.getElementById('currencyDropdown').contains(e.target)) {
@@ -1134,6 +1265,65 @@ document.addEventListener('click', function(e) {
         document.getElementById('currencyDropdown').classList.remove('show');
     }
 });
+
+// ── Mobile submenu toggle (accordion) ────────────────────────────────────────
+(function () {
+    function collapseSubMenu(li) {
+        var subMenu = li.querySelector(':scope > ul.sub-menu');
+        if (subMenu) subMenu.style.setProperty('display', 'none', 'important');
+        li.classList.remove('open');
+    }
+
+    function expandSubMenu(li) {
+        var subMenu = li.querySelector(':scope > ul.sub-menu');
+        if (subMenu) subMenu.style.setProperty('display', 'block', 'important');
+        li.classList.add('open');
+    }
+
+    function initMobileSubMenuToggle() {
+        var parents = document.querySelectorAll(
+            '.header-nav .nav > li.menu-item-has-children > a'
+        );
+
+        parents.forEach(function (anchor) {
+            anchor.addEventListener('click', function (e) {
+                // Only handle on mobile widths
+                if (window.innerWidth >= 992) return;
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                var li      = this.closest('li');
+                var subMenu = li.querySelector(':scope > ul.sub-menu');
+                if (!subMenu) return;
+
+                // Check actual inline display state (ground truth — set by us)
+                var isCurrentlyOpen = (subMenu.style.display === 'block');
+
+                // First collapse all open siblings
+                var navList = li.parentElement;
+                if (navList) {
+                    navList.querySelectorAll('li.menu-item-has-children').forEach(function (sib) {
+                        if (sib !== li) collapseSubMenu(sib);
+                    });
+                }
+
+                // Now toggle this one
+                if (isCurrentlyOpen) {
+                    collapseSubMenu(li);
+                } else {
+                    expandSubMenu(li);
+                }
+            });
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMobileSubMenuToggle);
+    } else {
+        initMobileSubMenuToggle();
+    }
+})();
 </script>
 
 <!-- Header End -->
