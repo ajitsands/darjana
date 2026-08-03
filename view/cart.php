@@ -1430,7 +1430,8 @@
             
             $(document).on('click', '#cartplaceorder-btn', function(e) {
                 e.preventDefault();
-                $.redirect('PlaceOrder', {
+                const targetUrl = (window.location.origin ? window.location.origin : '') + '/PlaceOrder';
+                $.redirect(targetUrl, {
                     flag: 1
                 }, 'POST');
             });

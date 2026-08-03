@@ -1,17 +1,19 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head >
 <?php include("templates/head.php"); ?>
 <!--<link rel="manifest" href="/manifest.json">-->
-<!--<meta name="theme-color" content="#D1B000">-->
+<!--<meta name="theme-color" content="#F0F0F0">-->
 
 <meta charset="UTF-8">
 
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#D1B000">
+<meta name="theme-color" content="#F0F0F0">
 
 <!-- iOS PWA Support -->
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,21 +24,50 @@ session_start();
 
 
 	<style>
-    /* Apply Montserrat font to all text elements */
-    /*body,*/
-    /*h1, h2, h3, h4, h5, h6,*/
-    /*p, span, div,*/
-    /*.title, .product-name,*/
-    /*.btn, .price,*/
-    /*.modal-content,*/
-    /*.navbar-nav {*/
-        /*font-family: "Montserrat", sans-serif !important;*/
-        /*text-transform: uppercase !important;*/
-    /*    letter-spacing: 0.5px !important;*/
-    /*}*/
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+    /* All Home Page Titles / Headings - Poppins Bold (700) */
+    h1, h2, h3, h4, h5, h6,
+    .h1, .h2, .h3, .h4, .h5, .h6,
+    .title, .product-head, .section-head, .section-title,
+    .product-title, .product-name, .dz-title, .about-btn .btn,
+    .section-head .title, .sub-title, .shop-product-title {
+        font-family: 'Poppins', sans-serif !important;
+        font-weight: 700 !important;
+    }
+
     a {
         color: #3B3B3B;
         font-weight : 400;
+    }
+
+    /* + button on product cards */
+    .card-plus-btn {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 36px;
+        height: 36px;
+        background: rgba(255,255,255,0.92);
+        color: #222;
+        font-size: 22px;
+        line-height: 34px;
+        text-align: center;
+        cursor: pointer;
+        z-index: 10;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: background 0.2s, color 0.2s;
+    }
+    .card-plus-btn:hover {
+        background: #222;
+        color: #fff;
+    }
+    .dz-media {
+        position: relative;
     }
     /* Quick View Modal Specific */
     /*#quickViewModal * {*/
@@ -597,6 +628,38 @@ session_start();
     .shop-card .dz-media img {
         border-radius: 0 !important;
     }
+
+    /* ── Fix uneven card heights in grid ─────────────────────── */
+    /* Make each grid cell a flex column so the card stretches */
+    li.card-container {
+        display: flex !important;
+        flex-direction: column;
+    }
+    li.card-container .shop-card {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        height: 100%;
+    }
+    li.card-container .img-gap {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+    /* Force every product image to the same portrait ratio */
+    li.card-container .dz-media {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    li.card-container .dz-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    /* ────────────────────────────────────────────────────────── */
     
     /* Optional: Keep some elements rounded if needed */
     .season-collection-banner {
@@ -687,16 +750,12 @@ session_start();
     }
 
     .product-head{
-        font-family: 'Instrument Sans', sans-serif; 
-        text-transform: uppercase; 
-        letter-spacing: 0.18em; 
-        font-weight: 400;
-        color: #343434;
-        
-        font-family: "Instrument Sans";
-        font-weight: 400;
-        font-style: normal;
-        font-display: fallback;
+        font-family: 'Instrument Sans', sans-serif !important; 
+        text-transform: uppercase !important; 
+        letter-spacing: 0.18em !important; 
+        font-weight: 400 !important;
+        font-style: normal !important;
+        color: #343434 !important;
     }
     
     
@@ -744,61 +803,7 @@ session_start();
 		<!-- Footer End -->
 		
 		<button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
-		<button id="installBtn" onclick="installPWA()" style="display:none;">
-          Install App
-        </button>
 <style>
-.pwa-popup {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 9999;
-}
-
-.pwa-content {
-  background: #fff;
-  max-width: 350px;
-  margin: 30% auto;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-}
-
-/*    .pwa-popup {*/
-/*  display: none;*/
-/*  position: fixed;*/
-/*  top: 0; left: 0;*/
-/*  width: 100%; height: 100%;*/
-/*  background: rgba(0,0,0,0.6);*/
-/*  z-index: 9999;*/
-/*}*/
-
-/*.pwa-content {*/
-/*  background: #fff;*/
-/*  width: 90%;*/
-/*  max-width: 350px;*/
-/*  margin: 20% auto;*/
-/*  padding: 20px;*/
-/*  text-align: center;*/
-/*  border-radius: 10px;*/
-/*}*/
-
-.pwa-content button {
-  margin: 10px;
-  padding: 10px 15px;
-  border: none;
-  cursor: pointer;
-}
-
-#pwaInstallBtn {
-  background: #D4AF37;
-  color: #000;
-}
-
-#pwaCloseBtn {
-  background: #ccc;
-}
 .navbar-nav {
     display: flex;
     flex-wrap: nowrap;      /* ðŸ”¥ prevent wrapping */
@@ -868,30 +873,55 @@ session_start();
     border-color: #333;
 }
 .whatsapp-float {
-                position: fixed;
-                width: 60px;
-                height: 60px;
-                bottom: 60px;
-                right: 80px;
-                background: #25D366;
-                color: white !important;
-                border-radius: 50%;
-                text-align: center;
-                font-size: 30px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-                z-index: 1000;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-decoration: none;
-                transition: all 0.3s ease;
-            }
-            
-            .whatsapp-float:hover {
-                transform: scale(1.12);
-                background: #20b858;
-                color: white !important;
-            }
+    position: fixed;
+    width: 46px;
+    height: 46px;
+    bottom: 110px;
+    right: 20px;
+    background: #25D366;
+    color: white !important;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.12);
+    background: #20b858;
+    color: white !important;
+}
+
+.instagram-float {
+    position: fixed;
+    width: 46px;
+    height: 46px;
+    bottom: 55px;
+    right: 20px;
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    color: white !important;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.instagram-float:hover {
+    transform: scale(1.12);
+    color: white !important;
+}
             .quantity-selector {
                 max-width: 220px;           /* adjust as needed */
             }
@@ -913,55 +943,7 @@ session_start();
     }
 }
 
-.pwa-content{
-    position: relative;
-}
-
-.pwa-close{
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 30px;
-    height: 30px;
-    border: none;
-    background: transparent !important;
-    font-size: 36px;
-    line-height: 30px;
-    cursor: pointer;
-    z-index: 99999;
-}
-
-.pwa-content button:not(.pwa-close){
-    margin: 10px;
-    padding: 10px 15px;
-}
-
 </style>
-<!-- PWA Install Popup -->
-<div id="pwaPopup" class="pwa-popup" style="display:none;">
-  <div class="pwa-content">
-      <!-- Close Button -->
-        <button id="pwaCloseBtn_new" class="pwa-close">&times;</button>
-    <img src="images/logo/web_logo.png" alt="logo" style="width: 180px; height: auto;">
-
-    <h3>INSTALL APP</h3>
-    <p>Add this app to your home screen for quick access.</p>
-
-    <!-- iOS Instructions -->
-    <p id="iosHint" style="display:none;">
-      📲 Tap <b>Share</b> → <b>Add to Home Screen</b>
-    </p>
-
-    <!-- Android Install Button -->
-    <button id="pwaInstallBtn">Add to Home Screen</button>
-
-    <button id="pwaCloseBtn" style="font-size:9px;">Not Now</button>
-  </div>
-</div>
-
-
 
 		<!-- Quick Modal Start -->
 		<?php include("pages/home/home_page_modal.php"); ?>
@@ -970,68 +952,17 @@ session_start();
 	<a href="https://wa.me/97333300160?text=Hi I Like to Know more about the Products ." class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+	<a href="https://www.instagram.com/Dar_jana_" class="instagram-float" target="_blank" title="Follow us on Instagram">
+        <i class="fab fa-instagram"></i>
+    </a>
 	
-	<?php include("templates/scripts.php"); ?>
-
-	
-<script>
-let deferredPrompt = null;
-
-// Detect iOS
-function isIOS() {
-  return /iphone|ipad|ipod/i.test(navigator.userAgent);
-}
-
-// Detect standalone (installed)
-function isInstalled() {
-  return window.matchMedia('(display-mode: standalone)').matches 
-         || window.navigator.standalone === true;
-}
-
-$(document).ready(function () {
-
-  // ANDROID
-  window.addEventListener('beforeinstallprompt', function (e) {
-    e.preventDefault();
-    deferredPrompt = e;
-
-    if (!isInstalled()) {
-      $('#pwaPopup').fadeIn();
-      $('#iosHint').hide();
-      $('#pwaInstallBtn').show();
-    }
-  });
-
-  // IOS (manual popup)
-  if (isIOS() && !isInstalled()) {
-    $('#pwaPopup').fadeIn();
-    $('#iosHint').show();       // show instructions
-    $('#pwaInstallBtn').hide(); // hide install button (not supported)
-  }
-
-  // Install button (Android only)
-  $('#pwaInstallBtn').on('click', async function () {
-    if (!deferredPrompt) return;
-
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-
-    deferredPrompt = null;
-    $('#pwaPopup').fadeOut();
-  });
-
-  // Close button
-  $('#pwaCloseBtn,#pwaCloseBtn_new').on('click', function () {
-    $('#pwaPopup').fadeOut();
-  });
-
-});
-
-</script>	
+	<?php include("templates/scripts.php"); ?>	
 	
 <script>
 function updateCurrencyDropdownDirection() {
     const dropdownItem = document.querySelector('.currency-dropdown');
+    if (!dropdownItem) return;
 
     if (window.innerWidth <= 768) {
         dropdownItem.classList.add('drop-up');
@@ -1048,28 +979,7 @@ window.addEventListener('resize', updateCurrencyDropdownDirection);
 </script>
 	
 	
-	<script>
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/service-worker.js');
-        }
-        let deferredPrompt;
 
-        window.addEventListener('beforeinstallprompt', e => {
-          e.preventDefault();
-          deferredPrompt = e;
-        
-          // show your own install button
-          document.getElementById('installBtn').style.display = 'block';
-        });
-        
-        function installPWA() {
-          deferredPrompt.prompt();
-          deferredPrompt.userChoice.then(choice => {
-            deferredPrompt = null;
-          });
-        }
-
-    </script>
     
 	<script>
 	$(document).ready(function () {
@@ -1221,7 +1131,8 @@ window.addEventListener('resize', updateCurrencyDropdownDirection);
             }
             
             // Format the number
-            let formatted = Number(convertedPrice).toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            let currentDecimals = currencyCode === 'BHD' ? 3 : decimals;
+            let formatted = Number(convertedPrice).toFixed(currentDecimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             
             // Different styling based on context
             if (includeSymbol) {
@@ -1374,8 +1285,9 @@ window.addEventListener('resize', updateCurrencyDropdownDirection);
                 }
         
                 const formatPriceValue = (price) => {
-                    if (isNaN(price) || price === 0) return '0.00';
-                    return price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    const dec = currencyCode === 'BHD' ? 3 : 2;
+                    if (isNaN(price) || price === 0) return (0).toFixed(dec);
+                    return price.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 };
         
                 const formattedOfferPrice = formatPriceValue(convertedOfferPrice);
@@ -1426,13 +1338,9 @@ window.addEventListener('resize', updateCurrencyDropdownDirection);
                                 <a href="ProductDetails?id=${product.ids}">
                                     <img src="${imagePath}" alt="${displayName}">
                                 </a>
-                                <div class="shop-meta">
-                                    <a href="ProductDetails?id=${product.ids}" 
-                                        class="btn btn-secondary btn-md btn-rounded quick-view-btn">
-                                            <i class="fa-solid fa-eye d-md-none d-block"></i>
-                                            <span class="d-md-block d-none" data-i18n="view_details">View Details</span>
-                                        </a>
-                                </div>
+                                <a href="ProductDetails?id=${product.ids}" class="card-plus-btn" title="View Details">
+                                    +
+                                </a>
                             </div>
                             <div class="align-items-center text-center p-3">
                                 <div class="row font-inst">
@@ -1441,13 +1349,14 @@ window.addEventListener('resize', updateCurrencyDropdownDirection);
                                     </h7>
                                 </div>
                                 <div class="row">
-                                    <div class="price">
+                                    <div class="price" ${formattedOfferPrice === formattedMrpPrice ? 'style="color: #000 !important; font-weight: 400 !important;"' : ''}>
                                         <span class="current-price blink-gold">
                                             ${currencySymbol} ${formattedOfferPrice}
                                         </span>
+                                        ${formattedOfferPrice !== formattedMrpPrice ? `
                                         <span class="original-price red-mrp">
                                             <del style="font-size: 12px;">${currencySymbol} ${formattedMrpPrice}</del>
-                                        </span>
+                                        </span>` : ''}
                                     </div>
                                 </div>
                             </div>
@@ -1510,8 +1419,9 @@ window.addEventListener('resize', updateCurrencyDropdownDirection);
                             
                             // Format prices
                             const formatPriceValue = (price) => {
-                                if (isNaN(price) || price === 0) return '0.00';
-                                return price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                const dec = currencyCode === 'BHD' ? 3 : 2;
+                                if (isNaN(price) || price === 0) return (0).toFixed(dec);
+                                return price.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             };
                             
                             const formattedPrice = formatPriceValue(convertedPrice);
@@ -1875,8 +1785,9 @@ window.addEventListener('resize', updateCurrencyDropdownDirection);
                 }
         
                 const formatPriceValue = (price) => {
-                    if (isNaN(price) || price === 0) return '0.00';
-                    return price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    const dec = currencyCode === 'BHD' ? 3 : 2;
+                    if (isNaN(price) || price === 0) return (0).toFixed(dec);
+                    return price.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 };
         
                 const formattedOfferPrice = formatPriceValue(convertedOfferPrice);
@@ -1897,13 +1808,14 @@ window.addEventListener('resize', updateCurrencyDropdownDirection);
                                     </h7>
                                 </div>
                                 <div class="row">
-                                    <div class="price">
+                                    <div class="price" ${formattedOfferPrice === formattedMrpPrice ? 'style="color: #000 !important; font-weight: 400 !important;"' : ''}>
                                         <span class="current-price blink-gold">
                                             ${currencySymbol} ${formattedOfferPrice}
                                         </span>
+                                        ${formattedOfferPrice !== formattedMrpPrice ? `
                                         <span class="original-price red-mrp">
                                             <del>${currencySymbol} ${formattedMrpPrice}</del>
-                                        </span>
+                                        </span>` : ''}
                                     </div>
                                 </div>
                             </div>
@@ -2141,8 +2053,9 @@ window.addEventListener('resize', updateCurrencyDropdownDirection);
                 }
         
                 const formatPriceValue = (price) => {
-                    if (isNaN(price) || price === 0) return '0.00';
-                    return price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    const dec = currencyCode === 'BHD' ? 3 : 2;
+                    if (isNaN(price) || price === 0) return (0).toFixed(dec);
+                    return price.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 };
         
                 const formattedOfferPrice = formatPriceValue(convertedOfferPrice);
@@ -2192,13 +2105,9 @@ window.addEventListener('resize', updateCurrencyDropdownDirection);
                                 <a href="ProductDetails?id=${product.product_id}">
                                     <img src="${imagePath}" alt="${displayName}">
                                 </a>
-                                <div class="shop-meta">
-                                   <a href="ProductDetails?id=${product.product_id}" 
-                                        class="btn btn-secondary btn-md btn-rounded quick-view-btn">
-                                            <i class="fa-solid fa-eye d-md-none d-block"></i>
-                                            <span class="d-md-block d-none" data-i18n="view_details">View Details</span>
-                                        </a>
-                                </div>
+                                <a href="ProductDetails?id=${product.product_id}" class="card-plus-btn" title="View Details">
+                                    +
+                                </a>
                             </div>
                             <div class="align-items-center text-center p-3">
                                 <div class="row font-inst">
@@ -2207,13 +2116,14 @@ window.addEventListener('resize', updateCurrencyDropdownDirection);
                                     </h7>
                                 </div>
                                 <div class="row">
-                                    <div class="price">
+                                    <div class="price" ${formattedOfferPrice === formattedMrpPrice ? 'style="color: #000 !important; font-weight: 400 !important;"' : ''}>
                                         <span class="current-price blink-gold">
                                             ${currencySymbol} ${formattedOfferPrice}
                                         </span>
+                                        ${formattedOfferPrice !== formattedMrpPrice ? `
                                         <span class="original-price red-mrp">
                                             <del>${currencySymbol} ${formattedMrpPrice}</del>
-                                        </span>
+                                        </span>` : ''}
                                     </div>
                                 </div>
                             </div>

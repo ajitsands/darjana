@@ -8,7 +8,7 @@
                       document.write(new Date().getFullYear());
                     </script>
                     , made with <span class="text-danger"><i class="tf-icons ri-heart-fill"></i></span> by
-                    <a href="https://www.sandslab.com" target="_blank" class="footer-link">SaNDS Lab</a>
+                    <span class="footer-link">Darjana</span>
                   </div>
                   <div class="d-none d-lg-inline-block">
                     <!--<a href="https://themeforest.net/licenses/standard" class="footer-link me-4" target="_blank">License</a>-->

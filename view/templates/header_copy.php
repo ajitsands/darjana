@@ -1,5 +1,7 @@
 <?php 
-session_start(); 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} 
 require_once 'config.php';
 
 // Define constants for Bahrain Dinar
@@ -753,7 +755,7 @@ body.rtl-mode .navbar-nav {
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="#" class="btn btn-outline-secondary btn-block m-b20" id="checkout-btn">
+                                    <a href="javascript:void(0);" class="btn btn-outline-secondary btn-block m-b20" id="checkout-btn">
                                         <span data-i18n="checkout"><?= $txt['checkout'] ?></span>
                                     </a>
                                     <a href="Cart" class="btn btn-secondary btn-block">

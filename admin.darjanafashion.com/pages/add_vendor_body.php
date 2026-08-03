@@ -202,7 +202,7 @@
                         <i class="ri-user-line me-1 text-primary"></i> Proof of Identity (Any one)
                       </h6>
                       <ul class="small mb-3 ps-3">
-                        <li>Aadhaar Card</li>
+                        <li>CPR/CR Number</li>
                         <li>PAN Card (Mandatory)</li>
                         <li>Voter ID Card</li>
                         <li>Passport</li>
@@ -216,7 +216,7 @@
                         <i class="ri-map-pin-line me-1 text-primary"></i> Proof of Address (Any one)
                       </h6>
                       <ul class="small mb-3 ps-3">
-                        <li>Aadhaar Card</li>
+                        <li>CPR/CR Number</li>
                         <li>Voter ID Card</li>
                         <li>Passport</li>
                         <li>Driving License</li>

@@ -361,7 +361,7 @@
             
             function initializeDataTable() {
                 $.ajax({
-                    url: "../controller/registration_controller.php",
+                    url: (window.location.origin ? window.location.origin : '') + "/controller/registration_controller.php",
                     type: "POST",
                     dataType: 'json',
                     data: {
@@ -418,9 +418,10 @@
 
                 // Handle image
                 if (subscriberData.Image) {
-                    $('#imagePreview').css('background-image', 'url(../httpdocs/images/' + subscriberData.Image + ')');
+                    const imgUrl = (window.location.origin ? window.location.origin : '') + '/httpdocs/images/' + subscriberData.Image + '?t=' + Date.now();
+                    $('#imagePreview').css('background-image', 'url(' + imgUrl + ')');
                 } else {
-                    $('#imagePreview').attr('src', 'https://via.placeholder.com/150');
+                    $('#imagePreview').css('background-image', 'url(images/profile3.jpg)');
                 }
 
                 // Set basic fields
@@ -528,25 +529,23 @@
 
                 const nameRegex = /^[a-zA-Z\s.]{2,50}$/;
 
-                if (phone.length !== 10) {
-                    alert("Phone number must be exactly 10 digits.");
-                    return false;
-                }
-                if (whatsapp.length !== 10) {
-                    alert("whatsapp number must be exactly 10 digits.");
-                    return false;
-                }
-
-                const postalCodeRegex = /^[1-9][0-9]{5}$/;
-                const districtRegex = /^[a-zA-Z\s]{2,50}$/;
-
-                if (!nameRegex.test(name)) {
-                    alert("Please enter a valid name (letters, spaces, periods only).");
+                if (phone && (phone.length < 7 || phone.length > 15)) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Invalid Phone Number',
+                        text: 'Please enter a valid phone number (7 to 15 digits).',
+                        confirmButtonColor: '#d39e00'
+                    });
                     return false;
                 }
 
-                if (address.length < 15) {
-                    alert("Please enter a valid address).");
+                if (!name || name.length < 2) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Invalid Name',
+                        text: 'Please enter a valid name.',
+                        confirmButtonColor: '#d39e00'
+                    });
                     return false;
                 }
 
@@ -567,10 +566,7 @@
                 formData.append('mobile_no', $('#phone').val());
                 formData.append('whatsapp_no', $('#whatsapp').val());
                 formData.append('postal_code', $('#postal_code').val());
-                // formData.append('district', $('#div_district option:selected').text());
-                // formData.append('state', $('#state option:selected').text());
                 formData.append('street', $('#street').val());
-                // formData.append('country', $('#country option:selected').text());
                 formData.append('state', $('#state').val());
                 formData.append('country', $('#country').val());
                 formData.append('gender', $('#gender option:selected').text());
@@ -584,28 +580,54 @@
 
                 // Make the AJAX request
                 $.ajax({
-                    url: "../controller/registration_controller.php",
+                    url: (window.location.origin ? window.location.origin : '') + "/controller/registration_controller.php",
                     type: "POST",
                     data: formData,
                     processData: false,
                     contentType: false,
-                    dataType: 'json', // Expect JSON response
+                    dataType: 'json',
                     success: function (res) {
-                        if (res.status === 'success') {
+                        if (res && res.status === 'success') {
+                            if (res.image) {
+                                const newImgUrl = (window.location.origin ? window.location.origin : '') + '/httpdocs/images/' + res.image + '?t=' + Date.now();
+                                $('#imagePreview').css('background-image', 'url(' + newImgUrl + ')');
+                                $('#prof_image').css('background-image', 'url(' + newImgUrl + ')');
+                            }
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Profile Updated',
+                                text: res.message || 'Details updated successfully.',
+                                confirmButtonColor: '#d39e00'
+                            });
                             setupDropdown('dropdownContent', 'success', svgSuccess + 'Details updated successfully.', 'click');
                             $('.editable').prop('disabled', true);
                             initializeDataTable();
                             $('#profileEditForm').addClass('d-none').hide();
-                            $('#imageUploadContainer').addClass('d-none'); // Hide image upload on success
+                            $('#imageUploadContainer').addClass('d-none');
                             $('#profileDisplay').show();
-                            $('#editProfile').show()
+                            $('#editProfile').show();
                         } else {
-                            alert(res.message); // Display server-side error message
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Update Failed',
+                                text: (res && res.message) ? res.message : 'Failed to update profile details. Please try again.',
+                                confirmButtonColor: '#d39e00'
+                            });
                         }
                     },
                     error: function (xhr, status, error) {
                         console.error("AJAX error:", status, error);
-                        alert("An error occurred while updating profile. Please try again.");
+                        let errMsg = "An error occurred while updating profile. Please try again.";
+                        try {
+                            let errRes = JSON.parse(xhr.responseText);
+                            if (errRes && errRes.message) errMsg = errRes.message;
+                        } catch(e) {}
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: errMsg,
+                            confirmButtonColor: '#d39e00'
+                        });
                     }
                 });
             });
@@ -614,7 +636,7 @@
                 
                 console.log("Loading countries, selecting:", selectedCountry);
                 $.ajax({
-                    url: "../controller/registration_controller.php",
+                    url: (window.location.origin ? window.location.origin : '') + "/controller/registration_controller.php",
                     type: "POST",
                     data: { action: "get_country" },
                     success: function(response) {
@@ -642,7 +664,7 @@
             function loadstateDropdown(selectedState) {
                 console.log("Loading states for country:", $('#country').val(), "selecting:", selectedState);
                 $.ajax({
-                    url: "../controller/registration_controller.php",
+                    url: (window.location.origin ? window.location.origin : '') + "/controller/registration_controller.php",
                     type: "POST",
                     data: { 
                         action: "get_state",
@@ -676,7 +698,7 @@
                 }
                 
                 $.ajax({
-                    url: "../controller/registration_controller.php",
+                    url: (window.location.origin ? window.location.origin : '') + "/controller/registration_controller.php",
                     type: "POST",
                     data: { 
                         action: "get_districts", 

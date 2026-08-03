@@ -1078,11 +1078,43 @@ class ProductController
                 break;
 
             case 'fetch_categories':
-                $categories = $this->varModelObj->ListFromTable($var[15]);
+                $query = "SELECT c.*, 
+                          (SELECT COUNT(*) FROM product_details p 
+                           WHERE FIND_IN_SET(c.ids, REPLACE(p.category_id, ' ', '')) > 0 
+                              OR p.category_id = c.ids
+                          ) AS product_count 
+                          FROM category_details c WHERE c.ids != '0' ORDER BY c.ids DESC";
+                $categories = $this->varModelObj->ListFromTable($query);
                 echo json_encode(json_decode($categories, true));
                 break;
                 
-               case 'fetch_categories_active':
+            case 'delete_category':
+                $categoryId = $_POST['category_id'] ?? 0;
+                if (empty($categoryId)) {
+                    echo 'invalid_id';
+                    break;
+                }
+                
+                $checkQuery = "SELECT COUNT(*) as cnt FROM product_details 
+                               WHERE FIND_IN_SET('$categoryId', REPLACE(category_id, ' ', '')) > 0 
+                                  OR category_id = '$categoryId'";
+                $checkRes = $this->varModelObj->ListFromTable($checkQuery);
+                $checkData = json_decode($checkRes, true);
+                $productCount = $checkData[0]['cnt'] ?? 0;
+                
+                if ($productCount > 0) {
+                    echo 'has_products';
+                } else {
+                    $delSubQuery = "DELETE FROM sub_category_details WHERE category_id = '$categoryId'";
+                    $this->varModelObj->DeleteRow($delSubQuery);
+
+                    $delQuery = "DELETE FROM category_details WHERE ids = '$categoryId'";
+                    $result = $this->varModelObj->DeleteRow($delQuery);
+                    echo $result ? 'success' : 'failed';
+                }
+                break;
+
+            case 'fetch_categories_active':
                 $categories = $this->varModelObj->ListFromTable($var[26]);
                 echo json_encode(json_decode($categories, true));
                 break;    

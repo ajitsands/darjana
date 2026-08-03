@@ -1,5 +1,7 @@
 <?php
-session_start(); // Make sure session is started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require ('../model/common/common_functions.php');
 
 class homeController {

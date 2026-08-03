@@ -467,10 +467,10 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="editProductModalLabel">
+                <h5 class="modal-title text-white" id="editProductModalLabel">
                     <i class="fas fa-edit me-2"></i>Edit Product Details
                 </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white text-white" data-bs-dismiss="modal" aria-label="Close" style="background: transparent; border: none; opacity: 1; font-size: 1.25rem; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;"><i class="ri-close-line"></i></button>
             </div>
             <div class="modal-body">
                 <form id="editProductForm" enctype="multipart/form-data">

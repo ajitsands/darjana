@@ -391,7 +391,8 @@
                     "scrollX": false,
                     "scrollCollapse": false,
                     "paging": true,
-                    "lengthChange": false,
+                    "lengthChange": true,
+                    "lengthMenu": [[10, 20, 50, 100, -1], [10, 20, 50, 100, "All"]],
                     "pageLength": 10,
                     "pagingType": "simple_numbers",
                     "searching": true,
@@ -703,8 +704,12 @@
                         },
                         {
                             "data": "ids",
-                            "render": function(data) {
-                                return `<a class="edit-category" data-id="${data}"><i class="ri-pencil-line me-1" style="color:blue;"></i></a>`;
+                            "render": function(data, type, row) {
+                                let actionHtml = `<a class="edit-category" data-id="${data}" title="Edit"><i class="ri-pencil-line me-1" style="color:blue;"></i></a>`;
+                                if (!row.product_count || parseInt(row.product_count) === 0) {
+                                    actionHtml += `<a class="delete-category" data-id="${data}" title="Delete Category" style="cursor:pointer;"><i class="ri-delete-bin-2-fill ms-2" style="color:red;"></i></a>`;
+                                }
+                                return actionHtml;
                             }
                         }
                     ]
@@ -1100,6 +1105,45 @@
                     if (response === 'success') {
                         $('#categoryTable').DataTable().ajax.reload();
                     }
+                }
+            });
+        });
+
+        $(document).on('click', '.delete-category', function(e) {
+            e.preventDefault();
+            var categoryId = $(this).data('id');
+            swal({
+                title: 'Are you sure?',
+                text: 'Do you want to delete this category?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: '../controller/add_product/product_controller.php',
+                        type: 'POST',
+                        data: {
+                            action: 'delete_category',
+                            category_id: categoryId
+                        },
+                        success: function(response) {
+                            if (response === 'success') {
+                                swal('Deleted!', 'Category deleted successfully.', 'success');
+                                $('#categoryTable').DataTable().ajax.reload(null, false);
+                                if (typeof fetchCategories === 'function') {
+                                    fetchCategories();
+                                }
+                            } else if (response === 'has_products') {
+                                swal('Cannot Delete!', 'Products are assigned to this category. Remove or reassign them first.', 'warning');
+                            } else {
+                                swal('Error!', 'Failed to delete category.', 'error');
+                            }
+                        },
+                        error: function() {
+                            swal('Error!', 'Error deleting category.', 'error');
+                        }
+                    });
                 }
             });
         });
@@ -1982,10 +2026,11 @@
 
             // ✅ Check at least one color
             let hasColor = false;
-            $('input[placeholder="Enter Product Color"]').each(function () {
-                if ($(this).val().trim() !== '') {
+            $('.color-row-item').each(function () {
+                var name = $(this).find('.color-name-input').val() ? $(this).find('.color-name-input').val().trim() : '';
+                var hex = $(this).find('.color-hex-input').val() ? $(this).find('.color-hex-input').val().trim() : '';
+                if (name !== '' || hex !== '') {
                     hasColor = true;
-                    laddaButton.stop();
                     return false;
                 }
             });
@@ -2002,9 +2047,7 @@
             $('input[placeholder="Enter Product Size"]').each(function () {
                 if ($(this).val().trim() !== '') {
                     hasSize = true;
-                    laddaButton.stop();
                     return false;
-                    
                 }
             });
             
@@ -2020,7 +2063,6 @@
             $('input[placeholder="Enter Product Length"]').each(function () {
                 if ($(this).val().trim() !== '') {
                     hasLength = true;
-                    laddaButton.stop();
                     return false;
                 }
             });
@@ -2034,10 +2076,9 @@
             
             // ✅ Check at least one image
             let hasImage = false;
-            $('input[type="file"]').each(function () {
-                if (this.files.length > 0) {
+            $('input[type="file"][name="product_images[]"], #product_images').each(function () {
+                if (this.files && this.files.length > 0) {
                     hasImage = true;
-                    laddaButton.stop();
                     return false;
                 }
             });

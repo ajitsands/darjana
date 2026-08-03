@@ -7,6 +7,29 @@
     <?php include("view/templates/head.php"); ?>
 
     <style>
+        .shop-product-title {
+            font-size: 1.4rem !important;
+            font-weight: 400;
+            margin-bottom: -4px !important;
+            padding-bottom: 0px;
+            line-height: 1.1;
+            color: #333;
+        }
+        .shop-product-price {
+            font-size: 1.05rem !important;
+            font-weight: 600;
+            color: #555;
+            margin-top: 0px !important;
+        }
+        @media (max-width: 768px) {
+            .shop-product-title {
+                font-size: 1.0rem !important;
+                margin-bottom: -2px !important;
+            }
+            .shop-product-price {
+                font-size: 0.85rem !important;
+            }
+        }
         html, body {
             overflow-x: hidden;
         }
@@ -640,6 +663,35 @@
             font-size: 0.95rem;
             margin-bottom: 0.25rem;
         }
+
+        /* + button on product cards */
+        .card-plus-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.92);
+            color: #222;
+            font-size: 22px;
+            line-height: 34px;
+            text-align: center;
+            cursor: pointer;
+            z-index: 10;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        .card-plus-btn:hover {
+            background: #222;
+            color: #fff !important;
+        }
+        .dz-media {
+            position: relative;
+        }
     
         .price-block {
             margin-top: 0 !important;
@@ -699,6 +751,7 @@
         /* Ensure cards maintain clean square edges */
         .shop-card {
             overflow: hidden;
+            cursor: pointer;
         }
     
         /* Specifically target Quick View button */
@@ -1077,30 +1130,55 @@
     }
     
     .whatsapp-float {
-                position: fixed;
-                width: 60px;
-                height: 60px;
-                bottom: 60px;
-                right: 80px;
-                background: #25D366;
-                color: white !important;
-                border-radius: 50%;
-                text-align: center;
-                font-size: 30px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-                z-index: 1000;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-decoration: none;
-                transition: all 0.3s ease;
-            }
-            
-            .whatsapp-float:hover {
-                transform: scale(1.12);
-                background: #20b858;
-                color: white !important;
-            }
+        position: fixed;
+        width: 46px;
+        height: 46px;
+        bottom: 110px;
+        right: 20px;
+        background: #25D366;
+        color: white !important;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 22px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .whatsapp-float:hover {
+        transform: scale(1.12);
+        background: #20b858;
+        color: white !important;
+    }
+
+    .instagram-float {
+        position: fixed;
+        width: 46px;
+        height: 46px;
+        bottom: 55px;
+        right: 20px;
+        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        color: white !important;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 22px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .instagram-float:hover {
+        transform: scale(1.12);
+        color: white !important;
+    }
 
     </style>
 </head>
@@ -1125,6 +1203,10 @@
     
     	<a href="https://wa.me/97333300160?text=Hi I Like to Know more about the Products ." class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
         <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <a href="https://www.instagram.com/Dar_jana_" class="instagram-float" target="_blank" title="Follow us on Instagram">
+        <i class="fab fa-instagram"></i>
     </a>
     <?php include("view/templates/scripts.php"); ?>
     <script>
@@ -1481,7 +1563,7 @@
                     : (product.product_name || 'Unnamed Product');
         
                 html += `
-                    <div class="col-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 m-md-b15 m-b30">
+                    <div class="col-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 m-b15">
                         <div class="shop-card style-1" data-vendor-id="${product.vendor_id}">
                             <div class="img-gap">
                                 <div class="dz-media">
@@ -1497,10 +1579,8 @@
                                     </a>
                                     
                                     <div class="shop-meta">
-                                        <a href="https://darjanafashion.com/ProductDetails?id=${product.ids}" 
-                                           class="btn btn-secondary btn-md btn-rounded quick-view-btn">
-                                            <i class="fa-solid fa-eye d-md-none d-block"></i>
-                                            <span class="d-md-block d-none" data-i18n="view_details">View Details</span>
+                                        <a href="https://darjanafashion.com/ProductDetails?id=${product.ids}" class="card-plus-btn" title="View Details">
+                                            +
                                         </a>
                                         <div class="btn btn-primary meta-icon dz-wishicon" data-product-id="${product.ids}">
                                             <i class="icon feather icon-heart dz-heart"></i>
@@ -1509,18 +1589,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dz-content font-inst align-items-center text-center p-3">
-                                <h6 class="title mb-0 product-title">
-                                    <a href="https://darjanafashion.com/ProductDetails?id=${product.ids}">
+                            <div class="dz-content font-inst align-items-center p-2" style="display: block !important; text-align: left !important;">
+                                <h6 class="title mb-0 product-title shop-product-title">
+                                    <a href="https://darjanafashion.com/ProductDetails?id=${product.ids}" style="color: inherit; text-decoration: none;">
                                         ${displayName}
                                     </a>
                                 </h6>
-                                <div class="price-block d-flex align-items-center gap-2 flex-wrap">
-                                    <h5 class="price mb-0 text-primary fw-bold">
+                                <div class="price-container" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 3px;">
+                                    <h5 class="price mb-0 shop-product-price">
                                         ${formatShopPrice(displayPrice)}
                                     </h5>
                                     ${showDiscount ? `
-                                    <h6 class="original-price mb-0 text-muted">
+                                    <h6 class="original-price mb-0 shop-product-price" style="color: #888; font-weight: normal; font-size: 0.85rem !important;">
                                         <del>${formatShopPrice(originalPrice)}</del>
                                     </h6>` : ''}
                                 </div>
@@ -1709,12 +1789,12 @@
                     } else if (response.status === 'exists') {
                         setupDropdown('dropdownContent', 'warning', svgError + response.message, 'click');
                     } else {
-                        alert(response.message || 'Error adding product to wishlist');
+                        Swal.fire('Error', response.message || 'Error adding product to wishlist', 'error');
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('Error adding to wishlist:', error);
-                    alert('An error occurred while adding the product to the wishlist.');
+                    Swal.fire('Error', 'An error occurred while adding the product to the wishlist.', 'error');
                 }
             });
         }
@@ -1735,12 +1815,12 @@
                             'click');
                         $(document).trigger('wishlistUpdated');
                     } else {
-                        alert(response.message || 'Error removing product from wishlist');
+                        Swal.fire('Error', response.message || 'Error removing product from wishlist', 'error');
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('Error removing from wishlist:', error);
-                    alert('An error occurred while removing the product from the wishlist.');
+                    Swal.fire('Error', 'An error occurred while removing the product from the wishlist.', 'error');
                 }
             });
         }
@@ -1888,9 +1968,8 @@
                                     </a>
                                     
                                     <div class="shop-meta">
-                                        <a href="https://darjanafashion.com/ProductDetails?id=${product.ids}" class="btn btn-secondary btn-md btn-rounded quick-view-btn">
-                                            <i class="fa-solid fa-eye d-md-none d-block"></i>
-                                            <span class="d-md-block d-none" data-i18n="view_details">View Details</span>
+                                        <a href="https://darjanafashion.com/ProductDetails?id=${product.ids}" class="card-plus-btn" title="View Details">
+                                            +
                                         </a>
                                         <div class="btn btn-primary meta-icon dz-wishicon" data-product-id="${product.ids}">
                                             <i class="icon feather icon-heart dz-heart"></i>
@@ -1899,18 +1978,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dz-content font-inst align-items-center text-center p-3">
-                                <h6 class="title mb-0 product-title">
-                                    <a href="https://darjanafashion.com/ProductDetails?id=${product.ids}">
+                            <div class="dz-content font-inst align-items-center p-2" style="display: block !important; text-align: left !important;">
+                                <h6 class="title mb-0 product-title" style="font-size: 0.9rem; font-weight: 400; margin-bottom: 0px !important; padding-bottom: 0px; line-height: 1.2; color: #333;">
+                                    <a href="https://darjanafashion.com/ProductDetails?id=${product.ids}" style="color: inherit; text-decoration: none;">
                                         ${displayName}
                                     </a>
                                 </h6>
-                                <div class="price-block d-flex align-items-center gap-2 flex-wrap">
-                                    <h5 class="price mb-0 text-primary fw-bold">
+                                <div class="price-container" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 3px;">
+                                    <h5 class="price mb-0" style="font-size: 0.75rem; font-weight: 600; color: #555;">
                                         ${formatShopPrice(displayPrice)}
                                     </h5>
                                     ${showDiscount ? `
-                                    <h6 class="original-price mb-0 text-muted">
+                                    <h6 class="original-price mb-0" style="font-size: 0.85rem; color: #888;">
                                         <del>${formatShopPrice(originalPrice)}</del>
                                     </h6>` : ''}
                                 </div>
@@ -1931,51 +2010,32 @@
                     checkWishlistStatus(productId, wishIcon);
                 }
             });
-            
-          
-            
-            // Quick view trigger
-            // $(document).on('click', '.quick-view-btn', function(e) {
-            //     e.preventDefault();
-            //     e.stopPropagation();
-            //     const productId = $(this).data('product-id');
-            //     loadProductDetails(productId);
-            // });
-        
-            // Click anywhere on card (except buttons) → go to product page
-            // $(document).on('click', '.shop-card-wrapper', function(e) {
-            //     if ($(e.target).closest('.shop-meta .btn, .quick-view-btn').length) {
-            //         return;
-            //     }
-            //     window.location = $(this).find('.product-main-link').attr('href');
-            // });
         }
 
-          // Product click tracking (redirect after tracking)
-            $(document).on('click', '.track-product-click', function(e) {
-                alert("clicked");
-                e.preventDefault();
-                const productId = $(this).data('product-id');
-                const productUrl = $(this).attr('href');
-                
-                // Send click data to server
-                $.ajax({
-                    url: 'controller/product_controller.php',
-                    type: 'POST',
-                    data: {
-                        action: 'track_product_click',
-                        product_id: productId
-                    },
-                    success: function() {
-                        // After tracking, proceed to the product page
-                        window.location.href = productUrl;
-                    },
-                    error: function(xhr, status, error) {
-                        // Even if tracking fails, still proceed to product page
-                        console.error('Error tracking click:', error);
-                        window.location.href = productUrl;
+            // Click anywhere on shop card (except wishlist button) → go to ProductDetails page
+            $(document).on('click', '.shop-card', function(e) {
+                // Ignore if clicked on wishlist icon
+                if ($(e.target).closest('.dz-wishicon').length) {
+                    return;
+                }
+
+                const productUrl = $(this).find('a[href*="ProductDetails"]').first().attr('href');
+                if (productUrl) {
+                    // Send tracking asynchronously without blocking navigation
+                    const productId = $(this).find('[data-product-id]').first().data('product-id');
+                    if (productId) {
+                        if (navigator.sendBeacon) {
+                            const formData = new FormData();
+                            formData.append('action', 'track_product_click');
+                            formData.append('product_id', productId);
+                            navigator.sendBeacon('controller/product_controller.php', formData);
+                        } else {
+                            $.post('controller/product_controller.php', { action: 'track_product_click', product_id: productId });
+                        }
                     }
-                });
+
+                    window.location.href = productUrl;
+                }
             });
 
         function checkWishlistStatus(productId, wishIcon) {
@@ -2913,23 +2973,21 @@
         });
         // Shop-specific price formatting
         function formatShopPrice(price, includeSymbol = true) {
+            const currencyCode = currentCurrency?.currency_code || 'BHD';
+            const decimals = (currencyCode.toUpperCase() === 'BHD') ? 3 : 2;
+
             if (isNaN(price) || price === 0) {
-                return includeSymbol ? 'BD 0.00' : '0.00';
+                return includeSymbol ? `${currencyCode} 0.00` : '0.00';
             }
             
             // Convert using current currency exchange rate
             const exchangeRate = currentCurrency?.exchange_rate || 1;
             const convertedPrice = price * exchangeRate;
             
-            // Format with 2 decimal places and commas
-            const formatted = convertedPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            // Format with appropriate decimal places and commas
+            const formatted = convertedPrice.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             
-            if (includeSymbol) {
-                const symbol = currentCurrency?.currency_symbol || 'BD';
-                return `${symbol} ${formatted}`;
-            }
-            
-            return formatted;
+            return includeSymbol ? `${currencyCode} ${formatted}` : formatted;
         }
         // Update all prices on shop page
         function updateShopPrices() {

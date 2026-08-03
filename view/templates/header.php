@@ -96,6 +96,19 @@ $txt = [
 <?php endif; ?>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* All Main Menu and Submenu Links - Poppins Bold (700) */
+.header-nav .nav > li > a,
+.header-nav .sub-menu li > a,
+.header-nav .sub-menu a,
+.header-nav.w3menu .nav > li > a,
+.navbar-nav > li > a,
+.header-nav a {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 700 !important;
+}
+
 /* Desktop/Laptop - Reduce header size through spacing */
     @media only screen and (min-width: 992px) {
 
@@ -383,14 +396,33 @@ $txt = [
         }
     }
 
-    /* Mobile – Logo CENTER */
+    /* Mobile – Logo CENTER, Mobile Toggle Icon on LEFT */
     @media (max-width: 991.98px) {
+        .main-bar {
+            position: relative !important;
+            min-height: 60px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
         .main-logo {
             position: absolute !important;
             left: 50% !important;
-            transform: translateX(-50%) !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
             text-align: center !important;
             z-index: 10;
+            margin: 0 !important;
+        }
+
+        .navbar-toggler {
+            position: absolute !important;
+            left: 15px !important;
+            right: auto !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            z-index: 20 !important;
+            margin: 0 !important;
         }
     }
     @media (min-width: 992px) {
@@ -498,12 +530,15 @@ $txt = [
 
                 <!-- Main Nav -->
                 <div class="header-nav w3menu navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
-                    <div class="logo-header logo-dark me-md-5"
-                         style="background-color:black; margin: 0 auto; text-align:center;">
+                    <div class="logo-header logo-dark me-md-5 mobile-drawer-header"
+                         style="background-color:#292929; margin: 0 auto; text-align:center; position:relative; padding: 10px 15px; height: auto;">
                         <a href="/" style="display:inline-block;">
-                            <img src="images/logo/web_logo.png" alt="logo"
-                                 style="width: 180px; height: auto;">
+                            <img src="images/logo/web_logo_menu.png" alt="logo"
+                                 style="width: 140px; max-height: 44px; object-fit: contain;">
                         </a>
+                        <button type="button" class="mobile-nav-close-btn d-lg-none" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-label="Close" style="position:absolute; right:15px; top:50%; transform:translateY(-50%); background:none; border:none; color:#ffffff; font-size:26px; cursor:pointer; line-height:1; padding:0 8px;">
+                            &times;
+                        </button>
                     </div>
 
                     <ul class="nav navbar-nav">
@@ -615,13 +650,16 @@ $txt = [
                     
                     <div class="dz-social-icon">
                         <ul>
-                            <li><a class="fab fa-facebook-f" target="_blank" href="https://www.facebook.com/dexignzone"></a></li>
-                            <li><a class="fab fa-twitter" target="_blank" href="https://twitter.com/dexignzones"></a></li>
-                            <li><a class="fab fa-linkedin-in" target="_blank" href="https://www.linkedin.com/showcase/3686700/admin/"></a></li>
-                            <li><a class="fab fa-instagram" target="_blank" href="https://www.instagram.com/dexignzone/"></a></li>
-                            
-                            
-                         
+                            <li>
+                                <a target="_blank" href="https://www.instagram.com/dar_jana_?igsh=b3VvY3hpejJ0aDZi" title="Instagram">
+                                    <i class="fab fa-instagram fa-brands fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="https://www.tiktok.com/@dar_jana_?_r=1&_t=ZS-98a0TvcKGOb" title="TikTok">
+                                    <i class="fab fa-tiktok fa-brands fa-tiktok"></i>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

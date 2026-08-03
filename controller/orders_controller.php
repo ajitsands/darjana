@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 date_default_timezone_set('Asia/Bahrain');
 require('../model/common/common_functions.php');
 require_once(__DIR__ . '/afs_payment.php');
@@ -286,7 +288,7 @@ class orders_controller
                             ) 
                             FROM cart_products cp 
                             JOIN product_details pd ON cp.product_id = pd.ids
-                            JOIN vendor_details vd ON pd.vendor_id = vd.ids
+                            LEFT JOIN vendor_details vd ON pd.vendor_id = vd.ids
                             WHERE cp.customer_id = cd.ids
                         ) AS cart_items,
                         (
@@ -1291,6 +1293,33 @@ class orders_controller
             $isPaid = (strcasecmp($paymentStatus, 'Paid') === 0 || 
                        strcasecmp($paymentStatus, 'SUCCESS') === 0 || 
                        strcasecmp($paymentStatus, 'success') === 0);
+        }
+
+        // Fetch IP location and append to responseDetails before saving to DB
+        $customerIp = $responseDetails['data']['customer']['ip'] ?? 
+                      $responseDetails['customer']['ip'] ?? 
+                      $_SERVER['REMOTE_ADDR'] ?? '';
+
+        if (!empty($customerIp) && $customerIp !== '127.0.0.1' && $customerIp !== '::1') {
+            $geoUrl = "http://api.db-ip.com/v2/free/" . urlencode($customerIp);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $geoUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+            $geoResp = curl_exec($ch);
+            curl_close($ch);
+
+            if ($geoResp) {
+                $geoData = json_decode($geoResp, true);
+                if (!empty($geoData) && isset($geoData['countryName'])) {
+                    $responseDetails['ip_location'] = [
+                        'countryName' => $geoData['countryName'] ?? 'N/A',
+                        'stateProv'   => $geoData['stateProv'] ?? 'N/A',
+                        'city'        => $geoData['city'] ?? 'N/A'
+                    ];
+                }
+            }
         }
 
         $jsonResponse = json_encode($responseDetails);

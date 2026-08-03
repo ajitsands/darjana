@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} 
+?>
 <?php
 
 $con = mysqli_connect("localhost","darjanafashion_user","s@nds1@b","darjanafashion_db");
@@ -180,39 +184,39 @@ if ($row = mysqli_fetch_assoc($result)) {
         }
     
         .btn-primary {
-            background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                        radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%) !important;
+            background: radial-gradient(ellipse farthest-corner at right bottom, #E0E0E0 0%, #D3D3D3 8%, #EAEAEA 30%, #E0E0E0 40%, transparent 80%),
+                        radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #F8F8F8 8%, #E0E0E0 25%, #D3D3D3 62.5%, #D3D3D3 100%) !important;
             border: none !important;
             color: #000 !important;
         }
         
         .btn-primary:hover {
             background: #000 !important;
-            color: #FEDB37 !important;
+            color: #E0E0E0 !important;
         }
     
         /* Secondary buttons - Black */
         /* .btn-secondary {
             background-color: #000 !important;
-            border-color: #ffffff !important;
-            color: #ffffff !important;
+            border-color: #555555 !important;
+            color: #555555 !important;
         } */
 /*     
         .btn-secondary:hover {
-            background-color: #9e8246 !important;
-            border-color: #ffffff !important;
-            color: #ffffff !important;
+            background-color: #D3D3D3 !important;
+            border-color: #555555 !important;
+            color: #555555 !important;
         } */
     
         /* Outline buttons - Gold theme */
         .btn-outline-primary {
-            border: 2px solid #FFD700 !important;
+            border: 2px solid #F0F0F0 !important;
             color: #000 !important;
             background: transparent !important;
         }
     
         .btn-outline-primary:hover {
-            background-color: #FFD700 !important;
+            background-color: #555555 !important;
             color: #000 !important;
         }
     
@@ -223,7 +227,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         }
     
         #product-price {
-            color: #FFD700 !important; /* Gold price */
+            color: #555555 !important; /* Gold price */
             font-size: 1.5rem;
             font-weight: 700;
         }
@@ -246,7 +250,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         input:not(.btn):focus,
         textarea:focus,
         select:focus {
-            border-color: #FFD700 !important;
+            border-color: #555555 !important;
             box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2) !important;
             outline: none !important;
         }
@@ -280,7 +284,7 @@ if ($row = mysqli_fetch_assoc($result)) {
             /* text-transform: uppercase !important; */
             letter-spacing: 0.3px !important;
             font-family: "Montserrat", sans-serif !important;
-            border-bottom: 1px dashed #FFD700;
+            border-bottom: 1px dashed #F0F0F0;
             padding: 8px 0;
         }
     
@@ -290,7 +294,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     
         .spec-heading {
             font-weight: bold;
-            color: #FFD700 !important; /* Gold headings */
+            color: #555555 !important; /* Gold headings */
         }
     
         .spec-content {
@@ -300,7 +304,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     
         /* Nav tabs - Gold theme */
         .nav-tabs {
-            border-bottom: 2px solid #FFD700;
+            border-bottom: 2px solid #F0F0F0;
         }
     
         .nav-tabs .nav-link {
@@ -318,7 +322,7 @@ if ($row = mysqli_fetch_assoc($result)) {
             left: 0;
             width: 0;
             height: 3px;
-            background-color: #FFD700;
+            background-color: #555555;
             transition: width 0.3s ease;
         }
     
@@ -334,7 +338,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     
         .nav-tabs .nav-link.active::after {
             width: 100%;
-            background-color: #FFD700;
+            background-color: #555555;
         }
     
         /* Description paragraph styling */
@@ -373,14 +377,14 @@ if ($row = mysqli_fetch_assoc($result)) {
         .related-products-section .shop-card.style-1::before {
             top: 10px;
             left: 10px;
-            border-top: 2px solid #FFD700;
+            border-top: 2px solid #F0F0F0;
         }
     
         .related-products-section .shop-card.style-1::after {
             bottom: 10px;
             right: 10px;
-            border-bottom: 2px solid #FFD700;
-            border-right: 2px solid #FFD700;
+            border-bottom: 2px solid #F0F0F0;
+            border-right: 2px solid #F0F0F0;
         }
     
         .related-products-section .shop-card.style-1:hover::before,
@@ -414,12 +418,12 @@ if ($row = mysqli_fetch_assoc($result)) {
             cursor: pointer;
             transition: all 0.3s ease;
             color: #000;
-            border: 2px solid #FFD700;
+            border: 2px solid #F0F0F0;
         }
     
         .btn-prev:hover,
         .btn-next:hover {
-            background: #FFD700;
+            background: #F0F0F0;
             color: #000;
             border-color: #000;
         }
@@ -443,7 +447,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         }
     
         .btn-quantity .form-control:focus {
-            border-color: #FFD700 !important;
+            border-color: #555555 !important;
         }
     
         .btn-quantity .input-group-btn {
@@ -463,8 +467,8 @@ if ($row = mysqli_fetch_assoc($result)) {
         }
     
         .btn-quantity .btn:hover {
-            background: #FFD700;
-            border-color: #FFD700;
+            background: #F0F0F0;
+            border-color: #555555;
             color: #000;
         }
     
@@ -503,7 +507,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     
         /* Active thumbnail with gold border */
         .thumb-swiper-lg .swiper-slide-thumb-active img {
-            border: 2px solid #FFD700 !important;
+            border: 2px solid #F0F0F0 !important;
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
             opacity: 1;
         }
@@ -512,7 +516,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         .thumb-swiper-lg .swiper-slide img:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 15px rgba(255, 215, 0, 0.2);
-            border-color: #FFD700;
+            border-color: #555555;
         }
     
         /* ========== RELATED PRODUCT IMAGES ========== */
@@ -535,7 +539,7 @@ if ($row = mysqli_fetch_assoc($result)) {
             box-shadow: 0 15px 30px rgba(255, 215, 0, 0.2); /* Gold shadow */
             transform: scale(1.03);
             filter: brightness(1.02);
-            border-color: #FFD700;
+            border-color: #555555;
         }
     
         /* ========== ENHANCED COLOR SELECTION STYLES - GOLD THEME ========== */
@@ -635,10 +639,10 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
         
             .product-size .btn-check:checked + .btn {
-                background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%) !important;
+                background: radial-gradient(ellipse farthest-corner at right bottom, #E0E0E0 0%, #D3D3D3 8%, #EAEAEA 30%, #E0E0E0 40%, transparent 80%),
+                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #F8F8F8 8%, #E0E0E0 25%, #D3D3D3 62.5%, #D3D3D3 100%) !important;
                 border: none !important;
-                color: #ffffff !important;
+                color: #555555 !important;
                 box-shadow: 0 0 0 2px rgba(254, 219, 55, 0.3), 0 0 15px rgba(254, 219, 55, 0.5);
                 transform: scale(1.05);
                 font-weight: 700;
@@ -646,8 +650,8 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             /* Hover state for size buttons */
             .product-size .btn:hover {
-                border-color: #FFD700;
-                background-color: rgba(255, 215, 0, 0.1);
+                border-color: #555555;
+                background-color: rgba(211, 211, 211, 0.1);
                 transform: translateY(-2px);
                 box-shadow: 0 5px 10px rgba(255, 215, 0, 0.2);
             }
@@ -668,7 +672,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             #length-select:focus,
             #length-select:hover {
-                border-color: #FFD700;
+                border-color: #555555;
                 box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
                 outline: none;
             }
@@ -686,18 +690,18 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             .bootstrap-select .dropdown-toggle:focus,
             .bootstrap-select .dropdown-toggle:hover {
-                border-color: #FFD700 !important;
+                border-color: #555555 !important;
                 box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2) !important;
             }
         
             .bootstrap-select.show .dropdown-toggle {
-                border-color: #FFD700 !important;
+                border-color: #555555 !important;
                 box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3) !important;
             }
         
             .bootstrap-select .dropdown-menu {
                 border-radius: 0 !important;
-                border: 2px solid #FFD700;
+                border: 2px solid #F0F0F0;
                 padding: 0;
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             }
@@ -711,11 +715,11 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
         
             .bootstrap-select .dropdown-menu li a:hover {
-                background-color: rgba(255, 215, 0, 0.1);
+                background-color: rgba(211, 211, 211, 0.1);
             }
         
             .bootstrap-select .dropdown-menu li.selected a {
-                background-color: #FFD700 !important;
+                background-color: #555555 !important;
                 color: #000 !important;
                 font-weight: 600;
             }
@@ -723,12 +727,12 @@ if ($row = mysqli_fetch_assoc($result)) {
             /* Login Modal Styling with gold accents */
             #loginModal .modal-content {
                 border-radius: 0 !important;
-                border: 2px solid #FFD700;
+                border: 2px solid #F0F0F0;
                 box-shadow: 0 5px 20px rgba(255, 215, 0, 0.2);
             }
         
             #loginModal .modal-header {
-                border-bottom: 1px solid #FFD700;
+                border-bottom: 1px solid #F0F0F0;
                 padding-bottom: 15px;
             }
         
@@ -743,13 +747,13 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
         
             #loginModal .modal-footer {
-                border-top: 1px solid #FFD700;
+                border-top: 1px solid #F0F0F0;
                 padding-top: 15px;
             }
         
             #loginModal .btn-primary {
-                background-color: #FFD700 !important;
-                border-color: #FFD700 !important;
+                background-color: #555555 !important;
+                border-color: #555555 !important;
                 color: #000 !important;
                 border-radius: 0 !important;
             }
@@ -757,13 +761,13 @@ if ($row = mysqli_fetch_assoc($result)) {
             #loginModal .btn-primary:hover {
                 background-color: #000 !important;
                 border-color: #000 !important;
-                color: #FFD700 !important;
+                color: #555555 !important;
             }
         
             #loginModal .btn-secondary {
                 background-color: #000 !important;
                 border-color: #000 !important;
-                color: #FFD700 !important;
+                color: #555555 !important;
                 border-radius: 0 !important;
             }
         
@@ -807,7 +811,7 @@ if ($row = mysqli_fetch_assoc($result)) {
                 z-index: 10;
                 top: 50%;
                 transform: translateY(-50%);
-                border: 1px solid #FFD700;
+                border: 1px solid #F0F0F0;
                 color: #000;
                 font-size: 12px;
                 margin: 0;
@@ -828,7 +832,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             .thumb-btn-prev:hover,
             .thumb-btn-next:hover {
-                background: #FFD700;
+                background: #F0F0F0;
                 color: #000;
                 border-color: #000;
             }
@@ -842,7 +846,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             /* Product tag badges with gold theme */
             .product-tag .badge {
-                background-color: #FFD700 !important;
+                background-color: #555555 !important;
                 color: #000 !important;
                 font-weight: 600;
                 padding: 5px 10px;
@@ -852,11 +856,22 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             #discount-badge, 
             .product-tag .badge {
-                background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%) !important;
+                background: radial-gradient(ellipse farthest-corner at right bottom, #E0E0E0 0%, #D3D3D3 8%, #EAEAEA 30%, #E0E0E0 40%, transparent 80%),
+                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #F8F8F8 8%, #E0E0E0 25%, #D3D3D3 62.5%, #D3D3D3 100%) !important;
                 color: white !important;
                 font-weight: 700;
                 border: none;
+            }
+            
+            .price, .price * {
+                font-family: "DM Sans", sans-serif !important;
+                font-weight: 700;
+                font-size: 1.25rem !important; /* Base size */
+            }
+            
+            /* Make strikethrough price same size */
+            del {
+                font-size: inherit !important;
             }
         
             /* Make all badges square */
@@ -873,8 +888,8 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
         
             .social-icon a:hover {
-                background-color: #FFD700 !important;
-                border-color: #FFD700 !important;
+                background-color: #555555 !important;
+                border-color: #555555 !important;
                 color: #000 !important;
                 transform: translateY(-2px);
             }
@@ -896,8 +911,8 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             /* Savings text in gold */
             #savings-text {
-                background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+                background: radial-gradient(ellipse farthest-corner at right bottom, #E0E0E0 0%, #D3D3D3 8%, #EAEAEA 30%, #E0E0E0 40%, transparent 80%),
+                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #F8F8F8 8%, #E0E0E0 25%, #D3D3D3 62.5%, #D3D3D3 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
@@ -910,8 +925,8 @@ if ($row = mysqli_fetch_assoc($result)) {
             #brand-info li strong,
             #warranty-info li strong,
             #vendor-info li strong {
-                background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+                background: radial-gradient(ellipse farthest-corner at right bottom, #E0E0E0 0%, #D3D3D3 8%, #EAEAEA 30%, #E0E0E0 40%, transparent 80%),
+                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #F8F8F8 8%, #E0E0E0 25%, #D3D3D3 62.5%, #D3D3D3 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
@@ -934,8 +949,8 @@ if ($row = mysqli_fetch_assoc($result)) {
             #brand-info a:hover,
             #warranty-info a:hover,
             #vendor-info a:hover {
-                background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+                background: radial-gradient(ellipse farthest-corner at right bottom, #E0E0E0 0%, #D3D3D3 8%, #EAEAEA 30%, #E0E0E0 40%, transparent 80%),
+                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #F8F8F8 8%, #E0E0E0 25%, #D3D3D3 62.5%, #D3D3D3 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
@@ -945,7 +960,7 @@ if ($row = mysqli_fetch_assoc($result)) {
             /* SKU styling */
             #product-sku {
                 color: #666;
-                border-bottom: 1px dashed #FFD700;
+                border-bottom: 1px dashed #F0F0F0;
                 padding-bottom: 5px;
             }
         
@@ -960,12 +975,12 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             .add-to-wishlist-btn:hover {
                 transform: scale(1.1);
-                border-color: #FFD700 !important;
+                border-color: #555555 !important;
                 background-color: #fff !important;
             }
         
             .add-to-wishlist-btn:hover i {
-                color: #FFD700 !important;
+                color: #555555 !important;
             }
         
             .add-to-wishlist-btn.wishlist-active i {
@@ -976,53 +991,49 @@ if ($row = mysqli_fetch_assoc($result)) {
                 border-color: #ff4444 !important;
             }
         
-            /* Add to cart button with gold theme */
-            .add-to-cart-btn {
-                background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%) !important;
+            /* Remove border from cart-detail box */
+            .cart-detail {
                 border: none !important;
-                color: #ffffff !important;
-                border-radius: 10px !important;
-                font-weight: 600;
-                transition: all 0.3s ease;
-                position: relative;
-                overflow: hidden;
             }
-            
-            .add-to-cart-btn:hover {
-                background: #000 !important;
-                color: #FEDB37 !important;
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(254, 219, 55, 0.4);
-            }
-            
-            .add-to-cart-btn i {
-                color: #000;
-                transition: color 0.3s ease;
-            }
-            
-            .add-to-cart-btn:hover i {
-                color: #FEDB37;
-            }
-        
+
+            /* Add to cart & Place order buttons - dark gray/black with white fonts */
+            .add-to-cart-btn,
             .place-order-btn {
-                background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%) !important;
-                border: none !important;
+                background: #292929 !important;
+                background-color: #292929 !important;
+                border: 1px solid #292929 !important;
                 color: #ffffff !important;
                 border-radius: 10px !important;
                 font-weight: 600;
+                transition: all 0.3s ease;
                 position: relative;
                 overflow: hidden;
-                z-index: 1;
-                transition: all 0.3s ease;
             }
             
+            .add-to-cart-btn span,
+            .place-order-btn span {
+                color: #ffffff !important;
+            }
+            
+            .add-to-cart-btn:hover,
             .place-order-btn:hover {
-                background: #000 !important;
-                color: #FEDB37 !important;
+                background: #111111 !important;
+                background-color: #111111 !important;
+                color: #ffffff !important;
+                border-color: #111111 !important;
                 transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(254, 219, 55, 0.3);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+
+            .add-to-cart-btn:hover span,
+            .place-order-btn:hover span {
+                color: #ffffff !important;
+            }
+            
+            .add-to-cart-btn i,
+            .place-order-btn i {
+                color: #ffffff !important;
+                transition: color 0.3s ease;
             }
             
             .place-order-btn:active {
@@ -1031,7 +1042,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             /* Zoom icon styling */
             .dz-maximize {
-                background: rgba(255, 215, 0, 0.9) !important;
+                background: rgba(211, 211, 211, 0.9) !important;
                 border-radius: 0 !important;
                 padding: 8px;
                 transition: all 0.3s ease;
@@ -1040,13 +1051,13 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             .dz-maximize:hover {
                 background: #000 !important;
-                color: #FFD700 !important;
+                color: #555555 !important;
             }
         
             /* Loading area enhancement */
             #loading-area {
                 border-radius: 0 !important;
-                background: rgba(255, 215, 0, 0.1) !important;
+                background: rgba(211, 211, 211, 0.1) !important;
             }
         
             /* Section titles with gold underline */
@@ -1063,7 +1074,7 @@ if ($row = mysqli_fetch_assoc($result)) {
                 left: 0;
                 width: 60px;
                 height: 3px;
-                background-color: #FFD700;
+                background-color: #555555;
             }
         
             /* Breadcrumb styling */
@@ -1078,7 +1089,7 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
         
             .breadcrumb-item a:hover {
-                color: #FFD700;
+                color: #555555;
             }
         
             .breadcrumb-item.active {
@@ -1087,23 +1098,23 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
         
             .breadcrumb-item + .breadcrumb-item::before {
-                color: #FFD700;
+                color: #555555;
             }
         
             /* Rating stars in gold */
             .rating i {
-                color: #FFD700;
+                color: #555555;
             }
         
             .rating .fa-star-half-alt {
-                color: #FFD700;
+                color: #555555;
             }
         
             /* Responsive adjustments */
             @media (max-width: 768px) {
                 .related-products-section .shop-card.style-1 .dz-content .title {
                     font-size: 0.85rem !important;
-                    height: 36px;
+                    height: 18px;
                 }
         
                 .related-products-section .shop-card.style-1 .dz-content .price {
@@ -1143,7 +1154,7 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
         
             ::-webkit-scrollbar-thumb {
-                background: #FFD700;
+                background: #F0F0F0;
             }
         
             ::-webkit-scrollbar-thumb:hover {
@@ -1151,15 +1162,15 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
             .whatsapp-float {
                 position: fixed;
-                width: 60px;
-                height: 60px;
-                bottom: 60px;
-                right: 80px;
+                width: 46px;
+                height: 46px;
+                bottom: 110px;
+                right: 20px;
                 background: #25D366;
                 color: white !important;
                 border-radius: 50%;
                 text-align: center;
-                font-size: 30px;
+                font-size: 22px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.25);
                 z-index: 1000;
                 display: flex;
@@ -1172,6 +1183,31 @@ if ($row = mysqli_fetch_assoc($result)) {
             .whatsapp-float:hover {
                 transform: scale(1.12);
                 background: #20b858;
+                color: white !important;
+            }
+
+            .instagram-float {
+                position: fixed;
+                width: 46px;
+                height: 46px;
+                bottom: 55px;
+                right: 20px;
+                background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+                color: white !important;
+                border-radius: 50%;
+                text-align: center;
+                font-size: 22px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
+
+            .instagram-float:hover {
+                transform: scale(1.12);
                 color: white !important;
             }
             .quantity-selector {
@@ -1196,8 +1232,8 @@ if ($row = mysqli_fetch_assoc($result)) {
             
             .btn-quantity-decrement:hover,
             .btn-quantity-increment:hover {
-                background: #FFD700;
-                border-color: #FFD700;
+                background: #F0F0F0;
+                border-color: #555555;
                 color: #000;
             }
             
@@ -1210,7 +1246,7 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
             
             #quantity-input:focus {
-                border-color: #FFD700 !important;
+                border-color: #555555 !important;
                 box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.15) !important;
             }
             
@@ -1267,17 +1303,17 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
             
             .product-length .btn-check:checked + .btn {
-                background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%) !important;
+                background: radial-gradient(ellipse farthest-corner at right bottom, #E0E0E0 0%, #D3D3D3 8%, #EAEAEA 30%, #E0E0E0 40%, transparent 80%),
+                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #F8F8F8 8%, #E0E0E0 25%, #D3D3D3 62.5%, #D3D3D3 100%) !important;
                 border: none !important;
-                color: #ffffff !important;
+                color: #555555 !important;
                 box-shadow: 0 0 0 2px rgba(254, 219, 55, 0.3), 0 0 15px rgba(254, 219, 55, 0.5);
                 transform: scale(1.05);
                 font-weight: 700;
             }
             
             .product-length .btn:hover {
-                border-color: #FFD700;
+                border-color: #555555;
                 background-color: rgba(255, 215, 0, 0.08);
                 transform: translateY(-2px);
                 box-shadow: 0 5px 10px rgba(255, 215, 0, 0.25);
@@ -1312,6 +1348,7 @@ if ($row = mysqli_fetch_assoc($result)) {
             /*    font-style: normal;*/
             /*}*/
             /* ========== FLOATING SIZE CHART BUTTON & SIDEBAR ========== */
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
             /* Floating Button */
             .size-chart-float-btn {
@@ -1319,21 +1356,22 @@ if ($row = mysqli_fetch_assoc($result)) {
                 right: 20px;
                 top: 50%;
                 transform: translateY(-50%);
-                background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
-                color: #ffffff;
-                padding: 15px 10px;
+                background: #292929 !important;
+                background-color: #292929 !important;
+                color: #ffffff !important;
+                padding: 12px 8px;
                 border-radius: 8px 0 0 8px;
                 writing-mode: vertical-rl;
                 text-orientation: mixed;
-                font-weight: 600;
-                letter-spacing: 2px;
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 500;
+                letter-spacing: 1.5px;
                 cursor: pointer;
                 z-index: 999;
-                box-shadow: -3px 3px 15px rgba(0,0,0,0.2);
+                box-shadow: -3px 3px 15px rgba(0,0,0,0.3);
                 transition: all 0.3s ease;
                 border: none;
-                font-size: 14px;
+                font-size: 12px !important;
                 text-transform: uppercase;
                 display: flex;
                 align-items: center;
@@ -1342,16 +1380,18 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
             
             .size-chart-float-btn i {
-                font-size: 20px;
+                font-size: 16px;
                 transform: rotate(90deg);
                 margin-bottom: 5px;
+                color: #ffffff !important;
             }
             
             .size-chart-float-btn:hover {
                 right: 25px;
-                background: #000;
-                color: #FFD700;
-                box-shadow: -5px 5px 20px rgba(255, 215, 0, 0.4);
+                background: #111111 !important;
+                background-color: #111111 !important;
+                color: #ffffff !important;
+                box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.4);
             }
             
             /* Sidebar */
@@ -1368,6 +1408,7 @@ if ($row = mysqli_fetch_assoc($result)) {
                 overflow-y: auto;
                 display: flex;
                 flex-direction: column;
+                font-family: 'Poppins', sans-serif !important;
             }
             
             .size-chart-sidebar.open {
@@ -1376,10 +1417,10 @@ if ($row = mysqli_fetch_assoc($result)) {
             
             /* Sidebar Header */
             .size-chart-header {
-                background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
-                color: #000;
-                padding: 20px 25px;
+                background: #292929 !important;
+                background-color: #292929 !important;
+                color: #ffffff !important;
+                padding: 16px 20px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -1390,59 +1431,67 @@ if ($row = mysqli_fetch_assoc($result)) {
             
             .size-chart-header h3 {
                 margin: 0;
-                font-size: 1.3rem;
+                font-family: 'Poppins', sans-serif !important;
+                font-size: 1.05rem !important;
                 font-weight: 600;
-                letter-spacing: 0.1em;
+                letter-spacing: 0.05em;
                 text-transform: uppercase;
+                color: #ffffff !important;
             }
             
             .close-sidebar {
                 background: none;
                 border: none;
-                font-size: 32px;
+                font-size: 26px;
                 line-height: 1;
                 cursor: pointer;
-                color: #ffffff;
+                color: #ffffff !important;
                 transition: transform 0.3s ease;
                 padding: 0 5px;
             }
             
             .close-sidebar:hover {
                 transform: rotate(90deg);
-                color: #333;
+                color: #ffffff !important;
             }
             
             /* Sidebar Content */
             .size-chart-content {
-                padding: 25px;
+                padding: 20px;
                 flex: 1;
                 position: relative;
+                font-family: 'Poppins', sans-serif !important;
+                font-size: 0.85rem;
             }
             
             /* Table Styling */
             .size-table {
-                border: 2px solid #FFD700 !important;
+                border: 1px solid #e5e5e5 !important;
                 margin-bottom: 0;
+                font-family: 'Poppins', sans-serif !important;
             }
             
             .size-table thead {
-                background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                            radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
-                color: #000;
+                background: #292929 !important;
+                background-color: #292929 !important;
+                color: #ffffff !important;
             }
             
             .size-table thead th {
-                border: 1px solid #FFD700 !important;
-                padding: 12px !important;
-                font-weight: 600;
+                border: 1px solid #3d3d3d !important;
+                padding: 10px !important;
+                font-family: 'Poppins', sans-serif !important;
+                font-weight: 500;
                 text-transform: uppercase;
-                font-size: 0.9rem;
-                color: white;
+                font-size: 0.8rem !important;
+                color: #ffffff !important;
             }
             
             .size-table tbody td {
-                border: 1px solid #FFD700 !important;
-                padding: 10px 12px !important;
+                border: 1px solid #e5e5e5 !important;
+                padding: 8px 10px !important;
+                font-family: 'Poppins', sans-serif !important;
+                font-size: 0.82rem !important;
             }
             
             .size-table tbody tr:nth-child(even) {
@@ -1451,21 +1500,22 @@ if ($row = mysqli_fetch_assoc($result)) {
             
             /* Table Title */
             .size-table-title {
-                font-family: 'Instrument Sans', sans-serif;
+                font-family: 'Poppins', sans-serif !important;
                 font-weight: 500;
-                letter-spacing: 0.05em;
-                font-size: 1.1rem;
+                letter-spacing: 0.03em;
+                font-size: 0.95rem !important;
             }
             
             .size-table-title small {
-                font-size: 0.85rem;
+                font-family: 'Poppins', sans-serif !important;
+                font-size: 0.8rem !important;
                 color: #666;
                 margin-top: 3px;
             }
             
             /* Height-Length Table Scroll */
             .height-length-table {
-                border: 2px solid #FFD700;
+                border: 2px solid #F0F0F0;
                 border-radius: 4px;
             }
             
@@ -1478,7 +1528,7 @@ if ($row = mysqli_fetch_assoc($result)) {
             }
             
             .height-length-table::-webkit-scrollbar-thumb {
-                background: #FFD700;
+                background: #F0F0F0;
                 border-radius: 4px;
             }
             
@@ -1657,6 +1707,33 @@ if ($row = mysqli_fetch_assoc($result)) {
                 color: #666;
                 text-align: center;
             }
+
+            /* + button on product cards */
+            .card-plus-btn {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 36px;
+                height: 36px;
+                background: rgba(255,255,255,0.92);
+                color: #222;
+                font-size: 22px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                z-index: 10;
+                border: none;
+                cursor: pointer;
+                transition: background 0.2s, color 0.2s;
+            }
+            .card-plus-btn:hover {
+                background: #222;
+                color: #fff !important;
+            }
+            .dz-media {
+                position: relative;
+            }
             
     </style>
 
@@ -1684,6 +1761,14 @@ if ($row = mysqli_fetch_assoc($result)) {
 
 
         <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
+
+        <a href="https://wa.me/97333300160?text=Hi I Like to Know more about the Products ." class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+
+        <a href="https://www.instagram.com/Dar_jana_" class="instagram-float" target="_blank" title="Follow us on Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
 
 
     </div>
@@ -1816,13 +1901,16 @@ if ($row = mysqli_fetch_assoc($result)) {
             const symbol = currentCurrency?.currency_symbol || '<?php echo STORE_CURRENCY_SYMBOL; ?>';
             const currencyCode = currentCurrency?.currency_code || 'BHD';
 
+            // Enforce decimals rule based on currency
+            decimals = (currencyCode.toUpperCase() === 'BHD') ? 3 : 2;
+
             let formatted = Number(convertedPrice)
                 .toFixed(decimals)
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
             if (includeSymbol) {
                 if (context === 'card') {
-                    return `<small class="card-currency-symbol">${symbol}</small> ${formatted} <span class="text-muted">${currencyCode}</span>`;
+                    return `${currencyCode} ${formatted}`;
                 }
 
                 return `<small class="currency-symbol">${symbol}</small> ${formatted}`;
@@ -2171,7 +2259,7 @@ if ($row = mysqli_fetch_assoc($result)) {
                     
                     .size-chart-description-en blockquote,
                     .size-chart-description-ar blockquote {
-                        border-left: 4px solid #FFD700;
+                        border-left: 4px solid #F0F0F0;
                         padding-left: 15px;
                         margin: 15px 0;
                         color: #666;
@@ -2180,7 +2268,7 @@ if ($row = mysqli_fetch_assoc($result)) {
                     
                     .size-chart-description-en a,
                     .size-chart-description-ar a {
-                        color: #FFD700;
+                        color: #555555;
                         text-decoration: underline;
                     }
                     
@@ -2287,10 +2375,12 @@ if ($row = mysqli_fetch_assoc($result)) {
                 Math.round(((originalPrice - displayPrice) / originalPrice) * 100) : 0;
             const savings = originalPrice - offerPrice;
         
-            // Set default image
-            const defaultImage = 'images/shop/product/default-product.jpg';
-            const baseImageUrl = 'https://admin.darjanafashion.com/assets/img/products/original/';
-            const baseVideoUrl = 'https://admin.darjanafashion.com/assets/videos/products/'
+            // Set image URLs: product/ for display, thumb/ for thumbnails, original/ for zoom
+            const defaultImage     = 'images/shop/product/default-product.jpg';
+            const displayImageUrl  = 'https://admin.darjanafashion.com/assets/img/products/product/';
+            const thumbImageUrl    = 'https://admin.darjanafashion.com/assets/img/products/thumb/';
+            const originalImageUrl = 'https://admin.darjanafashion.com/assets/img/products/original/';
+            const baseVideoUrl     = 'https://admin.darjanafashion.com/assets/videos/products/'
         
             // ── Localized values ────────────────────────────────────────────────────
             const productName        = getLocalized(product.product_name, product.product_name_arabic);
@@ -2306,12 +2396,6 @@ if ($row = mysqli_fetch_assoc($result)) {
             // Breadcrumb – use localized name
             $('#product-name-breadcrumb').text(productName);
         
-            // if (product.category_name) {
-            //     $('#category-link')
-            //         .text(product.category_name)
-            //         .removeAttr('href');
-            // }
-        
             if (product.category_name && product.category_id) {
                 $('#category-link')
                     .text(product.category_name)
@@ -2320,20 +2404,23 @@ if ($row = mysqli_fetch_assoc($result)) {
             // Show gallery loader before updating images
             $('#productGalleryLoader').show();
             
-            // Update product gallery – pass localized name for alt
-            updateImageGallery(product.images || [], product.product_video, productName, baseImageUrl, baseVideoUrl, defaultImage);
+            // Update product gallery – pass localized name & optimized URLs
+            updateImageGallery(product.images || [], product.product_video, productName, displayImageUrl, thumbImageUrl, originalImageUrl, baseVideoUrl, defaultImage);
             
-            // Wait for images to load before hiding spinner
-            setTimeout(function() {
-                const allImages = $('#lightgallery2 img, .thumb-swiper-lg img, #lightgallery2 video');
-                if (allImages.length > 0) {
-                    loadImagesWithSpinner(allImages.toArray(), function() {
-                        $('#productGalleryLoader').fadeOut(300);
-                    });
+            // Fast loader dismiss: hide spinner as soon as the first main image is ready
+            const firstImgElement = $('#lightgallery2 img').first().get(0);
+            if (firstImgElement) {
+                if (firstImgElement.complete) {
+                    $('#productGalleryLoader').fadeOut(150);
                 } else {
-                    $('#productGalleryLoader').fadeOut(300);
+                    $(firstImgElement).one('load error', function() {
+                        $('#productGalleryLoader').fadeOut(150);
+                    });
+                    setTimeout(function() { $('#productGalleryLoader').fadeOut(150); }, 250);
                 }
-            }, 100);
+            } else {
+                $('#productGalleryLoader').fadeOut(150);
+            }
         
             // Update product info – localized title & description
             $('#product-title').text(productName);
@@ -2399,14 +2486,6 @@ if ($row = mysqli_fetch_assoc($result)) {
                 $('#full-description').html(`<p class="text-muted">${noSpecsMsg}</p>`);
             }
         
-            // Social sharing – use localized name in tweet
-            const currentUrl = encodeURIComponent(window.location.href);
-            $('.social-icon a[href*="facebook.com"]').attr('href',
-                `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`);
-            $('.social-icon a[href*="twitter.com"]').attr('href',
-                `https://twitter.com/intent/tweet?url=${currentUrl}&text=${encodeURIComponent(productName)}`
-            );
-        
             // Initialize plugins (unchanged)
             initializePlugins();
         }
@@ -2465,7 +2544,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         //     $('#lightgallery2').html(imageSlides);
         //     $('.thumb-swiper-lg .swiper-wrapper').html(thumbSlides);
         // }
-        function updateImageGallery(images, product_video, productName, baseUrl, baseVideoUrl, defaultImage) {
+        function updateImageGallery(images, product_video, productName, displayUrl, thumbUrl, originalUrl, baseVideoUrl, defaultImage) {
             // Show loader
             $('#productGalleryLoader').show();
             
@@ -2474,33 +2553,35 @@ if ($row = mysqli_fetch_assoc($result)) {
         
             // ✅ First image (or default)
             if (images.length > 0) {
-                const firstImg = baseUrl + images[0];
+                const firstDisplayImg  = displayUrl + images[0];
+                const firstThumbImg    = thumbUrl + images[0];
+                const firstOriginalImg = originalUrl + images[0];
                 imageSlides += `
                     <div class="swiper-slide">
                         <div class="dz-media DZoomImage">
-                            <a class="mfp-link lg-item" href="${firstImg}" data-src="${firstImg}">
+                            <a class="mfp-link lg-item" href="${firstOriginalImg}" data-src="${firstOriginalImg}">
                                 <i class="feather icon-maximize dz-maximize top-left"></i>
                             </a>
-                            <img src="${firstImg}" alt="${productName}" data-loaded="false">
+                            <img src="${firstDisplayImg}" alt="${productName}" fetchpriority="high" loading="eager" decoding="async" data-loaded="false">
                         </div>
                     </div>
                 `;
                 thumbSlides += `
                     <div class="swiper-slide">
-                        <img src="${firstImg}" class="thumbnail-img" data-loaded="false">
+                        <img src="${firstThumbImg}" class="thumbnail-img" alt="${productName}" fetchpriority="high" loading="eager" decoding="async" data-loaded="false">
                     </div>
                 `;
             } else {
                 imageSlides += `
                     <div class="swiper-slide">
                         <div class="dz-media DZoomImage">
-                            <img src="${defaultImage}" data-loaded="false">
+                            <img src="${defaultImage}" alt="${productName}" data-loaded="false">
                         </div>
                     </div>
                 `;
                 thumbSlides += `
                     <div class="swiper-slide">
-                        <img src="${defaultImage}" class="thumbnail-img" data-loaded="false">
+                        <img src="${defaultImage}" class="thumbnail-img" alt="${productName}" data-loaded="false">
                     </div>
                 `;
             }
@@ -2538,20 +2619,22 @@ if ($row = mysqli_fetch_assoc($result)) {
             // ✅ Remaining images
             if (images.length > 1) {
                 images.slice(1).forEach((image) => {
-                    const imgUrl = baseUrl + image;
+                    const displayImg  = displayUrl + image;
+                    const thumbImg    = thumbUrl + image;
+                    const originalImg = originalUrl + image;
                     imageSlides += `
                         <div class="swiper-slide">
                             <div class="dz-media DZoomImage">
-                                <a class="mfp-link lg-item" href="${imgUrl}" data-src="${imgUrl}">
+                                <a class="mfp-link lg-item" href="${originalImg}" data-src="${originalImg}">
                                     <i class="feather icon-maximize dz-maximize top-left"></i>
                                 </a>
-                                <img src="${imgUrl}" alt="${productName}" data-loaded="false">
+                                <img src="${displayImg}" alt="${productName}" loading="lazy" decoding="async" data-loaded="false">
                             </div>
                         </div>
                     `;
                     thumbSlides += `
                         <div class="swiper-slide">
-                            <img src="${imgUrl}" class="thumbnail-img" data-loaded="false">
+                            <img src="${thumbImg}" class="thumbnail-img" alt="${productName}" loading="lazy" decoding="async" data-loaded="false">
                         </div>
                     `;
                 });
@@ -2741,7 +2824,7 @@ if ($row = mysqli_fetch_assoc($result)) {
                 'WHITE': '#FFFFFF',
                 'ORANGE': '#FFA500',
                 'PINK': '#FFC0CB',
-                'GOLD': '#FFD700',
+                'GOLD': '#F0F0F0',
                 'SILVER': '#C0C0C0',
                 'YELLOW': '#FFFF00',
                 'PURPLE': '#800080',
@@ -2928,7 +3011,9 @@ if ($row = mysqli_fetch_assoc($result)) {
             });
         
             // Initialize related products swiper
-            new Swiper('.swiper-four', {
+            window.relatedSwiper = new Swiper('.swiper-four', {
+                loop: true,
+                autoplay: { delay: 2500, disableOnInteraction: false },
                 slidesPerView: 4,
                 spaceBetween: 30,
                 navigation: {
@@ -2937,10 +3022,12 @@ if ($row = mysqli_fetch_assoc($result)) {
                 },
                 breakpoints: {
                     320: {
-                        slidesPerView: 1
+                        slidesPerView: 2,
+                        spaceBetween: 15
                     },
                     575: {
-                        slidesPerView: 2
+                        slidesPerView: 2,
+                        spaceBetween: 15
                     },
                     768: {
                         slidesPerView: 3
@@ -3051,7 +3138,7 @@ if ($row = mysqli_fetch_assoc($result)) {
                 
                 
                 const productImage = product.product_image ?
-                    `https://admin.darjanafashion.com/assets/img/products/original/${product.product_image}` :
+                    `https://admin.darjanafashion.com/assets/img/products/product/${product.product_image}` :
                     'images/shop/product/default-product.jpg';
                 
                 // ── Localized name for related products ─────────────────────────────
@@ -3066,26 +3153,27 @@ if ($row = mysqli_fetch_assoc($result)) {
                     <div class="swiper-slide">
                         <div class="shop-card style-1">
                             <div class="dz-media">
-                                <img src="${productImage}" alt="${displayName}">
-                                <div class="shop-meta">
-                                    <a href="https://darjanafashion.com/ProductDetails?id=${product.ids}" class="btn btn-secondary btn-md btn-rounded">
-                                        <i class="fa-solid fa-eye d-md-none d-block"></i>
-                                        <span class="d-md-block d-none">View Details</span>
-                                    </a>
-                                </div>
+                                <img src="${productImage}" alt="${displayName}" loading="lazy" decoding="async">
+                                <a href="https://darjanafashion.com/ProductDetails?id=${product.ids}" class="card-plus-btn" title="View Details">
+                                    +
+                                </a>
                             </div>
-                            <div class="dz-content">
-                                <h5 class="title" style="font-size: 0.9rem; font-weight: 400; margin-bottom: 5px;">
-                                    ${truncatedName}
+                            <div class="dz-content" style="display: block !important; text-align: left;">
+                                <h5 class="title" style="font-size: 0.9rem; font-weight: 400; margin-bottom: 0px !important; padding-bottom: 0px; line-height: 1.2; color: #333;">
+                                    <a href="https://darjanafashion.com/ProductDetails?id=${product.ids}" style="color: inherit; text-decoration: none;">
+                                        ${truncatedName}
+                                    </a>
                                 </h5>
-                                <h5 class="price" style="font-size: 0.85rem; font-weight: 600; margin-bottom: 3px;">
-                                    ${formatPrice(displayPrice, true, 2, 'card')}
-                                </h5>
-                                ${originalPrice > offerPrice ? 
-                                    `<h6 class="original-price" style="font-size: 0.75rem;">
-                                        <del>${formatPrice(originalPrice, true, 2, 'card')}</del>
-                                    </h6>` 
-                                    : ''}
+                                <div class="price-container" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 3px;">
+                                    <h5 class="price mb-0" style="font-size: 0.85rem; font-weight: 600; color: #111;">
+                                        ${formatPrice(displayPrice, true, 2, 'card')}
+                                    </h5>
+                                    ${originalPrice > displayPrice ? 
+                                        `<h6 class="original-price mb-0" style="font-size: 0.85rem; color: #888;">
+                                            <del>${formatPrice(originalPrice, true, 2, 'card')}</del>
+                                        </h6>` 
+                                        : ''}
+                                </div>
                             </div>
                             ${discount > 0 ? `
                             <div class="product-tag">
@@ -3099,9 +3187,16 @@ if ($row = mysqli_fetch_assoc($result)) {
             
             $('.swiper-four .swiper-wrapper').html(html);
             
-            // Re-init swiper (your original config)
+            // Destroy previous instance to fix loop/white screen issue on re-init
+            if (window.relatedSwiper && typeof window.relatedSwiper.destroy === 'function') {
+                window.relatedSwiper.destroy(true, true);
+            }
+            
+            // Re-init swiper
             if (typeof Swiper !== 'undefined') {
-                new Swiper('.swiper-four', {
+                window.relatedSwiper = new Swiper('.swiper-four', {
+                    loop: true,
+                    autoplay: { delay: 2500, disableOnInteraction: false },
                     slidesPerView: 4,
                     spaceBetween: 30,
                     navigation: {
@@ -3478,7 +3573,8 @@ if ($row = mysqli_fetch_assoc($result)) {
                 success: function(response) {
                     if (response.logged_in) {
                         // User is logged in, proceed to place order
-                        $.redirect('PlaceOrder', {
+                        const targetUrl = (window.location.origin ? window.location.origin : '') + '/PlaceOrder';
+                        $.redirect(targetUrl, {
                             id: productId,
                             quantity: quantity,
                             color: color,

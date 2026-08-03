@@ -53,7 +53,7 @@
         
         function fetch_data() {
            $.ajax({
-                url: "../controller/registration_controller.php",
+                url: (window.location.origin ? window.location.origin : '') + "/controller/registration_controller.php",
                 type: "POST",
                 dataType: 'json',
                 data: {
@@ -65,7 +65,7 @@
                     if (Array.isArray(response) && response.length > 0) {
                         const subscriberData = response[0];
                         
-                        const imagePath = "../httpdocs/images/" + subscriberData.Image;
+                        const imagePath = (window.location.origin ? window.location.origin : '') + "/httpdocs/images/" + subscriberData.Image + '?t=' + Date.now();
                         $('#prof_name').html(subscriberData.customer_name || getLocalized('Name', 'الاسم'));
                         $('#prof_email').html(subscriberData.email_user_name || getLocalized('Email', 'البريد الإلكتروني'));
                         $('#prof_image').css('background-image', 'url(' + imagePath + ')');

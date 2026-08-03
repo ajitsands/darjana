@@ -1,5 +1,7 @@
 <?php 
-	session_start(); 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} 
 ?>
 <?php
 
@@ -600,7 +602,9 @@ class CommonModel extends FunctionDefinitions
 	public function SignOut()
 	{
 
-		session_start();
+		if (session_status() === PHP_SESSION_NONE) {
+			session_start();
+		}
 		$_SESSION = array();
 		session_destroy();
 	}
@@ -963,14 +967,21 @@ class CommonModel extends FunctionDefinitions
 
 	function __destruct()
 	{
-		if ($this->flag == 1) {
-			mysqli_free_result($this->result);
+		if ($this->flag == 1 && isset($this->result) && $this->result instanceof \mysqli_result) {
+			try {
+				@mysqli_free_result($this->result);
+			} catch (\Throwable $e) {
+				// Result object already closed
+			}
 		}
 
-		mysqli_close($this->varDBConnection);
-		//mysqli_close($this->varAcntConnection);
-		//print "Destroying " . __CLASS__ . "\n";
-
+		if (isset($this->varDBConnection) && $this->varDBConnection instanceof \mysqli) {
+			try {
+				@mysqli_close($this->varDBConnection);
+			} catch (\Throwable $e) {
+				// Connection already closed
+			}
+		}
 	}
 
 // function __destruct()

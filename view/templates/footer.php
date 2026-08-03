@@ -8,8 +8,7 @@
                     <script>
                         document.write(new Date().getFullYear());
                     </script>
-                    </span>, made with ❤️ by <a href="https://www.sandslab.com" target="_blank">SaNDSLab</a> <!---  |
-                    All prices in <?php //echo STORE_CURRENCY_NAME . ' (' . STORE_CURRENCY_SYMBOL . ')'; ?>-></p>
+                    </span> All Rights Reserved</p>
                 </div>
                 <!-- Your commented code remains here -->
             </div>

@@ -1,6 +1,8 @@
 <?php
-session_start();
-require('../model/common/common_functions.php');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+require_once(__DIR__ . '/../model/common/common_functions.php');
 
 class formcontroller
 {
@@ -46,7 +48,7 @@ class formcontroller
                         SELECT 1 FROM customer_details WHERE email_user_name = ?
                     )";
         // $array[1] = "SELECT * FROM customer_details WHERE ids = ?";
-        $array[1] = "SELECT c.ids,c.customer_name,c.permenant_address,c.postal_code,c.country ,co.country AS country_name,c.state,s.state_name,c.district,c.street,c.mobile_no,c.whatsapp_no,c.email_user_name,c.status,c.gender,c.date_of_birth,c.created_date
+        $array[1] = "SELECT c.ids,c.customer_name,c.permenant_address,c.postal_code,c.country ,co.country AS country_name,c.state,s.state_name,c.district,c.street,c.mobile_no,c.whatsapp_no,c.email_user_name,c.status,c.gender,c.date_of_birth,c.Image,c.created_date
                         FROM customer_details c LEFT JOIN country co ON c.country = co.ids LEFT JOIN state s ON c.state = s.ids WHERE c.ids= ?";
         $array[2] = "UPDATE `customer_details` SET `customer_name` = ?, `permenant_address` = ?, `country` = ?, `mobile_no` = ?, `whatsapp_no` = ?, `postal_code` = ?, `district` = ?, `state` = ?, `street` = ?, `gender` = ?, `date_of_birth` = ?" . 
                     (!empty($this->image_name) ? ", `Image` = ?" : "") . 
@@ -250,35 +252,33 @@ class formcontroller
 
             case 'update_details':
                 $response = ['status' => 'error', 'message' => 'Failed to update details.'];
+                $userId = $_SESSION['ids'] ?? $this->id ?? null;
+                if (empty($userId)) {
+                    echo json_encode(['status' => 'error', 'message' => 'User session expired. Please log in again.']);
+                    exit;
+                }
+
+                // Handle image upload if a file was selected
                 if ($this->profile_image && $this->profile_image['error'] === UPLOAD_ERR_OK) {
-                    $uploadDir = '../httpdocs/images/';
+                    $uploadDir = __DIR__ . '/../httpdocs/images/';
                     if (!is_dir($uploadDir)) {
-                        if (!mkdir($uploadDir, 0777, true)) {
-                            echo json_encode(['status' => 'error', 'message' => 'Failed to create upload directory.']);
-                            exit;
-                        }
+                        @mkdir($uploadDir, 0777, true);
                     }
-                    if (!is_writable($uploadDir)) {
-                        echo json_encode(['status' => 'error', 'message' => 'Upload directory is not writable.']);
-                        exit;
-                    }
+                    
                     $fileExtension = strtolower(pathinfo($this->profile_image['name'], PATHINFO_EXTENSION));
-                    $allowedExtensions = ['jpg', 'jpeg', 'png'];
+                    $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
                     if (!in_array($fileExtension, $allowedExtensions)) {
-                        echo json_encode(['status' => 'error', 'message' => 'Only JPG, JPEG, and PNG files are allowed.']);
+                        echo json_encode(['status' => 'error', 'message' => 'Only JPG, JPEG, PNG, and WEBP image files are allowed.']);
                         exit;
                     }
-                    $fileName = $this->profile_image['name'];
-                    $filePath = $uploadDir . $fileName;
-                    if (file_exists($filePath)) {
-                        $baseName = pathinfo($fileName, PATHINFO_FILENAME);
-                        $fileName = $baseName . '_' . time() . '.' . $fileExtension;
-                        $filePath = $uploadDir . $fileName;
-                    }
+
+                    $newFileName = 'profile_' . $userId . '_' . time() . '.' . $fileExtension;
+                    $filePath = $uploadDir . $newFileName;
+
                     if (move_uploaded_file($this->profile_image['tmp_name'], $filePath)) {
-                        $this->image_name = $fileName;
+                        $this->image_name = $newFileName;
                     } else {
-                        echo json_encode(['status' => 'error', 'message' => 'Failed to upload image. Please try again.']);
+                        echo json_encode(['status' => 'error', 'message' => 'Failed to save uploaded image file. Check folder permissions.']);
                         exit;
                     }
                 } elseif ($this->profile_image && $this->profile_image['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -294,21 +294,64 @@ class formcontroller
                     echo json_encode(['status' => 'error', 'message' => $errorMessage]);
                     exit;
                 }
-                $stmt = $this->varDBConnection->prepare($var[2]);
+
+                // Build update query dynamically based on whether image_name was set
+                $updateQuery = "UPDATE `customer_details` SET 
+                                `customer_name` = ?, 
+                                `permenant_address` = ?, 
+                                `country` = ?, 
+                                `mobile_no` = ?, 
+                                `whatsapp_no` = ?, 
+                                `postal_code` = ?, 
+                                `district` = ?, 
+                                `state` = ?, 
+                                `street` = ?, 
+                                `gender` = ?, 
+                                `date_of_birth` = ?";
+
+                if (!empty($this->image_name)) {
+                    $updateQuery .= ", `Image` = ?";
+                }
+                $updateQuery .= " WHERE ids = ?";
+
+                $stmt = $this->varDBConnection->prepare($updateQuery);
+                if (!$stmt) {
+                    echo json_encode(['status' => 'error', 'message' => 'Failed to prepare database query: ' . $this->varDBConnection->error]);
+                    exit;
+                }
+
                 $params = [
-                    $this->customer_name, $this->permenant_address, $this->country, $this->mobile_no, 
-                    $this->whatsapp_no, $this->postal_code, $this->district, $this->state, 
-                    $this->street, $this->gender, $this->date_of_birth
+                    $this->customer_name ?? '', 
+                    $this->permenant_address ?? '', 
+                    $this->country ?? '', 
+                    $this->mobile_no ?? '', 
+                    $this->whatsapp_no ?? '', 
+                    $this->postal_code ?? '', 
+                    $this->district ?? '', 
+                    $this->state ?? '', 
+                    $this->street ?? '', 
+                    $this->gender ?? '', 
+                    $this->date_of_birth ?? ''
                 ];
+                
                 if (!empty($this->image_name)) {
                     $params[] = $this->image_name;
                 }
-                $params[] = $_SESSION['ids'];
-                $stmt->bind_param(str_repeat("s", count($params)), ...$params);
+                $params[] = $userId;
+                
+                $types = str_repeat("s", count($params));
+                $stmt->bind_param($types, ...$params);
                 $result = $stmt->execute();
-                echo json_encode($result ? 
-                    ['status' => 'success', 'message' => 'Details updated successfully.'] :
-                    ['status' => 'error', 'message' => 'Failed to update profile details. Please try again.']);
+                
+                if ($result) {
+                    echo json_encode([
+                        'status' => 'success', 
+                        'message' => 'Profile details updated successfully.',
+                        'image' => $this->image_name ?? null
+                    ]);
+                } else {
+                    echo json_encode(['status' => 'error', 'message' => 'Failed to update profile details: ' . $stmt->error]);
+                }
                 $stmt->close();
                 break;
 

@@ -105,9 +105,13 @@
     <div class="container">
         <!--<div class="section-head style-1 wow fadeInUp d-lg-flex justify-content-between" data-wow-delay="0.2s">-->
             <div class="col-lg-12 col-md-12 m-b2 mb-4 m-t10">
-                <h2 class="title product-head" data-i18n="most_viewed_products">
-                    MOST VIEWED PRODUCTS
-                </h2>
+                <div class="m-b20 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="text-center pb-4">
+                        <h2 class="title product-head" data-i18n="most_viewed_products">
+                            MOST VIEWED PRODUCTS
+                        </h2>
+                    </div>
+                </div>
             </div>
         <!--</div>-->
         <div class="swiper swiper-four swiper-visible">

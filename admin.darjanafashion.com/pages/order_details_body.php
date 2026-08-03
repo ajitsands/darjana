@@ -184,3 +184,23 @@
         </div>
     </div>
 </div>
+
+<!-- Payment Details Modal -->
+<div class="modal fade" id="paymentDetailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="background-color: #ffffff;">
+            <div class="modal-header border-bottom py-3" style="background-color: #ffffff;">
+                <h5 class="modal-title fw-bold mb-0" style="color: #111827; font-size: 16px;">
+                    <i class="ri-bank-card-line text-primary me-2 fs-5"></i> Payment Gateway Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4" id="paymentDetailsContent" style="background-color: #f9fafb;">
+                <!-- Dynamic Content inserted via JS -->
+            </div>
+            <div class="modal-footer border-top py-2" style="background-color: #ffffff;">
+                <button type="button" class="btn btn-secondary btn-sm px-4 fw-semibold" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

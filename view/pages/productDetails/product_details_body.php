@@ -159,18 +159,13 @@
                                         <ul class="social-icon">
                                             <li><strong data-i18n="share">Share:</strong></li>
                                             <li>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
-                                                    <i class="fa-brands fa-facebook-f"></i>
+                                                <a href="https://www.instagram.com/dar_jana_?igsh=b3VvY3hpejJ0aDZi" target="_blank" title="Instagram">
+                                                    <i class="fab fa-instagram fa-brands fa-instagram"></i>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="https://twitter.com/intent/tweet?url=" target="_blank">
-                                                    <i class="fa-brands fa-twitter"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.instagram.com/" target="_blank">
-                                                    <i class="fa-brands fa-instagram"></i>
+                                                <a href="https://www.tiktok.com/@dar_jana_?_r=1&_t=ZS-98a0TvcKGOb" target="_blank" title="TikTok">
+                                                    <i class="fab fa-tiktok fa-brands fa-tiktok"></i>
                                                 </a>
                                             </li>
                                         </ul>
@@ -452,7 +447,7 @@
             </div>
 
             <!-- Measurement Tips -->
-            <div class="measurement-tips mt-4 p-3" style="background: #f9f9f9; border-left: 4px solid #FFD700;">
+            <div class="measurement-tips mt-4 p-3" style="background: #f9f9f9; border-left: 4px solid #F0F0F0;">
                 <h5 class="mb-2" style="font-weight: 600;" data-i18n="measurement_tips_en">💡 Measurement Tips</h5>
                 <div class="english-tips size-chart-tips-en"></div>
                 

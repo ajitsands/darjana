@@ -76,6 +76,10 @@ class OrdersController
             case 'get_order_details':
                 $this->handleGetOrderDetails();
                 break;
+
+            case 'fetch_ip_location':
+                $this->handleFetchIpLocation();
+                break;
            
             case 'fetch_customer_name':
                 $customername = $this->varModelObj->ListFromTable($var[0]);
@@ -483,6 +487,7 @@ class OrdersController
                 od.customer_email,
                 od.status,
                 od.product_notes,
+                od.api_response,
                 
                 -- Item-level tailoring status from tailoring_batch_items
                 (SELECT tbi.item_status 
@@ -518,38 +523,32 @@ class OrdersController
                 ) AS actual_cost
                 
             FROM order_details od
-            JOIN product_details p ON od.product_id = p.ids
-            WHERE od.vendor_id = ?";
+            LEFT JOIN product_details p ON od.product_id = p.ids
+            WHERE 1=1";
         
         $countQuery = "SELECT COUNT(od.ids) as total 
                        FROM order_details od
-                       JOIN product_details p ON od.product_id = p.ids
-                       WHERE od.vendor_id = ?";
+                       LEFT JOIN product_details p ON od.product_id = p.ids
+                       WHERE 1=1";
                        
-        $params = [$vendor_id];
-        $types = is_numeric($vendor_id) ? 'i' : 's';
-        
-        // Handle status filter - for Product Cancelled, don't filter by payment_status
+        $params = [];
+        $types = '';
+
+        // Handle status filter
         if ($order_id) {
             $query .= " AND od.order_id = ?";
             $countQuery .= " AND od.order_id = ?";
             $params[] = $order_id;
             $types .= 's';
         } elseif ($status === 'Product Cancelled') {
-            // For cancelled orders, get all cancelled products regardless of payment status
+            // For cancelled orders, get all cancelled products
             $query .= " AND od.status = 'Product Cancelled'";
             $countQuery .= " AND od.status = 'Product Cancelled'";
-            // Note: No payment_status filter here
         } elseif ($status) {
-            // For other statuses, only get paid orders
-            $query .= " AND od.payment_status = 'PAID' AND od.status = ?";
-            $countQuery .= " AND od.payment_status = 'PAID' AND od.status = ?";
+            $query .= " AND od.status = ?";
+            $countQuery .= " AND od.status = ?";
             $params[] = $status;
             $types .= 's';
-        } else {
-            // Default: only show paid orders that are not cancelled
-            $query .= " AND od.payment_status = 'PAID'";
-            $countQuery .= " AND od.payment_status = 'PAID'";
         }
         
         // Add date filter
@@ -626,6 +625,7 @@ class OrdersController
                 'tailoring_batch_code' => $row['tailoring_batch_code'],
                 'tailoring_batch_id' => $row['tailoring_batch_id'],
                  'product_notes'=>$row['product_notes'],
+                'api_response' => $row['api_response'] ?? null,
                 'actions' => ''
                
             ];
@@ -1313,7 +1313,68 @@ class OrdersController
             ]);
         }
     }
-    
+
+    private function handleFetchIpLocation()
+    {
+        $ip = $_POST['ip'] ?? '';
+        $order_detail_id = intval($_POST['id'] ?? 0);
+
+        if (empty($ip) || $ip === 'N/A' || $ip === '127.0.0.1' || $ip === '::1') {
+            echo json_encode(['success' => false, 'message' => 'Invalid IP']);
+            return;
+        }
+
+        $url = "http://api.db-ip.com/v2/free/" . urlencode($ip);
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 6);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response) {
+            $data = json_decode($response, true);
+            if (!empty($data) && isset($data['countryName'])) {
+                $location = [
+                    'countryName' => $data['countryName'] ?? 'N/A',
+                    'stateProv'   => $data['stateProv'] ?? 'N/A',
+                    'city'        => $data['city'] ?? 'N/A'
+                ];
+
+                // If order detail ID is provided, update api_response in database for persistent caching
+                if ($order_detail_id > 0) {
+                    $stmt = $this->varDBConnection->prepare("SELECT api_response FROM order_details WHERE ids = ?");
+                    $stmt->bind_param("i", $order_detail_id);
+                    $stmt->execute();
+                    $res = $stmt->get_result()->fetch_assoc();
+                    
+                    if ($res && !empty($res['api_response'])) {
+                        $parsed = json_decode($res['api_response'], true);
+                        if (is_array($parsed)) {
+                            $parsed['ip_location'] = $location;
+                            $updatedJson = json_encode($parsed);
+                            
+                            $updateStmt = $this->varDBConnection->prepare("UPDATE order_details SET api_response = ? WHERE ids = ?");
+                            $updateStmt->bind_param("si", $updatedJson, $order_detail_id);
+                            $updateStmt->execute();
+                        }
+                    }
+                }
+
+                echo json_encode([
+                    'success' => true,
+                    'countryName' => $location['countryName'],
+                    'stateProv'   => $location['stateProv'],
+                    'city'        => $location['city']
+                ]);
+                return;
+            }
+        }
+
+        echo json_encode(['success' => false, 'message' => 'Unable to fetch location details']);
+    }
 }
 
 $obj = new OrdersController();

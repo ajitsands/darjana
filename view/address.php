@@ -490,16 +490,28 @@
         
             // Delete Address
             $(document).on('click', '.remove-address', function () {
-                if (confirm('Delete this address?')) {
-                    $.ajax({
-                        url: 'controller/orders_controller.php',
-                        type: 'POST',
-                        data: { action: 'delete_address', address_id: $(this).data('id') },
-                        success: function() {
-                            loadCustomerAddresses();
-                        }
-                    });
-                }
+                const addressId = $(this).data('id');
+                Swal.fire({
+                    title: 'Delete Address?',
+                    text: 'Are you sure you want to delete this address?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, delete',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'controller/orders_controller.php',
+                            type: 'POST',
+                            data: { action: 'delete_address', address_id: addressId },
+                            success: function() {
+                                loadCustomerAddresses();
+                            }
+                        });
+                    }
+                });
             });
         });
     </script>

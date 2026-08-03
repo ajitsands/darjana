@@ -76,7 +76,7 @@
                         <div class="product-grid">
                             <div id="product-list-container" class="product-list-view" style="display: none;"></div>
                             <div id="product-column-container" class="product-column-view" style="display: none;"></div>
-                            <div id="product-grid-container" class="row product-grid-view gx-5"></div>
+                            <div id="product-grid-container" class="row product-grid-view g-2"></div>
                             <div id="load-more-section" class="col-12 text-center mt-5 mb-5">
                             <button id="load-more-btn" class="btn btn-dark btn-lg px-5 py-3" style="display: none;">
                                 <i class="fas fa-chevron-down me-2"></i> Load More Products

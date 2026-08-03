@@ -615,6 +615,9 @@ session_start();
                                             <a class="dropdown-item view-invoice" href="javascript:void(0);" data-id="${row.ids}" data-order-id="${row.order_id}">
                                                 <i class="ri-eye-line me-1"></i> View Order
                                             </a>
+                                            <a class="dropdown-item view-payment-details" href="javascript:void(0);" data-id="${row.ids}">
+                                                <i class="ri-bank-card-line me-1"></i> Payment Details
+                                            </a>
                                             <div class="dropdown-divider"></div>
                                             ${!isCancelled ? `
                                             <h6 class="dropdown-header">Update Status</h6>
@@ -1281,6 +1284,175 @@ session_start();
                 }, 100);
             }
         
+            $(document).on('click', '.view-payment-details', function() {
+                const tr = $(this).closest('tr');
+                const rowData = ordersTable.row(tr).data();
+                showPaymentDetailsModal(rowData);
+            });
+
+            function showPaymentDetailsModal(row) {
+                if (!row) return;
+
+                let apiResp = row.api_response;
+                let parsed = null;
+
+                if (apiResp) {
+                    try {
+                        if (typeof apiResp === 'string') {
+                            parsed = JSON.parse(apiResp);
+                            if (typeof parsed === 'string') {
+                                parsed = JSON.parse(parsed);
+                            }
+                        } else {
+                            parsed = apiResp;
+                        }
+                    } catch(e) {
+                        console.error('Failed to parse api_response JSON:', e);
+                    }
+                }
+
+                let data = (parsed && parsed.data) ? parsed.data : (parsed || {});
+
+                const id = data.id || 'N/A';
+                const paymentBrand = data.paymentBrand || 'N/A';
+                const amount = data.amount || (row.selling_price || 'N/A');
+                const currency = data.currency || 'BHD';
+
+                const card = data.card || {};
+                const last4Digits = card.last4Digits || 'N/A';
+                const cardHolder = card.holder || 'N/A';
+
+                const customer = data.customer || {};
+                const givenName = customer.givenName || '';
+                const surname = customer.surname || '';
+                const customerName = (givenName + ' ' + surname).trim() || (row.customer ? row.customer.name : 'N/A');
+                const email = customer.email || (row.customer ? row.customer.email : 'N/A');
+                const ip = customer.ip || 'N/A';
+
+                let html = '';
+                if (data.id || data.paymentBrand || card.last4Digits) {
+                    html = `
+                        <div class="payment-details-wrapper">
+                            <!-- Transaction Summary Card -->
+                            <div class="card border-0 mb-3 shadow-sm" style="background-color: #ffffff; border-radius: 8px;">
+                                <div class="card-body p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                        <span class="fw-semibold" style="color: #4b5563; font-size: 14px;">Transaction ID</span>
+                                        <span class="font-monospace fw-bold text-break" style="color: #111827; font-size: 14px;">${id}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                        <span class="fw-semibold" style="color: #4b5563; font-size: 14px;">Payment Brand</span>
+                                         <span class="badge fw-bold" style="background-color: #2563eb !important; color: #ffffff !important; font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 6px; letter-spacing: 0.5px; display: inline-block;">${paymentBrand}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-semibold" style="color: #4b5563; font-size: 14px;">Amount Paid</span>
+                                        <span class="font-monospace fw-bold text-success" style="font-size: 16px;">${amount} ${currency}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card Details -->
+                            <div class="card border-0 mb-3 shadow-sm" style="background-color: #ffffff; border-radius: 8px;">
+                                <div class="card-header bg-transparent py-2 fw-bold border-bottom d-flex align-items-center" style="color: #111827; font-size: 15px;">
+                                    <i class="ri-bank-card-fill text-primary me-2 fs-5"></i> Card Details
+                                </div>
+                                <div class="card-body p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                        <span class="fw-semibold" style="color: #4b5563; font-size: 14px;">Card Holder</span>
+                                        <span class="fw-bold" style="color: #111827; font-size: 14px;">${cardHolder}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-semibold" style="color: #4b5563; font-size: 14px;">Last 4 Digits</span>
+                                        <span class="font-monospace fw-bold" style="color: #111827; font-size: 14px;">•••• ${last4Digits}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Customer Information -->
+                            <div class="card border-0 shadow-sm" style="background-color: #ffffff; border-radius: 8px;">
+                                <div class="card-header bg-transparent py-2 fw-bold border-bottom d-flex align-items-center" style="color: #111827; font-size: 15px;">
+                                    <i class="ri-user-3-fill text-primary me-2 fs-5"></i> Customer Information
+                                </div>
+                                <div class="card-body p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                        <span class="fw-semibold" style="color: #4b5563; font-size: 14px;">Full Name</span>
+                                        <span class="fw-bold" style="color: #111827; font-size: 14px;">${customerName}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                        <span class="fw-semibold" style="color: #4b5563; font-size: 14px;">Email</span>
+                                        <span class="fw-bold text-break" style="color: #111827; font-size: 14px;">${email}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                        <span class="fw-semibold" style="color: #4b5563; font-size: 14px;">IP Address</span>
+                                        <span class="font-monospace fw-bold" style="color: #111827; font-size: 14px;">${ip}</span>
+                                    </div>
+
+                                    <!-- IP Geo Location Details -->
+                                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                        <span class="fw-semibold" style="color: #4b5563; font-size: 14px;">Country</span>
+                                        <span class="fw-bold" id="ipCountry" style="color: #111827; font-size: 14px;"><i class="ri-loader-4-line ri-spin text-muted me-1"></i> <span class="text-muted fw-normal" style="font-size: 12px;">Loading...</span></span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                        <span class="fw-semibold" style="color: #4b5563; font-size: 14px;">State / Province</span>
+                                        <span class="fw-bold" id="ipState" style="color: #111827; font-size: 14px;"><i class="ri-loader-4-line ri-spin text-muted me-1"></i> <span class="text-muted fw-normal" style="font-size: 12px;">Loading...</span></span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-semibold" style="color: #4b5563; font-size: 14px;">City</span>
+                                        <span class="fw-bold" id="ipCity" style="color: #111827; font-size: 14px;"><i class="ri-loader-4-line ri-spin text-muted me-1"></i> <span class="text-muted fw-normal" style="font-size: 12px;">Loading...</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    html = `
+                        <div class="alert alert-warning d-flex align-items-center mb-0" role="alert">
+                            <i class="ri-alert-line me-2 fs-4"></i>
+                            <div>No online payment gateway details available for Order <strong>#${row.order_id}</strong>.</div>
+                        </div>
+                    `;
+                }
+
+                $('#paymentDetailsContent').html(html);
+                const modal = new bootstrap.Modal(document.getElementById('paymentDetailsModal'));
+                modal.show();
+
+                // Check if ip_location was already saved in api_response JSON
+                const ipLoc = (parsed && parsed.ip_location) ? parsed.ip_location : ((data && data.ip_location) ? data.ip_location : null);
+                
+                if (ipLoc) {
+                    $('#ipCountry').text(ipLoc.countryName || 'N/A');
+                    $('#ipState').text(ipLoc.stateProv || 'N/A');
+                    $('#ipCity').text(ipLoc.city || 'N/A');
+                } else if (ip && ip !== 'N/A' && ip !== '127.0.0.1' && ip !== '::1') {
+                    // Fallback for older orders: fetch location once & auto-save to DB
+                    $.ajax({
+                        url: '../controller/orders/orders_controller.php',
+                        type: 'POST',
+                        data: {
+                            action: 'fetch_ip_location',
+                            ip: ip,
+                            id: row.ids
+                        },
+                        dataType: 'json',
+                        success: function(res) {
+                            if (res && res.success) {
+                                $('#ipCountry').text(res.countryName || 'N/A');
+                                $('#ipState').text(res.stateProv || 'N/A');
+                                $('#ipCity').text(res.city || 'N/A');
+                            } else {
+                                $('#ipCountry, #ipState, #ipCity').text('N/A');
+                            }
+                        },
+                        error: function() {
+                            $('#ipCountry, #ipState, #ipCity').text('N/A');
+                        }
+                    });
+                } else {
+                    $('#ipCountry, #ipState, #ipCity').text('N/A');
+                }
+            }
+
             $(document).on('click', '.view-invoice', function() {
                 const orderId = $(this).data('order-id');
                 const itemId = $(this).data('id');

@@ -648,14 +648,19 @@
      
   
     <?php
-    // Storing values passed through redirect js
-        $productId = $_POST['id'] ?? '';
-        $quantity = $_POST['quantity'] ?? '';
-        $color = $_POST['color'] ?? '';
-        $size = $_POST['size'] ?? '';
-        $length = $_POST['length'] ?? '';
-        $notes = $_POST['notes'] ?? '';
-        $flag=$_POST['flag'] ?? '';
+    // Storing values passed through redirect js or GET query parameters
+        $productId = $_POST['id'] ?? $_GET['id'] ?? $_POST['product_id'] ?? $_GET['product_id'] ?? '';
+        $quantity = $_POST['quantity'] ?? $_GET['quantity'] ?? '';
+        $color = $_POST['color'] ?? $_GET['color'] ?? '';
+        $size = $_POST['size'] ?? $_GET['size'] ?? '';
+        $length = $_POST['length'] ?? $_GET['length'] ?? '';
+        $notes = $_POST['notes'] ?? $_GET['notes'] ?? '';
+        $rawFlag = $_POST['flag'] ?? $_GET['flag'] ?? '';
+        if ($rawFlag !== '' && $rawFlag !== null) {
+            $flag = intval($rawFlag);
+        } else {
+            $flag = !empty($productId) ? 0 : 1;
+        }
     ?>
     <script>
     
@@ -857,8 +862,8 @@
             // const flag = urlParams.get('flag') || '0';
             
             
-            const productId= "<?php echo $productId; ?>";
-            const flag = <?php echo isset($flag) ? $flag : 0; ?>;
+            const productId = "<?php echo addslashes($productId); ?>";
+            const flag = <?php echo intval($flag); ?>;
 
            
             
@@ -1096,11 +1101,11 @@
             //  Product / Cart Display
             // =======================
             function ProductPlaceOrder() {
-                const quantity = "<?php echo $quantity; ?>";
-                const length = "<?php echo $length; ?>";
-                const color = "<?php echo $color; ?>";
-                const size = "<?php echo $size; ?>";
-                const flag = <?php echo isset($flag) ? $flag : 0; ?>;
+                const quantity = "<?php echo addslashes($quantity); ?>";
+                const length = "<?php echo addslashes($length); ?>";
+                const color = "<?php echo addslashes($color); ?>";
+                const size = "<?php echo addslashes($size); ?>";
+                const flag = <?php echo intval($flag); ?>;
                 
                 $.ajax({
                     url: 'controller/orders_controller.php',
@@ -1811,7 +1816,7 @@
                 $.ajax({
                     url: 'controller/orders_controller.php',
                     type: 'POST',
-                    data: { action: 'customer_shipping_details', customer_id: <?php echo $_SESSION['ids']; ?> },
+                    data: { action: 'customer_shipping_details', customer_id: <?php echo $_SESSION['ids'] ?? 0; ?> },
                     dataType: 'json',
                     success: function(response) {
                         const addresses = Array.isArray(response) ? response : (response.data || []);
@@ -1860,25 +1865,36 @@
         
             $(document).on('click', '.delete-address-btn', function() {
                 const addressId = $(this).data('id');
-                if (confirm('Are you sure you want to delete this address?')) {
-                    $.ajax({
-                        url: 'controller/orders_controller.php',
-                        type: 'POST',
-                        data: { action: 'delete_address', address_id: addressId },
-                        dataType: 'json',
-                        success: function(response) {
-                            if (response === 1 || response.status === 'success') {
-                                loadCustomerAddresses();
-                            } else {
-                                alert('Error deleting address: ' + (response.message || 'Unknown error'));
+                Swal.fire({
+                    title: 'Delete Address?',
+                    text: 'Are you sure you want to delete this address?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, delete',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'controller/orders_controller.php',
+                            type: 'POST',
+                            data: { action: 'delete_address', address_id: addressId },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response === 1 || response.status === 'success') {
+                                    loadCustomerAddresses();
+                                } else {
+                                    Swal.fire('Error', 'Error deleting address: ' + (response.message || 'Unknown error'), 'error');
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('AJAX Error:', status, error);
+                                Swal.fire('Error', 'Error deleting address. Please try again.', 'error');
                             }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('AJAX Error:', status, error);
-                            alert('Error deleting address. Please try again.');
-                        }
-                    });
-                }
+                        });
+                    }
+                });
             });
         
             // =======================
@@ -1948,7 +1964,7 @@
             }
             
             function checkForExistingOffers() {
-                const flag = <?php echo isset($flag) ? $flag : 0; ?>;
+                const flag = <?php echo intval($flag); ?>;
                 const result = {
                     hasOffer: false,
                     products: []
@@ -2201,12 +2217,12 @@
                 
                 // Log PHP variables
                 const phpVars = {
-                    quantity: "<?php echo $quantity; ?>",
-                    flag: <?php echo isset($flag) ? $flag : 0; ?>,
-                    color: "<?php echo $color; ?>",
-                    size: "<?php echo $size; ?>",
-                    length: "<?php echo $length; ?>",
-                    notes: "<?php echo $notes; ?>"
+                    quantity: "<?php echo addslashes($quantity); ?>",
+                    flag: <?php echo intval($flag); ?>,
+                    color: "<?php echo addslashes($color); ?>",
+                    size: "<?php echo addslashes($size); ?>",
+                    length: "<?php echo addslashes($length); ?>",
+                    notes: "<?php echo addslashes($notes); ?>"
                 };
                 
                 console.log('PHP Variables:', phpVars);
@@ -2226,8 +2242,8 @@
                     console.log('Email validation passed:', email);
                 }
                 
-                const urlQuantity = "<?php echo $quantity; ?>";
-                const flag = <?php echo isset($flag) ? $flag : 0; ?>;
+                const urlQuantity = "<?php echo addslashes($quantity); ?>";
+                const flag = <?php echo intval($flag); ?>;
                 console.log('Flag value:', flag, '(1 = cart checkout, 0 = single product)');
                 
                 const quantity = $('#quantity-input').val() || urlQuantity || 1;
@@ -2307,12 +2323,25 @@
                     const cartItems = $('#selected-cart-items').val();
                     console.log('Cart items raw value:', cartItems);
                     
-                    if (!cartItems) {
+                    if (!cartItems || cartItems.trim() === '') {
                         console.error('CRITICAL: No cart items found!');
                         $('#orderSpinner').fadeOut(300);
-                        alert('No cart items found.');
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'No Items in Cart',
+                            text: 'Your cart is currently empty. Please add items to your cart before confirming the order.',
+                            confirmButtonText: 'Go to Shop',
+                            confirmButtonColor: '#d39e00',
+                            showCancelButton: true,
+                            cancelButtonText: 'Close',
+                            cancelButtonColor: '#6c757d'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = (window.location.origin ? window.location.origin : '') + '/Shop';
+                            }
+                        });
                         console.groupEnd();
-                        return;
+                        return false;
                     }
                     
                     // Parse and validate cart items
@@ -2321,6 +2350,23 @@
                     
                     if (cartItemsArray.length === 0) {
                         console.warn('Cart items array is empty after parsing');
+                        $('#orderSpinner').fadeOut(300);
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'No Items in Cart',
+                            text: 'Your cart is currently empty. Please add items to your cart before confirming the order.',
+                            confirmButtonText: 'Go to Shop',
+                            confirmButtonColor: '#d39e00',
+                            showCancelButton: true,
+                            cancelButtonText: 'Close',
+                            cancelButtonColor: '#6c757d'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = (window.location.origin ? window.location.origin : '') + '/Shop';
+                            }
+                        });
+                        console.groupEnd();
+                        return false;
                     } else {
                         console.group('Cart Items Details:');
                         cartItemsArray.forEach((item, index) => {
@@ -2345,8 +2391,25 @@
                     const productId = $('#selected-product-id').val();
                     console.log('Product ID:', productId);
                     
-                    if (!productId) {
+                    if (!productId || productId.trim() === '' || productId === '0') {
                         console.warn('Product ID is missing');
+                        $('#orderSpinner').fadeOut(300);
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'No Product Selected',
+                            text: 'No product selected. Please select a product before confirming the order.',
+                            confirmButtonText: 'Go to Shop',
+                            confirmButtonColor: '#d39e00',
+                            showCancelButton: true,
+                            cancelButtonText: 'Close',
+                            cancelButtonColor: '#6c757d'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = (window.location.origin ? window.location.origin : '') + '/Shop';
+                            }
+                        });
+                        console.groupEnd();
+                        return false;
                     }
                     
                     orderData.product_id = productId;
@@ -2538,10 +2601,20 @@
                         try {
                             var response = JSON.parse(xhr.responseText);
                             console.error('Parsed error response:', response);
-                            alert('Error: ' + (response.message || 'Unknown error occurred'));
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Order Submission Error',
+                                text: response.message || 'Unknown error occurred',
+                                confirmButtonColor: '#d39e00'
+                            });
                         } catch (e) {
                             console.error('Failed to parse error response as JSON:', e);
-                            alert('Error submitting order. Please try again.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Order Submission Error',
+                                text: 'Error submitting order. Please try again.',
+                                confirmButtonColor: '#d39e00'
+                            });
                         }
                         console.error('AJAX Error:', status, error, xhr.responseText);
                         console.groupEnd();
