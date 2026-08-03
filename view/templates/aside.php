@@ -14,6 +14,24 @@
         justify-content: flex-start;
         /* Align to left */
     }
+
+    /* ── User Profile button: dark gray-black ── */
+    .toggle-btn {
+        background-color: #292929 !important;
+        background: #292929 !important;
+        background-image: none !important;
+        color: #ffffff !important;
+        border-color: #292929 !important;
+        transition: background 0.2s ease !important;
+    }
+    .toggle-btn:hover,
+    .toggle-btn:focus,
+    .toggle-btn:active {
+        background-color: #111111 !important;
+        background: #111111 !important;
+        background-image: none !important;
+        color: #ffffff !important;
+    }
 </style>
 <aside class="col-xl-3 pt-3">
     <div class="toggle-info">
