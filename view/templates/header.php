@@ -99,26 +99,30 @@ $txt = [
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 /* All Main Menu and Submenu Links - Poppins Bold (700) & CAPITALS ONLY */
-.header-nav,
-.header-nav *,
 .header-nav a,
-.header-nav span,
-.header-nav li,
 .header-nav .nav > li > a,
-.header-nav .sub-menu,
 .header-nav .sub-menu a,
-.navbar-nav,
-.navbar-nav *,
 .navbar-nav a,
-.navbar-nav span,
-.sub-menu,
+.navbar-nav li > a,
 .sub-menu a,
 .sub-menu li a,
-.mega-menu,
 .mega-menu a {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
+}
+
+/* Ensure icon fonts are never overridden */
+.header-nav i,
+.navbar-nav i,
+.header-nav [class*="icon"],
+.navbar-nav [class*="icon"],
+.header-nav [class*="fa-"],
+.navbar-nav [class*="fa-"],
+.header-nav .fi,
+.navbar-nav .fi,
+i.fas, i.fab, i.far, i.la, i.ri-arrow-down-s-line {
+    font-family: initial !important;
 }
 
 /* Desktop/Laptop - Reduce header size through spacing */
