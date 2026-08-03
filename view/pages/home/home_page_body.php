@@ -126,9 +126,11 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-12 col-md-12 m-b2 m-t10">
-                <h2 class="title product-head" data-i18n="discover_our_latest_collections">
-                    DISCOVER OUR LATEST COLLECTIONS
-                </h2>
+                <div class="text-center pb-4">
+                    <h2 class="title product-head" data-i18n="discover_our_latest_collections">
+                        DISCOVER OUR LATEST COLLECTIONS
+                    </h2>
+                </div>
             </div>
             <div class="col-lg-12 col-md-12 m-b3">
                 <div class="about-wraper position-relative pt-1">
