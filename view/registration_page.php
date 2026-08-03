@@ -45,14 +45,14 @@ $redirect = $_SESSION['redirect_after_registration'] ?? 'index.php';
     }
 
     .registration-wrapper {
-        padding-top: 40px !important;
+        padding-top: 85px !important;
         padding-bottom: 50px !important;
         min-height: 80vh;
     }
 
     @media (max-width: 991px) {
         .registration-wrapper {
-            padding-top: 25px !important;
+            padding-top: 70px !important;
             padding-bottom: 40px !important;
         }
     }
