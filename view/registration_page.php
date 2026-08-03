@@ -25,7 +25,7 @@ $redirect = $_SESSION['redirect_after_registration'] ?? 'index.php';
 <head>
     <?php include("templates/head.php"); ?>
     <style>
-    /* Apply Poppins font to all text elements */
+    /* ── Global Poppins & Typography ── */
     body, html,
     h1, h2, h3, h4, h5, h6,
     p, span, div,
@@ -34,35 +34,198 @@ $redirect = $_SESSION['redirect_after_registration'] ?? 'index.php';
     .modal-content,
     .navbar-nav {
         font-family: 'Poppins', sans-serif !important;
-        letter-spacing: 0.5px !important;
+        letter-spacing: 0.3px !important;
     }
-    
+
+    /* ── Page spacing so content is pushed down below the header ── */
+    .page-content.bg-light,
+    .registration-wrapper {
+        padding-top: 110px !important;
+        padding-bottom: 70px !important;
+        min-height: 85vh;
+        background: #f7f9fb !important;
+    }
+
+    @media (max-width: 991px) {
+        .page-content.bg-light,
+        .registration-wrapper {
+            padding-top: 90px !important;
+            padding-bottom: 50px !important;
+        }
+    }
+
+    /* ── Registration Card ── */
+    .registration-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 32px 30px;
+        max-width: 480px;
+        margin: 0 auto;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.03);
+        border: 1px solid #e8ecf1;
+    }
+
+    .registration-card .reg-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #292929;
+        margin-bottom: 4px;
+        text-align: center;
+        letter-spacing: -0.2px;
+    }
+
+    .registration-card .reg-subtitle {
+        font-size: 13px;
+        color: #718096;
+        margin-bottom: 18px;
+        text-align: center;
+    }
+
+    .form-group-reg {
+        margin-bottom: 14px;
+        text-align: left;
+    }
+
+    .form-group-reg label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #292929;
+        margin-bottom: 5px;
+    }
+
+    .form-group-reg .form-control {
+        height: 46px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 14px;
+        color: #292929;
+        background-color: #fff;
+        transition: all 0.2s ease;
+        box-shadow: none;
+    }
+
+    .form-group-reg .form-control:focus {
+        border-color: #292929;
+        box-shadow: 0 0 0 3px rgba(41, 41, 41, 0.08);
+        outline: none;
+    }
+
+    .reg-secure-wrapper {
+        position: relative;
+    }
+
+    .reg-secure-wrapper .show-pass-btn {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #718096;
+        font-size: 15px;
+        z-index: 5;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reg-secure-wrapper .show-pass-btn:hover {
+        color: #292929;
+    }
+
     .otp-section {
         display: none;
     }
-    
+
     input {
         text-transform: none;
     }
 
     /* ── Dark Gray-Black Buttons on Registration ── */
-    .btn-primary,
+    .btn-reg-primary,
     #customer_register,
     #verify_otp {
         background: #292929 !important;
         background-color: #292929 !important;
         background-image: none !important;
-        border-color: #292929 !important;
+        border: 1.5px solid #292929 !important;
+        border-radius: 8px !important;
         color: #ffffff !important;
+        height: 46px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.5px !important;
+        text-transform: uppercase !important;
+        width: 100% !important;
+        cursor: pointer !important;
         transition: all 0.2s ease !important;
+        margin-top: 16px !important;
+        margin-bottom: 12px !important;
     }
-    .btn-primary:hover,
+
+    .btn-reg-primary:hover,
     #customer_register:hover,
     #verify_otp:hover {
         background: #111111 !important;
         background-color: #111111 !important;
         border-color: #111111 !important;
         color: #ffffff !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .btn-reg-secondary {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        background-image: none !important;
+        color: #292929 !important;
+        border: 1.5px solid #292929 !important;
+        border-radius: 8px !important;
+        height: 46px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.5px !important;
+        text-transform: uppercase !important;
+        width: 100% !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        text-decoration: none !important;
+    }
+
+    .btn-reg-secondary:hover {
+        background: #292929 !important;
+        background-color: #292929 !important;
+        border-color: #292929 !important;
+        color: #ffffff !important;
+    }
+
+    .reg-auth-divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 14px 0;
+        color: #a0aec0;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .reg-auth-divider::before,
+    .reg-auth-divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .reg-auth-divider span {
+        padding: 0 10px;
     }
     </style>
 </head>
@@ -90,12 +253,23 @@ $redirect = $_SESSION['redirect_after_registration'] ?? 'index.php';
 
         <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 
-    
-
     </div>
     <?php include("templates/scripts.php"); ?>
     <script>
         $(document).ready(function () {
+            // Password toggle
+            $(".toggle-pass").click(function() {
+                var target = $($(this).data("target"));
+                var icon = $(this).find("i");
+                if (target.attr("type") === "password") {
+                    target.attr("type", "text");
+                    icon.removeClass("fa-eye").addClass("fa-eye-slash");
+                } else {
+                    target.attr("type", "password");
+                    icon.removeClass("fa-eye-slash").addClass("fa-eye");
+                }
+            });
+
             $("#customer_register").click(function () {
                 var v_funame = $("#funame").val();
                 var v_euname = $("#euname").val();

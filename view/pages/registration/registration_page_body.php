@@ -1,52 +1,62 @@
-
-<div class="col-xxl-12 col-xl-12 col-lg-12 end-side-content">
-    <div class="login-area">
-        <h2 class="text-secondary text-center pt-4">Register Now</h2>
-        <p class="text-center m-b30">Welcome please register your account</p>
-        <div class="registration-form">
-            <form id="registrationForm">
-                <div class="m-b25">
-                    <label class="label-title">Full Name</label>
-                    <input name="fuName" required="" class="form-control" id="funame" placeholder="Full name" type="text">
-                </div>
-                <div class="m-b25">
-                    <label class="label-title">Email Address</label>
-                    <input name="EuName" required="" class="form-control" id="euname" placeholder="Email Address" type="email">
-                </div>
-                <div class="m-b40">
-                    <label class="label-title">Password</label>
-                    <div class="secure-input">
-                        <input type="password" name="password" class="form-control dz-password" id="password" placeholder="Password">
-                        <div class="show-pass">
-                            <i class="eye-open fa-regular fa-eye"></i>
+<div class="container registration-wrapper">
+    <div class="row justify-content-center">
+        <div class="col-xl-6 col-lg-8 col-md-10">
+            <div class="registration-card">
+                <h2 class="reg-title">Register Now</h2>
+                <p class="reg-subtitle">Welcome! Please enter your details to create an account</p>
+                
+                <div class="registration-form">
+                    <form id="registrationForm" onsubmit="return false;">
+                        <div class="form-group-reg">
+                            <label for="funame">Full Name</label>
+                            <input name="fuName" required="" class="form-control" id="funame" placeholder="Enter your full name" type="text" autocomplete="name">
                         </div>
-                    </div>
-                </div>
-                <div class="m-b40">
-                    <label class="label-title">Confirm Password</label>
-                    <div class="secure-input">
-                        <input type="password" name="conpassword" class="form-control dz-password" id="conpassword" placeholder="Confirm Password">
-                        <div class="show-pass">
-                            <i class="eye-open fa-regular fa-eye"></i>
+                        
+                        <div class="form-group-reg">
+                            <label for="euname">Email Address</label>
+                            <input name="EuName" required="" class="form-control" id="euname" placeholder="Enter your email" type="email" autocomplete="email">
                         </div>
-                    </div>
+                        
+                        <div class="form-group-reg">
+                            <label for="password">Password</label>
+                            <div class="reg-secure-wrapper">
+                                <input type="password" name="password" class="form-control dz-password" id="password" placeholder="Create a password (min 8 characters)" autocomplete="new-password">
+                                <span class="show-pass-btn toggle-pass" data-target="#password" title="Toggle password visibility">
+                                    <i class="fa-regular fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group-reg">
+                            <label for="conpassword">Confirm Password</label>
+                            <div class="reg-secure-wrapper">
+                                <input type="password" name="conpassword" class="form-control dz-password" id="conpassword" placeholder="Confirm your password" autocomplete="new-password">
+                                <span class="show-pass-btn toggle-pass" data-target="#conpassword" title="Toggle password visibility">
+                                    <i class="fa-regular fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <button type="button" id="customer_register" class="btn btn-reg-primary">REGISTER</button>
+                        
+                        <div class="reg-auth-divider">
+                            <span>or</span>
+                        </div>
+                        
+                        <a href="Login" class="btn-reg-secondary">Sign In</a>
+                    </form>
                 </div>
-                <div class="text-center">
-                    <button type="button" id="customer_register" class="btn btn-primary">REGISTER</button>
-                    <a href="Login" class="btn btn-outline-secondary btnhover text-uppercase">Sign In</a>
+                
+                <div class="otp-section">
+                    <form id="otpForm" onsubmit="return false;">
+                        <div class="form-group-reg">
+                            <label for="otp">Enter 6-Digit OTP</label>
+                            <input name="otp" required="" class="form-control" id="otp" placeholder="Enter OTP received via email" type="text" maxlength="6">
+                        </div>
+                        <button type="button" id="verify_otp" class="btn btn-reg-primary">VERIFY OTP</button>
+                    </form>
                 </div>
-            </form>
-        </div>
-        <div class="otp-section">
-            <form id="otpForm">
-                <div class="m-b25">
-                    <label class="label-title">Enter OTP</label>
-                    <input name="otp" required="" class="form-control" id="otp" placeholder="Enter 6-digit OTP" type="text">
-                </div>
-                <div class="text-center">
-                    <button type="button" id="verify_otp" class="btn btn-primary">VERIFY OTP</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
