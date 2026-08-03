@@ -47,8 +47,8 @@
       }
 
       .login-card-header img {
-          max-height: 55px;
-          max-width: 220px;
+          max-height: 110px;
+          max-width: 260px;
           width: auto;
           object-fit: contain;
           display: inline-block;

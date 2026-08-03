@@ -3,7 +3,7 @@
         <!-- Top Black Area for Logo -->
         <div class="login-card-header">
             <a href="/">
-                <img src="images/logo/web_logo.png" alt="Darjana Fashion">
+                <img src="images/logo/web_logo_menu.png" alt="Darjana Fashion">
             </a>
         </div>
         
