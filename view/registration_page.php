@@ -37,20 +37,23 @@ $redirect = $_SESSION['redirect_after_registration'] ?? 'index.php';
         letter-spacing: 0.3px !important;
     }
 
-    /* ── Page spacing so content is pushed down below the header ── */
-    .page-content.bg-light,
-    .registration-wrapper {
-        padding-top: 110px !important;
-        padding-bottom: 70px !important;
-        min-height: 85vh;
+    /* ── Clean Spacing for Registration Page ── */
+    .page-content.bg-light {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
         background: #f7f9fb !important;
     }
 
+    .registration-wrapper {
+        padding-top: 40px !important;
+        padding-bottom: 50px !important;
+        min-height: 80vh;
+    }
+
     @media (max-width: 991px) {
-        .page-content.bg-light,
         .registration-wrapper {
-            padding-top: 90px !important;
-            padding-bottom: 50px !important;
+            padding-top: 25px !important;
+            padding-bottom: 40px !important;
         }
     }
 
